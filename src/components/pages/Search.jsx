@@ -1,11 +1,110 @@
-import React from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import Media from "../Media";
 
 const Search = () => {
-  return (
-    <div>
-      test
-    </div>
-  )
-}
+  const { state } = useLocation();
+  const [searchFor, setSearchFor] = useState(state || "");
+  const [query, setQuery] = useState(state || "");
+  console.log("STATE", state);
 
-export default Search
+  // const fetchQueryData = async (query) => {
+  //   if (query) {
+  //     const results = await (await fetch (`http://www.omdbapi.com/?apikey=420fa557&s=${query}&page=1`)).json()
+  //     return results
+  //   }
+  // }
+
+  const handleClick = () => {
+    setSearchFor(query);
+  };
+
+  useEffect(() => {
+    //returns list of movies and shows from OMDapi for given query
+    const fetchQueryData = async (query) => {
+      if (query) {
+        const results = await (
+          await fetch(
+            `http://www.omdbapi.com/?apikey=420fa557&s=${query}&page=1`,
+          )
+        ).json();
+
+        console.log("PERFORMING SEARCH FOR:", searchFor);
+        console.log("RESULTS:", results);
+
+        return results;
+      }
+    };
+
+    //use function
+    fetchQueryData(searchFor);
+
+    //runs on first mount (Initial search if there is one) and whenever the search button is clicked
+  }, [searchFor]);
+
+  return (
+    <>
+      <section id="search__header">
+        <div className="container">
+          <div className="row">
+            <div className="search__header--wrapper">
+              <h1>What's on your mind?</h1>
+              <div className="search__wrapper">
+                <input
+                  type="search"
+                  placeholder="Search by Title"
+                  class="header__input"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                <button class="btn btn__search" onClick={handleClick}>
+                  <FontAwesomeIcon icon="search" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <section className="search__results">
+        <div className="container">
+          <div className="row">
+
+
+            <div className="results__heading--wrapper">
+              <h2 className="results__title">Search Results:</h2>
+              <div className="sort__wrapper">
+                <h3>Sort By: </h3>
+                <select id="filter" defaultValue="DEFAULT">
+                  <option value="DEFAULT" disabled>
+                    Sort
+                  </option>
+                  <option value="RELEASE_DATE">Release Date</option>
+                  <option value="RATING">Rating</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="results__wrapper">
+              <Media/>
+              <Media/>
+              <Media/>
+              <Media/>
+              <Media/>
+
+            </div>
+
+
+          </div>
+        </div>
+
+      </section>
+    </>
+  );
+};
+
+export default Search;

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -27,7 +27,7 @@ const Landing = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)} />
               <button 
-              class="btn__search"
+              class="btn btn__search"
               onClick={handleClick}>
                 <FontAwesomeIcon icon="search" />
               </button>
