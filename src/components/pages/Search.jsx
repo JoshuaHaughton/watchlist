@@ -7,6 +7,8 @@ const Search = () => {
   const { state } = useLocation();
   const [searchFor, setSearchFor] = useState(state || "");
   const [query, setQuery] = useState(state || "");
+  const [results, setResults] = useState("");
+
   console.log("STATE", state);
 
   // const fetchQueryData = async (query) => {
@@ -23,19 +25,30 @@ const Search = () => {
   useEffect(() => {
     //returns list of movies and shows from OMDapi for given query
     const fetchQueryData = async (query) => {
-      if (query) {
-        const results = await (
+      if (query !== "") {
+        const response = await (
           await fetch(
-            `http://www.omdbapi.com/?apikey=420fa557&s=${query}&page=1`,
+            `http://www.omdbapi.com/?apikey=420fa557&s=${query}&type=movie&page=1`,
           )
         ).json();
 
-        console.log("PERFORMING SEARCH FOR:", searchFor);
-        console.log("RESULTS:", results);
+        console.log("PERFORMING SEARCH FOR:", searchFor, query);
+        console.log("RESULTS:", response);
 
-        return results;
+        if (response.Response === 'False') {
+          console.log("TRY A MORE SPECIFIC SEARCH");
+          return
+          //RENDER INFO HERE EVENTUALLY
+        }
+
+        setResults(response.Search.slice(0, 8));
+
+
+        return response.Search;
       }
     };
+
+    console.log('SEARCHFOR', searchFor);
 
     //use function
     fetchQueryData(searchFor);
@@ -54,7 +67,7 @@ const Search = () => {
                 <input
                   type="search"
                   placeholder="Search by Title"
-                  class="header__input"
+                  className="header__input"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
@@ -90,11 +103,16 @@ const Search = () => {
             </div>
 
             <div className="results__wrapper">
+              {results && results.map(result => {
+                if (result.Type === "movie") {
+                  return <Media media={result}/>
+                }
+              } )}
+              {/* <Media/>
               <Media/>
               <Media/>
               <Media/>
-              <Media/>
-              <Media/>
+              <Media/> */}
 
             </div>
 
