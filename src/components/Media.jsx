@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import placeholder from "../assets/No-Image-Placeholder.svg.png"
 
-const Media = ({media}) => {
+const Media = ({media, reloadPage}) => {
 
 
 
@@ -58,7 +58,7 @@ const Media = ({media}) => {
 
   return (
     <div className="media__card">
-      <Link to={`/media/${media.imdbID}`}>
+      <Link to={`/media/${media.imdbID}`} onClick={reloadPage}>
         <figure className="media__card--wrapper">
           <img src={media.Poster === "N/A" ? placeholder : media.Poster} alt="" className="media__card--img"/>
         </figure>

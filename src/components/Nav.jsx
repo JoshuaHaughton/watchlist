@@ -12,6 +12,10 @@ const Nav = () => {
   //   document.body.classList.remove("menu--open");
   // };
 
+  const handleClick = () => {
+    alert("Sorry, this is a placeholder. Have a great day!")
+  }
+
 
   return (
     <nav>
@@ -34,7 +38,7 @@ const Nav = () => {
 
 
           <li className="nav__list">
-            <Link to="" className="nav__link link__hover-effect">
+            <Link to="/search" className="nav__link link__hover-effect">
               Search Movies
             </Link>
           </li>
@@ -46,10 +50,10 @@ const Nav = () => {
 
 
           <li className="nav__list">
-            <Link to="" className="nav__link
+            <button onClick={handleClick} className="nav__link
             nav__link--primary">
               Contact
-            </Link>
+            </button>
           </li>
 
 

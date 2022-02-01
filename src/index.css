@@ -95,6 +95,10 @@ select {
   max-width: 200px;
 }
 
+.spacer {
+  margin: 40px 0;
+}
+
 button {
   cursor: pointer;
 }

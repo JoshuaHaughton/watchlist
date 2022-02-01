@@ -14,6 +14,7 @@ const MediaInfo = ({media}) => {
 
   const [myMedia, setMyMedia] = useState(media || '');
   const [relatedMedia, setRelatedMedia] = useState("");
+  const [newPage, setNewPage] = useState("");
 
 
   useEffect(() => {
@@ -66,10 +67,13 @@ const MediaInfo = ({media}) => {
           return;
         }
 
-        console.log("RELATED", relatedDetailedResponse);
+        console.log("RELATED", relatedDetailedResponse, shortTitle);
 
         const noDuplicates = relatedDetailedResponse.Search.filter(
-          (media) => media.imdbID !== myMedia.imdbID
+          (media) => {
+            console.log("the medias", media.imdbID, myMedia.imdbID);
+            return media.imdbID !== id;
+          }
         )
 
         console.log("RELATED WITH NO DUPLICATES", noDuplicates);
@@ -88,7 +92,7 @@ const MediaInfo = ({media}) => {
 
     getDetails();
     // console.log(detailedMedia);
-  }, [myMedia]);
+  }, [newPage]);
 
   return (
     <div id="media__body">
@@ -114,7 +118,7 @@ const MediaInfo = ({media}) => {
               <div className="media__selected--description">
                 <h2 className="media__selected--title">{myMedia.Title} - {myMedia.Year}</h2>
                 {/* <Rating rating= /> */}
-                  <h3 className="media__summary--title">Rating: {myMedia.imdbRating} - ({myMedia.Rated})</h3>
+                  <h3 className="media__summary--title">Rating: {myMedia.imdbRating}</h3><h3 className="media__summary--title">Rated: {myMedia.Rated}</h3>
                   <h3 className="media__summary--title">Genres:  {myMedia.Genre}</h3>
                   <br/>
                   
@@ -140,7 +144,7 @@ const MediaInfo = ({media}) => {
 
 
 
-        <div className="media__container">
+       {relatedMedia.length > 0 ? <div className="media__container">
           <div className="row">
             <div className="media__selected--top">
 
@@ -159,7 +163,7 @@ const MediaInfo = ({media}) => {
                 .slice(0, 4)
                 .map((media) => {
                   console.log("passed", media);
-                  return <Media media={media} key={media.imdbId} />})
+                  return <Media media={media} key={media.imdbId} reloadPage={setNewPage} />})
                 }
 
 
@@ -168,6 +172,8 @@ const MediaInfo = ({media}) => {
 
           </div>
         </div>
+        :
+        <h2 class="spacer">{"Sorry, no related media for this title"}</h2>}
       </main>
     </div>
   )
