@@ -8,6 +8,7 @@ const Search = () => {
   const [searchFor, setSearchFor] = useState(state || "");
   const [query, setQuery] = useState(state || "");
   const [results, setResults] = useState("");
+  const [sortValue, setSortValue] = useState("DEFAULT");
 
   console.log("STATE", state);
 
@@ -18,8 +19,49 @@ const Search = () => {
   //   }
   // }
 
+  const filterResults = (filter) => {
+    console.log(filter);
+    setSortValue(filter)
+    if (filter === "OLDEST") {
+      setResults(
+        results
+          .slice()
+          .sort(
+            (a, b) =>
+              a.Year - b.Year
+          ),
+      );
+    }
+
+    if (filter === "NEWEST") {
+      setResults(
+        results
+          .slice()
+          .sort(
+            (a, b) =>
+              b.Year -
+              a.Year
+          ),
+      );
+    }
+    
+
+    if (filter === "TITLE") {
+      
+
+      setResults(
+        results
+        .slice()
+        .sort((a, b) => a.Title.localeCompare(b.Title, undefined, { numeric: true, sensitivity: 'base' })),
+      );
+    }
+
+
+  }
+
   const handleClick = () => {
     setSearchFor(query);
+    setSortValue("DEFAULT")
   };
 
   useEffect(() => {
@@ -92,12 +134,13 @@ const Search = () => {
               <h2 className="results__title">Search Results:</h2>
               <div className="sort__wrapper">
                 <h3>Sort By: </h3>
-                <select id="filter" defaultValue="DEFAULT">
+                <select id="filter" value={sortValue} onChange={(e) => filterResults(e.target.value)}>
                   <option value="DEFAULT" disabled>
                     Sort
                   </option>
-                  <option value="RELEASE_DATE">Release Date</option>
-                  <option value="RATING">Rating</option>
+                  <option value="OLDEST">Oldest</option>
+                  <option value="NEWEST">Newest</option>
+                  <option value="TITLE">Title</option>
                 </select>
               </div>
             </div>
