@@ -4,6 +4,7 @@ import Nav from "./components/Nav";
 import Landing from './components/Landing';
 import Search from './components/pages/Search';
 import MediaInfo from './components/pages/MediaInfo';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               element={<MediaInfo />}
             />
           </Routes>
+      <Footer/>
     </Router>
   );
 }

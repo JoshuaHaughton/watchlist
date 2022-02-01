@@ -120,6 +120,17 @@ button:active {
   filter: invert(1);
 }
 
+.no-cursor {
+  cursor: not-allowed;
+}
+
+
+/* NAV */
+
+
+
+
+
 .nav__container {
   width: 100%;
   max-width: 1200px;
@@ -469,6 +480,50 @@ button:active {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+
+
+
+
+/* FOOTER */
+
+
+
+
+
+footer {
+  background-color: #242424;
+}
+
+.footer__logo {
+  display: flex;
+  justify-content: center;
+}
+
+.footer__logo--img {
+  width: 160px;
+  filter: grayscale(1) invert(1);
+}
+
+.footer__copyright {
+  text-align: center;
+}
+
+.footer__link,
+.footer__copyright {
+  color: #fff;
+}
+
+.footer__list {
+  margin: 20px 0 32px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.footer__link {
+  padding: 0 24px;
+}
+
 
 
 

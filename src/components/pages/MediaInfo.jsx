@@ -17,6 +17,8 @@ const MediaInfo = ({media}) => {
 
 
   useEffect(() => {
+
+    //CURRENT MOVIE PAGE
     const getDetails = async () => {
       console.log('MY LOCATION IS ', id);
       const detailedResponse = await (
@@ -32,6 +34,19 @@ const MediaInfo = ({media}) => {
   
         console.log("details", detailedResponse);
         setMyMedia(detailedResponse)
+
+
+
+
+
+
+
+
+        // RECOMMENDED MEDIA 
+
+
+
+
 
         let shortTitle = detailedResponse.Title
         if (detailedResponse.Title.split(" ").length > 3) {
@@ -52,36 +67,22 @@ const MediaInfo = ({media}) => {
         }
 
         console.log("RELATED", relatedDetailedResponse);
-        
 
-        setRelatedMedia(relatedDetailedResponse.Search.filter(
+        const noDuplicates = relatedDetailedResponse.Search.filter(
           (media) => media.imdbID !== myMedia.imdbID
-        ))
+        )
 
-
-
-
-        return detailedResponse;
+        if (noDuplicates.length > 0) {
+          setRelatedMedia(noDuplicates);
+        }
+        
+        // return noDuplicates;
   
   
   
       // setDetailedMedia(detailedResponse);
     }
 
-    const getRelatedDetails = () => {
-
-      // const singleWordTitle = myMedia
-      // const detailedResponse = await (
-      //   await fetch(
-      //     `http://www.omdbapi.com/?apikey=420fa557&s=${id}`,
-      //     )
-      //   ).json();
-  
-      //   if (detailedResponse.Response === 'False') {
-      //     console.log("You haven't entered a valid imdbId!");
-      //     return;
-      //   }
-    }
 
     getDetails();
     // console.log(detailedMedia);
