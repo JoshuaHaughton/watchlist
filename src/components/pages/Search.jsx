@@ -12,13 +12,6 @@ const Search = () => {
 
   console.log("STATE", state);
 
-  // const fetchQueryData = async (query) => {
-  //   if (query) {
-  //     const results = await (await fetch (`http://www.omdbapi.com/?apikey=420fa557&s=${query}&page=1`)).json()
-  //     return results
-  //   }
-  // }
-
   const filterResults = (filter) => {
     console.log(filter);
     setSortValue(filter)
@@ -64,6 +57,12 @@ const Search = () => {
     setSortValue("DEFAULT")
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      setSearchFor(query);
+      setSortValue("DEFAULT");
+    }
+  }
   useEffect(() => {
     //returns list of movies and shows from OMDapi for given query
     const fetchQueryData = async (query) => {
@@ -112,6 +111,7 @@ const Search = () => {
                   className="header__input"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
                 <button class="btn btn__search" onClick={handleClick}>
                   <FontAwesomeIcon icon="search" />
@@ -167,5 +167,6 @@ const Search = () => {
     </>
   );
 };
+
 
 export default Search;

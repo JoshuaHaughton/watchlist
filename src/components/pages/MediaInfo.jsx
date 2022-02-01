@@ -72,6 +72,8 @@ const MediaInfo = ({media}) => {
           (media) => media.imdbID !== myMedia.imdbID
         )
 
+        console.log("RELATED WITH NO DUPLICATES", noDuplicates);
+
         if (noDuplicates.length > 0) {
           setRelatedMedia(noDuplicates);
         }

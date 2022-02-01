@@ -8,7 +8,12 @@ const Landing = () => {
 
   const handleClick = () => {
     navigate('/search', { state: query });
-    console.log('YEU');
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate('/search', { state: query });
+    }
   }
 
   return (
@@ -25,7 +30,8 @@ const Landing = () => {
               type="search" 
               placeholder="Search by Title" class="landing__input"
               value={query}
-              onChange={(e) => setQuery(e.target.value)} />
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown} />
               <button 
               class="btn btn__search"
               onClick={handleClick}>
@@ -38,5 +44,6 @@ const Landing = () => {
     </section>
   )
 }
+
 
 export default Landing
