@@ -146,7 +146,7 @@ const MediaInfo = ({media}) => {
 
 
               <h2 className="media__selected--title--top">
-                Recommended media
+                You may also like:
               </h2>
             </div>
             <div className="media">
