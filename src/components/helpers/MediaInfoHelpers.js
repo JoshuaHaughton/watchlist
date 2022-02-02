@@ -5,7 +5,7 @@ export const getDetails = async (id, navigate, setMyMedia, setRelatedMedia) => {
 
   //Get detailed response from OMDBapi based on current media's imdbID
   const detailedResponse = await (
-    await fetch(`http://www.omdbapi.com/?apikey=420fa557&i=${id}`)
+    await fetch(`https://www.omdbapi.com/?apikey=420fa557&i=${id}`)
   ).json();
 
   //If imdbID is wrong(If user tries to find a page manually) send them back to home
@@ -32,7 +32,7 @@ export const getDetails = async (id, navigate, setMyMedia, setRelatedMedia) => {
 
   const relatedDetailedResponse = await (
     await fetch(
-      `http://www.omdbapi.com/?apikey=420fa557&s=${shortTitle}&type=movie`,
+      `https://www.omdbapi.com/?apikey=420fa557&s=${shortTitle}&type=movie`,
     )
   ).json();
 

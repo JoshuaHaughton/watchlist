@@ -28,7 +28,7 @@ export const fetchQueryData = async (query, setResults, setTooBroad) => {
   if (query !== "") {
     let response = await (
       await fetch(
-        `http://www.omdbapi.com/?apikey=420fa557&s=${query}&type=movie&page=1`,
+        `https://www.omdbapi.com/?apikey=420fa557&s=${query}&type=movie&page=1`,
       )
     ).json();
 
@@ -39,7 +39,7 @@ export const fetchQueryData = async (query, setResults, setTooBroad) => {
       //(in case the user searches something like the "It" clown movie)
       response = await (
         await fetch(
-          `http://www.omdbapi.com/?apikey=420fa557&t=${query}&type=movie&page=1`,
+          `https://www.omdbapi.com/?apikey=420fa557&t=${query}&type=movie&page=1`,
         )
       ).json();
 
