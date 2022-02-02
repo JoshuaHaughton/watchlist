@@ -27,17 +27,17 @@ const Landing = () => {
           <div className="landing__wrapper">
             <h2 className="red">Find your favourite movie today with:
               <br/>
-              <span class="gold">Find-It!</span>
+              <span className="gold">Find-It!</span>
             </h2>
             <div className="search__wrapper">
               <input 
               type="search" 
-              placeholder="Search by Title" class="landing__input"
+              placeholder="Search by Title" className="landing__input"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown} />
               <button 
-              class="btn btn__search"
+              className="btn btn__search"
               onClick={handleClick}>
                 <FontAwesomeIcon icon="search" />
               </button>
