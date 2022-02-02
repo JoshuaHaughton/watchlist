@@ -1,4 +1,61 @@
-# Getting Started with Create React App
+# Find-It! - Movie Finder
+Find-It is a movie searching app where users can search and find detailed descriptions of all their favourite movies. This project served as a way for me to solidify my understanding of using APIs with React.js, and allowed me to experiment with implementing these features into a bigger project that includes my own Html and CSS.
+
+View Live HERE: [Find-It!](https://clever-mirzakhani-0fc908.netlify.app/)
+
+
+
+## Built With
+- HTML5
+- CSS3
+- JavaScript
+- React.js
+- OMDBapi
+
+
+## Description / Features
+- Page layouts and styling built entirely with HTML and CSS
+- Use of React hooks
+- Functional sorting by date (new to old / old to new) and title
+- Recommended movies section showing similar movies to the one selected
+- Final app and subsequent edits connected and deployed to Netlify
+
+
+
+
+## Images
+
+
+
+### Landing
+!['Landing page of app'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Landing.png)
+
+
+### Search
+!['Landing page of app'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Search.png)
+
+
+### Search Results
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Search_Results.png)
+
+
+### Movie Info
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Movie_Info.png)
+
+
+### Recommended Movies
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Recommended_Movies.png)
+
+
+### Mobile Mode
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Mobile_Mode.png)
+
+
+
+
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -28,9 +28,9 @@ const MediaInfo = ({ media }) => {
                 <FontAwesomeIcon icon="arrow-left" />
               </Link>
               <Link to="/search" className="media__link click">
-                <h2 className="media__selected--title--top red">
+                <h3 className="media__selected--title--top red">
                   Back to Search
-                </h2>
+                </h3>
               </Link>
             </div>
             <div className="media__selected">

@@ -507,6 +507,9 @@ button:active {
 
 .media__link {
   color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .media__wrapper {
