@@ -26,10 +26,10 @@ const Search = () => {
   !tooBroad
     ? (searchTitle = (
         <h1>
-          What are <span class="gold">you </span>watching?
+          What are <span className="gold">you </span>watching?
         </h1>
       ))
-    : (searchTitle = <h1 class="Red">Please try a broader search!</h1>);
+    : (searchTitle = <h1 className="Red">Please try a broader search!</h1>);
 
   const handleClick = () => {
     setSearchFor(query);
@@ -66,7 +66,7 @@ const Search = () => {
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
-                <button class="btn btn__search" onClick={handleClick}>
+                <button className="btn btn__search" onClick={handleClick}>
                   <FontAwesomeIcon icon="search" />
                 </button>
               </div>

@@ -77,7 +77,7 @@ h1 {
 
 h2 {
   font-size: 40px;
-  margin-bottom: 32px;
+  margin: 48px 0 24px 0;
   text-align: center;
 }
 
@@ -377,6 +377,7 @@ button:active {
 
 
 
+
 #landing {
     background-color: #242424;
     height: calc(100vh - 80px)
@@ -387,7 +388,6 @@ button:active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* padding-bottom: 240px; */
   height: 100%;
 }
 
@@ -472,7 +472,6 @@ button:active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* padding-bottom: 240px; */
   height: 100%;
 }
 
@@ -499,8 +498,11 @@ button:active {
 .media__card {
   width: 25%;
   padding: 32px 32px;
-  /* height:  */
   background-color: #fff;
+}
+
+.media__card--img {
+  border-radius: 8px;
 }
 
 .media__link {
@@ -607,7 +609,6 @@ button:active {
 
 .media__selected--title--top {
   margin-left: 15px;
-  /* color: #CB0104; */
   margin-bottom: 0;
   padding-bottom: 0 !important;
 }
@@ -757,13 +758,6 @@ footer {
   .search__wrapper {
     justify-content: center;
     align-items: center;
-  }
-}
-
-@media(max-width: 600px) {
-  .optional__link {
-    position: absolute;
-    display: none;
   }
 }
 
