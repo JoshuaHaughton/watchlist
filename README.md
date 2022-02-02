@@ -36,19 +36,19 @@ View Live HERE: [Find-It!](https://clever-mirzakhani-0fc908.netlify.app/)
 
 
 ### Search Results
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Search_Results.png)
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Search_Results.png)
 
 
 ### Movie Info
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Movie_Info.png)
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Movie_Info.png)
 
 
 ### Recommended Movies
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Recommended_Movies.png)
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Recommended_Movies.png)
 
 
 ### Mobile Mode
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/vinyl-shop/blob/main/docs/Mobile_Mode.png)
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Mobile_Mode.png)
 
 
 
