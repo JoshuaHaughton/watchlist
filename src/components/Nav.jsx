@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../assets/Placeholder.svg";
-import { Link } from "react-router-dom";
+import logo from "../assets/Logo.svg";
+import { Link, useLocation } from "react-router-dom";
 
 const Nav = () => {
   // const openMenu = () => {
@@ -16,9 +16,28 @@ const Nav = () => {
     alert("Sorry, this is a placeholder. Have a great day!")
   }
 
+  const location = useLocation();
+  console.log(location);
+
+  let option = "bgblack";
+  let underlineOption = "nav__link link__hover-effect--alt"
+  
+
+  if (location.pathname === '/') {
+    
+    option = ""
+    underlineOption = "nav__link link__hover-effect"
+
+  } 
+
+  useEffect(() => {
+    
+    
+  }, [])
+
 
   return (
-    <nav>
+    <nav className={option}>
       <div className="nav__container">
 
 
@@ -31,14 +50,14 @@ const Nav = () => {
 
 
           <li className="nav__list">
-            <Link to="/" className="nav__link link__hover-effect">
+            <Link to="/" className={underlineOption}>
               Home
             </Link>
           </li>
 
 
           <li className="nav__list">
-            <Link to="/search" className="nav__link link__hover-effect">
+            <Link to="/search" className={underlineOption}>
               Search Movies
             </Link>
           </li>

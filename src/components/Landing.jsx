@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom';
+import landingLogo from "../assets/Landing.svg";
 
 const Landing = () => {
   const [query, setQuery] = useState('');
@@ -21,10 +22,10 @@ const Landing = () => {
       <div className="container">
         <div className="row">
           <div className="landing__wrapper">
-            <h1>Find your favourite movie today with:
+            <h2 className="red">Find your favourite movie today with:
               <br/>
-              Find-It!
-            </h1>
+              <span class="gold">Find-It!</span>
+            </h2>
             <div className="search__wrapper">
               <input 
               type="search" 
@@ -38,6 +39,9 @@ const Landing = () => {
                 <FontAwesomeIcon icon="search" />
               </button>
             </div>
+            <figure className="landing__img--wrapper">
+              <img src={landingLogo} alt="Drawing of girl beside Netflix logo" className="landing__img" />
+            </figure>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Media from "../Media";
+import image from "../../assets/Search.svg";
 
 const Search = () => {
   const { state } = useLocation();
@@ -125,7 +126,7 @@ const Search = () => {
 
 
 
-      <section className="search__results">
+     {results ? <section className="search__results">
         <div className="container">
           <div className="row">
 
@@ -146,7 +147,7 @@ const Search = () => {
             </div>
 
             <div className="results__wrapper">
-              {results && results.map(result => {
+              {results.map(result => {
                 if (result.Type === "movie") {
                   return <Media media={result}/>
                 }
@@ -163,7 +164,12 @@ const Search = () => {
           </div>
         </div>
 
-      </section>
+      </section>:
+      <figure className="search__img--wrapper">
+
+          <img src={image} alt="" />
+
+        </figure>}
     </>
   );
 };

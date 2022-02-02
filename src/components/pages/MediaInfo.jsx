@@ -100,10 +100,10 @@ const MediaInfo = ({media}) => {
         <div className="media__container">
           <div className="row">
             <div className="media__selected--top">
-              <Link to="/search" className="media__link">
+              <Link to="/search" className="red click">
                 <FontAwesomeIcon icon="arrow-left" />
               </Link>
-              <Link to="/search" className="media__link">
+              <Link to="/search" className="media__link click">
                 <h2 className="media__selected--title--top">Back to Search</h2>
               </Link>
             </div>
@@ -133,7 +133,7 @@ const MediaInfo = ({media}) => {
                   </p>
                 </div>
                 {(
-                  <a href={`https://m.imdb.com/title/${id}/`} target="_blank"> <button className="btn">More Details</button></a>
+                  <a href={`https://m.imdb.com/title/${id}/`} target="_blank"> <button className="btn btn__effect">More Details</button></a>
                 )}
               </div>
             </div>
