@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom';
-import landingLogo from "../assets/Landing.svg";
+import landingLogo from "../../assets/Landing.svg";
 
 const Landing = () => {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
+
+  // Navigate to search with whatever input the user put in 
   const handleClick = () => {
     navigate('/search', { state: query });
   }
 
+  //Navigate to search if user presser enter
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       navigate('/search', { state: query });

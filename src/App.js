@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
-import Landing from './components/Landing';
+import Landing from './components/pages/Landing';
 import Search from './components/pages/Search';
 import MediaInfo from './components/pages/MediaInfo';
 import Footer from './components/Footer';
