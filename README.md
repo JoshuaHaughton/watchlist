@@ -1,7 +1,7 @@
 # Find-It! - Movie Finder
 Find-It is a movie searching app where users can search and find detailed descriptions of all their favourite movies. This project served as a way for me to solidify my understanding of using APIs with React.js, and allowed me to experiment with implementing these features into a bigger project that includes my own Html and CSS.
 
-View Live HERE: [Find-It!](https://clever-mirzakhani-0fc908.netlify.app/)
+View Live HERE: [Find-It!](https://xenodochial-jackson-500304.netlify.app/)
 
 
 
