@@ -14,7 +14,7 @@ View Live HERE: [Find-It!](https://clever-mirzakhani-0fc908.netlify.app/)
 
 
 ## Description / Features
-- Page layouts and styling built entirely with HTML and CSS
+- Page layouts and styling built entirely with HTML, CSS and JavaScript
 - Use of React hooks
 - Functional sorting by date (new to old / old to new) and title
 - Recommended movies section showing similar movies to the one selected
