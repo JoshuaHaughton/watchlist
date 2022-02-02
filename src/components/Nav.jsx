@@ -4,13 +4,6 @@ import logo from "../assets/Logo.svg";
 import { Link, useLocation } from "react-router-dom";
 
 const Nav = () => {
-  // const openMenu = () => {
-  //   document.body.classList += " menu--open";
-  // };
-
-  // const closeMenu = () => {
-  //   document.body.classList.remove("menu--open");
-  // };
 
   const handleClick = () => {
     alert("Sorry, this is a placeholder. Have a great day!")
@@ -21,14 +14,26 @@ const Nav = () => {
 
   let option = "bgblack";
   let underlineOption = "nav__link link__hover-effect--alt"
+  let primaryNav = "nav__link nav__link--primary"
   
 
   if (location.pathname === '/') {
     
     option = ""
     underlineOption = "nav__link link__hover-effect"
+    primaryNav = "nav__link nav__link--primary--alt"
 
   } 
+
+  const openMenu = () => {
+    document.body.classList += " menu--open";
+  };
+
+  const closeMenu = () => {
+    document.body.classList.remove("menu--open");
+  };
+
+
 
   useEffect(() => {
     
@@ -56,23 +61,22 @@ const Nav = () => {
           </li>
 
 
-          <li className="nav__list">
-            <Link to="/search" className={underlineOption}>
-              Search Movies
-            </Link>
-          </li>
+          {/* <li className="nav__list">
+            <button onClick={handleClick} className={underlineOption}>
+              Contact
+            </button>
+          </li> */}
 
 
-          <button className="btn__menu">
+          <button className="btn__menu" onClick={openMenu}>
             <FontAwesomeIcon icon="bars" />
           </button>
 
 
-          <li className="nav__list">
-            <button onClick={handleClick} className="nav__link
-            nav__link--primary">
-              Contact
-            </button>
+          <li className="nav__list optional__link">
+            <Link to="/search" className={primaryNav}>
+              Search Movies!
+            </Link>
           </li>
 
 
@@ -82,28 +86,22 @@ const Nav = () => {
 
         <div className="menu__backdrop">
 
-          <button className="btn__menu btn__menu--close">
+          <button className="btn__menu btn__menu--close" onClick={closeMenu}>
             <FontAwesomeIcon icon="times" />
           </button>
 
           <ul className="menu__links">
 
 
-            <li className="menu__list">
+            <li className="menu__list" onClick={closeMenu}>
               <Link to="/" className="menu__link">
                 Home
               </Link>
             </li>
 
-            <li className="menu__list">
-              <Link to="" className="menu__link">
+            <li className="menu__list" onClick={closeMenu}>
+              <Link to="/search" className="menu__link">
                 Search
-              </Link>
-            </li>
-
-            <li className="menu__list">
-              <Link to="" className="menu__link">
-                Contact
               </Link>
             </li>
 

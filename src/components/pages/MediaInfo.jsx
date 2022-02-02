@@ -104,7 +104,7 @@ const MediaInfo = ({media}) => {
                 <FontAwesomeIcon icon="arrow-left" />
               </Link>
               <Link to="/search" className="media__link click">
-                <h2 className="media__selected--title--top">Back to Search</h2>
+                <h2 className="media__selected--title--top red">Back to Search</h2>
               </Link>
             </div>
             <div className="media__selected">
@@ -152,7 +152,7 @@ const MediaInfo = ({media}) => {
 
 
 
-              <h2 className="media__selected--title--top">
+              <h2 className="media__selected--title--top black">
                 You may also like:
               </h2>
             </div>
