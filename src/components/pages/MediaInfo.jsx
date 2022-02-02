@@ -3,21 +3,27 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDetails } from "../helpers/MediaInfoHelpers.js";
 import Media from "../ui/Media";
-import placeholder from "../../assets/No-Image-Placeholder.svg.png"
+import placeholder from "../../assets/No-Image-Placeholder.svg.png";
 
 const MediaInfo = ({ media }) => {
   let location = useLocation().pathname;
   let param = location.split("/");
   let id = param[param.length - 1];
+ 
 
   const [myMedia, setMyMedia] = useState(media || "");
   const [relatedMedia, setRelatedMedia] = useState("");
   const navigate = useNavigate();
 
+  let src = media ? media.Poster : myMedia.Poster
+  if (src === 'N/A') src = placeholder;
+
   //Get details for page everytime it is changed
   useEffect(() => {
     getDetails(id, navigate, setMyMedia, setRelatedMedia);
   }, [location]);
+
+  // media ? media.Poster : myMedia.Poster
 
   return (
     <div id="media__body">
@@ -37,8 +43,8 @@ const MediaInfo = ({ media }) => {
             <div className="media__selected">
               <figure className="media__selected--figure">
                 <img
-                  src={media ? media.Poster || myMedia.Poster : placeholder}
-                  alt="Movie Poster"
+                  src={src}
+                  alt=""
                   className="media__selected--img"
                 />
               </figure>
