@@ -1,5 +1,5 @@
 //Detailed information retrieved from omdbapi about this specific movie
-const getDetails = async (id, navigate, setMyMedia, setRelatedMedia) => {
+export const getDetails = async (id, navigate, setMyMedia, setRelatedMedia) => {
 
   //CURRENT MOVIE PAGE DETAILS
 
@@ -48,5 +48,3 @@ const getDetails = async (id, navigate, setMyMedia, setRelatedMedia) => {
   }
 
 };
-
-module.exports = { getDetails };
