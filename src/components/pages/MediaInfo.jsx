@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDetails } from "../helpers/MediaInfoHelpers.js";
 import Media from "../ui/Media";
+import placeholder from "../../assets/No-Image-Placeholder.svg.png"
 
 const MediaInfo = ({ media }) => {
   let location = useLocation().pathname;
@@ -36,8 +37,8 @@ const MediaInfo = ({ media }) => {
             <div className="media__selected">
               <figure className="media__selected--figure">
                 <img
-                  src={media ? media.Poster : myMedia.Poster}
-                  alt=""
+                  src={media ? media.Poster || myMedia.Poster : placeholder}
+                  alt="Movie Poster"
                   className="media__selected--img"
                 />
               </figure>
