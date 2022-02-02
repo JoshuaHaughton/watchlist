@@ -1,5 +1,5 @@
 //Formats year to look more presentable to users
-const yearFormat = (year) => {
+export const yearFormat = (year) => {
   let formattedYear = year;
 
 
@@ -19,11 +19,9 @@ const yearFormat = (year) => {
 
 
 //Turns the first letter of the given type into an uppercase
-const typeFormat = (type) => {
+export const typeFormat = (type) => {
   let formattedType = type;
   formattedType = formattedType.charAt(0).toUpperCase() + formattedType.slice(1);
 
   return formattedType;
 }
-
-module.exports = { yearFormat, typeFormat };

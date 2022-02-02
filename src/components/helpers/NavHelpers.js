@@ -1,12 +1,11 @@
 //Opens full width menu when menu button is clicked in mobile mode
-const openMenu = () => {
+export const openMenu = () => {
   document.body.classList += " menu--open";
 };
 
 //Closes full width menu when menu button is clicked in mobile mode
-const closeMenu = () => {
+export const closeMenu = () => {
   document.body.classList.remove("menu--open");
 };
 
 
-module.exports = { openMenu, closeMenu };

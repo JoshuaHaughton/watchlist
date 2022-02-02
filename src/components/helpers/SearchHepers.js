@@ -1,4 +1,4 @@
-const sortResults = (filter, results, setResults, setSortValue) => {
+export const sortResults = (filter, results, setResults, setSortValue) => {
   //Visually changes value of filter for user
   setSortValue(filter);
 
@@ -23,7 +23,7 @@ const sortResults = (filter, results, setResults, setSortValue) => {
 };
 
 //Returns list of movies from OMDapi for given query
-const fetchQueryData = async (query, setResults, setTooBroad) => {
+export const fetchQueryData = async (query, setResults, setTooBroad) => {
 
   if (query !== "") {
     let response = await (
@@ -62,4 +62,3 @@ const fetchQueryData = async (query, setResults, setTooBroad) => {
   }
 };
 
-module.exports = { sortResults, fetchQueryData };
