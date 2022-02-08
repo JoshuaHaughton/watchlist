@@ -198,6 +198,11 @@ button:active {
   transform: translate(0);
 }
 
+.warning {
+  color: red;
+  padding-bottom: 8px;
+}
+
 
 
 
@@ -429,6 +434,22 @@ button:active {
 
 .btn__search:hover {
   color: #b27b23;
+}
+
+.spinner {
+  animation: loading 600ms infinite linear;
+  transition: all 300ms ease;
+  font-size: 28px;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 

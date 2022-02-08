@@ -5,12 +5,34 @@ import landingLogo from "../../assets/Landing.svg";
 
 const Landing = () => {
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [valid, setValid] = useState(true);
   const navigate = useNavigate();
 
 
   // Navigate to search with whatever input the user put in 
   const handleClick = () => {
-    navigate('/search', { state: query });
+    // Shows rotating logo icon for UI 
+    setLoading(true)
+
+    if (query.trim().length > 0) {
+      setTimeout(() => {
+        setLoading(false)
+        navigate('/search', { state: query });
+      }, 500)
+      return;
+    }
+    setValid(false);
+    setLoading(false);
+  }
+
+  const handleChange = (e) => {
+    setQuery(e.target.value)
+
+    if(e.target.value.trim().length > 0 && !valid) {
+      setValid(true)
+    }
+
   }
 
   //Navigate to search if user presser enter
@@ -19,6 +41,7 @@ const Landing = () => {
       navigate('/search', { state: query });
     }
   }
+
 
   return (
     <section id="landing">
@@ -29,17 +52,18 @@ const Landing = () => {
               <br/>
               <span className="gold">Find-It!</span>
             </h2>
+            {!valid && <p className="warning">Your search cannot be empty!</p>}
             <div className="search__wrapper">
               <input 
               type="search" 
               placeholder="Search by Title" className="landing__input"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={handleChange}
               onKeyDown={handleKeyDown} />
               <button 
               className="btn btn__search"
               onClick={handleClick}>
-                <FontAwesomeIcon icon="search" />
+                {!loading ? <FontAwesomeIcon icon="search" /> : <FontAwesomeIcon icon="spinner" className="spinner" />}
               </button>
             </div>
             <figure className="landing__img--wrapper">
