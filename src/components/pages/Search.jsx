@@ -22,6 +22,8 @@ const Search = () => {
   //If true (too many results error came back from request) then render output to let user know their search was too broad
   const [tooBroad, setTooBroad] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [valid, setValid] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('')
   
 
   //Will populate media search while results are being fetched
@@ -50,44 +52,59 @@ const Search = () => {
     Year: '-'
   }]
 
-  let searchTitle;
-  !tooBroad
-    ? (searchTitle = (
-        <h1>
-          What are <span className="gold">you </span>watching?
-        </h1>
-      ))
-    : (searchTitle = <h1 className="Red">Please try a broader search!</h1>);
+    const validateQuery = (queryBeingValidated) => {
+      if (queryBeingValidated.trim().length < 1) {
+        setValid(false)
+        setErrorMessage("Error! Cannot make a search for an empty string.")
+        return;
+      }
+      setValid(true)
+    }
+
 
   const handleClick = () => {
-    setSearchFor(query);
-    setSortValue("DEFAULT");
-    setLoading(false);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    validateQuery(query)
+    if (valid) {
       setSearchFor(query);
       setSortValue("DEFAULT");
       setLoading(false);
     }
   };
 
+  const handleKeyDown = (event) => {
+    //If key pressed was enter, validate the query
+    if (event.key === "Enter") {
+      validateQuery(query);
+      if(valid) {
+        setSearchFor(query);
+        setSortValue("DEFAULT");
+        setLoading(false);
+      }
+    } else {
+      setValid(true)
+    }
+  };
+
+
+
   useEffect(() => {
     setLoading(true);
     //Returns list of movies from OMDapi for given query
-    fetchQueryData(searchFor, setResults, setTooBroad, setLoading);
+    fetchQueryData(searchFor, setResults, setValid, setLoading, setErrorMessage);
 
     //Runs on first mount (Initial search if there is one) and whenever the search button is clicked
   }, [searchFor]);
 
+
   return (
     <>
       <section id="search__header">
-        <div className="container">
+        <div className="search__header--container">
           <div className="row">
             <div className="search__header--wrapper">
-              {searchTitle}
+              <h1>
+                What are <span className="gold">you </span>watching?
+              </h1>
               <div className="search__wrapper">
                 <input
                   type="search"
@@ -101,6 +118,7 @@ const Search = () => {
                   <FontAwesomeIcon icon="search" />
                 </button>
               </div>
+              {!valid && <p className="warning">{errorMessage}</p>}
             </div>
           </div>
         </div>

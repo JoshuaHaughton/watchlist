@@ -23,7 +23,7 @@ export const sortResults = (filter, results, setResults, setSortValue) => {
 };
 
 //Returns list of movies from OMDapi for given query
-export const fetchQueryData = async (query, setResults, setTooBroad, setLoading) => {
+export const fetchQueryData = async (query, setResults, setValid, setLoading, setErrorMessage) => {
 
   if (query !== "") {
     let response = await (
@@ -32,6 +32,7 @@ export const fetchQueryData = async (query, setResults, setTooBroad, setLoading)
       )
     ).json();
 
+    console.log("response1", response)
 
     if (response.Response === "False") {
       //This error happens because too many results come back... search is too broad
@@ -43,19 +44,24 @@ export const fetchQueryData = async (query, setResults, setTooBroad, setLoading)
         )
       ).json();
 
+      console.log('response2', response)
 
-      if (!response) {
-        //Results are too broad, let user know
-        setTooBroad(true)
+      //If still false, return the error message from the API
+      if (response.Response == "False") {
+        setErrorMessage(response.Error)
+        setValid(false)
+        setLoading(false)
         return;
       }
 
-      setTooBroad(false);
+
       setResults([response]);
       setLoading(false)
       return;
     }
-    
+
+
+    console.log(response.Search.slice(0, 8))
     setResults(response.Search.slice(0, 8));
     setLoading(false)
 

@@ -37,8 +37,21 @@ const Landing = () => {
 
   //Navigate to search if user presser enter
   const handleKeyDown = (event) => {
+    
     if (event.key === 'Enter') {
-      navigate('/search', { state: query });
+      setLoading(true)
+
+      if (query.trim().length > 0) {
+        setTimeout(() => {
+          setLoading(false)
+          navigate('/search', { state: query });
+        }, 500)
+        return;
+      }
+      
+      setValid(false);
+      setLoading(false);
+
     }
   }
 
