@@ -573,6 +573,27 @@ button:active {
   color: black;
 }
 
+.skeleton__card--wrapper {
+  /* transform: rotate(90deg); */
+}
+
+.skeleton__card--img {
+  /* transform: rotate(90deg) */
+}
+
+.skeleton__title {
+
+}
+
+.skeleton__type,
+.skeleton__title,
+.skeleton__year {
+  color: transparent;
+  background-color: gray;
+  margin: 12px 0;
+  padding: 0
+}
+
 
 
 

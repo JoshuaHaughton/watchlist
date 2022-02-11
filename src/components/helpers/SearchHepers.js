@@ -23,7 +23,7 @@ export const sortResults = (filter, results, setResults, setSortValue) => {
 };
 
 //Returns list of movies from OMDapi for given query
-export const fetchQueryData = async (query, setResults, setTooBroad) => {
+export const fetchQueryData = async (query, setResults, setTooBroad, setLoading) => {
 
   if (query !== "") {
     let response = await (
@@ -49,14 +49,15 @@ export const fetchQueryData = async (query, setResults, setTooBroad) => {
         setTooBroad(true)
         return;
       }
+
       setTooBroad(false);
-
-
       setResults([response]);
+      setLoading(false)
       return;
     }
-
+    
     setResults(response.Search.slice(0, 8));
+    setLoading(false)
 
     return response.Search;
   }

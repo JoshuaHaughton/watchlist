@@ -21,6 +21,34 @@ const Search = () => {
   const [sortValue, setSortValue] = useState("DEFAULT");
   //If true (too many results error came back from request) then render output to let user know their search was too broad
   const [tooBroad, setTooBroad] = useState(false);
+  const [loading, setLoading] = useState(false);
+  
+
+  //Will populate media search while results are being fetched
+  const skeletonArr = [{
+    id: 1,
+    Title: '-',
+    Type: '-',
+    Year: '-'
+  },
+  {
+    id: 2,
+    Title: '-',
+    Type: '-',
+    Year: '-'
+  },
+  {
+    id: 3,
+    Title: '-',
+    Type: '-',
+    Year: '-'
+  },
+  {
+    id: 4,
+    Title: '-',
+    Type: '-',
+    Year: '-'
+  }]
 
   let searchTitle;
   !tooBroad
@@ -34,18 +62,21 @@ const Search = () => {
   const handleClick = () => {
     setSearchFor(query);
     setSortValue("DEFAULT");
+    setLoading(false);
   };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       setSearchFor(query);
       setSortValue("DEFAULT");
+      setLoading(false);
     }
   };
 
   useEffect(() => {
+    setLoading(true);
     //Returns list of movies from OMDapi for given query
-    fetchQueryData(searchFor, setResults, setTooBroad);
+    fetchQueryData(searchFor, setResults, setTooBroad, setLoading);
 
     //Runs on first mount (Initial search if there is one) and whenever the search button is clicked
   }, [searchFor]);
@@ -106,11 +137,15 @@ const Search = () => {
               </div>
 
               <div className="results__wrapper">
-                {results.map((result) => {
+                {!loading ? results.map((result) => {
                   if (result.Type === "movie") {
                     return <Media media={result} key={result.imdbID} />;
                   }
-                })}
+                }) : 
+                  skeletonArr.map(result => {
+                    return <Media media={result} key={result.id} />;
+                  })
+                }
               </div>
             </div>
           </div>
