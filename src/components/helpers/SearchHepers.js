@@ -55,12 +55,14 @@ export const fetchQueryData = async (query, setResults, setValid, setLoading, se
       }
 
 
+      //If second response didn't return false, set results to the returned movie (Will only be one, as we searched for a specific title)
       setResults([response]);
       setLoading(false)
       return;
     }
 
 
+    //Will set first 8 movies to state if data is returned
     console.log(response.Search.slice(0, 8))
     setResults(response.Search.slice(0, 8));
     setLoading(false)

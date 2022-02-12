@@ -19,10 +19,11 @@ const Search = () => {
   const [results, setResults] = useState("");
   //Current sorting method for results
   const [sortValue, setSortValue] = useState("DEFAULT");
-  //If true (too many results error came back from request) then render output to let user know their search was too broad
-  const [tooBroad, setTooBroad] = useState(false);
+  //Renders a skeleton state for movies while movie data is being fetched
   const [loading, setLoading] = useState(false);
+  //When false, won't submit a query to fetch data
   const [valid, setValid] = useState(true);
+  //If an error message is returned, this state is used to render it to the user
   const [errorMessage, setErrorMessage] = useState('')
   
 

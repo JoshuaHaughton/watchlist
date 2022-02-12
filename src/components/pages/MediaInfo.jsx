@@ -11,11 +11,16 @@ const MediaInfo = ({ media }) => {
   let id = param[param.length - 1];
  
 
+  //Movie info of current page
   const [myMedia, setMyMedia] = useState(media || "");
+
+  //State for related media section below the movie info
   const [relatedMedia, setRelatedMedia] = useState("");
   const navigate = useNavigate();
 
+  //If media was passed in, automatically use the src of that object. Else, wait until state returns and use that src instead
   let src = media ? media.Poster : myMedia.Poster
+  //If that specific movie doesn't have an image, use a placeholder to let user know
   if (src === 'N/A') src = placeholder;
 
   //Get details for page everytime it is changed
@@ -23,7 +28,6 @@ const MediaInfo = ({ media }) => {
     getDetails(id, navigate, setMyMedia, setRelatedMedia);
   }, [location]);
 
-  // media ? media.Poster : myMedia.Poster
 
   return (
     <div id="media__body">
