@@ -104,7 +104,7 @@ const Search = () => {
           <div className="row">
             <div className="search__header--wrapper">
               <h1>
-                What are <span className="gold">you </span>watching?
+                What are <span className="gold title__font">you </span>watching?
               </h1>
               <div className="search__wrapper">
                 <input

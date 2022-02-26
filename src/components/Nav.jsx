@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../assets/Logo.svg";
+import logo from "../assets/Logo.png";
 import { Link, useLocation } from "react-router-dom";
 import { closeMenu, openMenu } from "./helpers/NavHelpers";
 
@@ -27,7 +27,7 @@ const Nav = () => {
         <ul className="nav__links">
           <li className="nav__list">
             <Link to="/" className={underlineOption}>
-              Home
+              HOME
             </Link>
           </li>
 
