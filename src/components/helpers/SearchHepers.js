@@ -1,9 +1,13 @@
+import tmdbApi from "../../api/tmdbApi";
+
 export const sortResults = (filter, results, setResults, setSortValue) => {
   //Visually changes value of filter for user
   setSortValue(filter);
 
   if (filter === "OLDEST") {
-    setResults(results.slice().sort((a, b) => a.Year - b.Year));
+    setResults(results.slice().sort((a, b) => {
+      return a.Year - b.Year
+    }));
   }
 
   if (filter === "NEWEST") {
@@ -26,13 +30,24 @@ export const sortResults = (filter, results, setResults, setSortValue) => {
 export const fetchQueryData = async (query, setResults, setValid, setLoading, setErrorMessage) => {
 
   if (query !== "") {
-    let response = await (
-      await fetch(
-        `https://www.omdbapi.com/?apikey=420fa557&s=${query}&type=movie&page=1`,
-      )
-    ).json();
+    // let response = await (
+    //   await fetch(
+    //     `https://www.omdbapi.com/?apikey=420fa557&s=${query}&type=movie&page=1`,
+    //   )
+    // ).json();
 
+    console.log(query)
+    console.log(String(query))
+    let response = await tmdbApi.search(query);
     console.log("response1", response)
+
+    response = await response.results.filter(result => {
+      return result.media_type !== 'person'
+    })
+
+
+
+    console.log("response2", response)
 
     if (response.Response === "False") {
       //This error happens because too many results come back... search is too broad
@@ -63,11 +78,11 @@ export const fetchQueryData = async (query, setResults, setValid, setLoading, se
 
 
     //Will set first 8 movies to state if data is returned
-    console.log(response.Search.slice(0, 8))
-    setResults(response.Search.slice(0, 8));
+    console.log(response.slice(0, 8))
+    setResults(response.slice(0, 8));
     setLoading(false)
 
-    return response.Search;
+    return response;
   }
 };
 

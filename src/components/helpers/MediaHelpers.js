@@ -1,6 +1,7 @@
 //Formats year to look more presentable to users
 export const yearFormat = (year) => {
-  let formattedYear = year;
+  let formattedYear = year
+  console.log(formattedYear)
 
 
   //if year has a dash in it, format it with a space to look nicer!

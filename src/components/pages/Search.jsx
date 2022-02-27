@@ -7,6 +7,7 @@ import {
   fetchQueryData,
   sortResults,
 } from "../../components/helpers/SearchHepers";
+import tmdbApi from "../../api/tmdbApi";
 
 const Search = () => {
   //State given from Landing component if a search was made from there
@@ -30,27 +31,27 @@ const Search = () => {
   //Will populate media search while results are being fetched
   const skeletonArr = [{
     id: 1,
-    Title: '-',
-    Type: '-',
-    Year: '-'
+    title: '-',
+    media_type: '-',
+    release_date: '-'
   },
   {
     id: 2,
-    Title: '-',
-    Type: '-',
-    Year: '-'
+    title: '-',
+    media_type: '-',
+    release_date: '-'
   },
   {
     id: 3,
-    Title: '-',
-    Type: '-',
-    Year: '-'
+    title: '-',
+    media_type: '-',
+    release_date: '-'
   },
   {
     id: 4,
-    Title: '-',
-    Type: '-',
-    Year: '-'
+    title: '-',
+    media_type: '-',
+    release_date: '-'
   }]
 
     const validateQuery = (queryBeingValidated) => {
@@ -63,8 +64,13 @@ const Search = () => {
     }
 
 
-  const handleClick = () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     validateQuery(query)
+    const response = await tmdbApi.getMoviesList('popular', {});
+    const response2 = await tmdbApi.search('popular', {});
+    console.log(response);
+    console.log(response2);
     if (valid) {
       setSearchFor(query);
       setSortValue("DEFAULT");
@@ -106,7 +112,7 @@ const Search = () => {
               <h1>
                 What are <span className="gold title__font">you </span>watching?
               </h1>
-              <div className="search__wrapper">
+              <form className="search__wrapper" onSubmit={handleSubmit}>
                 <input
                   type="search"
                   placeholder="Search by Title"
@@ -115,10 +121,10 @@ const Search = () => {
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
-                <button className="btn btn__search" onClick={handleClick}>
+                <button className="btn btn__search" >
                   <FontAwesomeIcon icon="search" />
                 </button>
-              </div>
+              </form>
               {!valid && <p className="warning">{errorMessage}</p>}
             </div>
           </div>
@@ -157,9 +163,9 @@ const Search = () => {
 
               <div className="results__wrapper">
                 {!loading ? results.map((result) => {
-                  if (result.Type === "movie") {
-                    return <Media media={result} key={result.imdbID} />;
-                  }
+                  // if (result.Type === "movie") {
+                    return <Media media={result} key={result.id} />;
+                  // }
                 }) : 
                   skeletonArr.map(result => {
                     return <Media media={result} key={result.id} />;

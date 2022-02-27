@@ -37,7 +37,17 @@ const Nav = () => {
 
           <li className="nav__list optional__link">
             <Link to="/search" className={primaryNav}>
-              Search Movies!
+              SEARCH
+            </Link>
+          </li>
+          <li className="nav__list optional__link">
+            <Link to="/explore" className={underlineOption}>
+              EXPLORE
+            </Link>
+          </li>
+          <li className="nav__list optional__link">
+            <Link to="/search" className={underlineOption}>
+              MY LIST
             </Link>
           </li>
         </ul>

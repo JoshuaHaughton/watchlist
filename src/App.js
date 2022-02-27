@@ -17,7 +17,7 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/search" element={<Search />} />
               <Route
-                path="/media/:id"
+                path="/:media/:id"
                 element={<MediaInfo />}
               />
             </Routes>
