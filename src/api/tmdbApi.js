@@ -19,7 +19,7 @@ import axiosClient, { apiConfig } from "./axiosClient";
 
 const tmdbApi = {
   getMoviesList: (type, params = {}) => {
-    const url = `movie/${String(type)}?api_key=${apiConfig.apiKey}`;
+    const url = `movie/${String(type)}?api_key=${apiConfig.apiKey}&page=1`;
     return axiosClient.get(url, params)
   },
   getTvList: (type, params = {}) => {

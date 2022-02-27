@@ -124,6 +124,10 @@ select {
   color: #c78f03;
 }
 
+.white {
+  color: white;
+}
+
 .black__bg {
   background-color: #242424;
 }
@@ -399,9 +403,9 @@ button:active {
 
 
 #landing {
-    background-color: #fff;
+    background-color: #242424;
     background-size: cover;
-    background-image: url('https://image.tmdb.org/t/p/original//eVSa4TpyXbOdk9fXSD6OcORJGtv.jpg');
+    /* background-image: url('https://image.tmdb.org/t/p/original//eVSa4TpyXbOdk9fXSD6OcORJGtv.jpg'); */
 
     height: calc(100vh - 80px)
   }
@@ -415,7 +419,10 @@ button:active {
   }
 
   .landing__title {
-    color: #c78f03
+    font-size: 64px;
+    margin-bottom: 32px;
+    text-align: center;
+    font-family: 'Bebas Neue', cursive;
   }
 
 .landing__wrapper {

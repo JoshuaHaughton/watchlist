@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import landingLogo from "../../assets/Landing.svg";
+import tmdbApi from "../../api/tmdbApi";
+import { apiConfig } from "../../api/axiosClient";
 
 const Landing = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [valid, setValid] = useState(true);
+  const [placeholder, setPlaceholder] = useState("");
   const navigate = useNavigate();
 
   // Navigate to search with whatever input the user put in
@@ -51,14 +54,31 @@ const Landing = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await tmdbApi.getMoviesList('popular')
+      console.log(response);
+
+      const randomIndex = Math.floor(Math.random() * response.results.length-1);
+
+      const src = apiConfig.originalImage(response.results[randomIndex].backdrop_path)
+
+      document.getElementById('landing').style.backgroundImage=`url(${src})`;
+
+      setPlaceholder(response.results[randomIndex].title)
+
+    }
+    fetchMovies()
+  }, [])
+
   return (
     <section id="landing">
       <div className="landing__fade">
         <div className="container">
           <div className="row">
             <div className="landing__wrapper">
-              <h1 className="landing__title">
-                What's next on your watch list?
+              <h1 className="landing__title white">
+                What's next on <span className="landing__title gold">your</span> watch list?
               </h1>
               {!valid && (
                 <p className="warning">Your search cannot be empty!</p>
@@ -66,7 +86,7 @@ const Landing = () => {
               <div className="search__wrapper">
                 <input
                   type="search"
-                  placeholder="Search by Title"
+                  placeholder={placeholder}
                   className="landing__input"
                   value={query}
                   onChange={handleChange}
