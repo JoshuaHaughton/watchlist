@@ -7,8 +7,8 @@ const MediaList = (props) => {
   
 
   useEffect(() => {
-    const fetchMovieList = async () => {
-      const response = await tmdbApi.getMoviesList(props.category);
+    const fetchMediaList = async () => {
+      const response = await tmdbApi.getMediaList(props.category, props.type);
       console.log(response);
 
       setMediaList(response.results)
@@ -16,8 +16,8 @@ const MediaList = (props) => {
 
     }
 
-    fetchMovieList();
-  }, [])
+    fetchMediaList();
+  }, [props.type])
 
   return (
     <div className='media__list--wrapper'>

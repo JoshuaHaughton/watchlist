@@ -406,9 +406,8 @@ button:active {
 #landing {
     background-color: #242424;
     background-size: cover;
-    /* background-image: url('https://image.tmdb.org/t/p/original//eVSa4TpyXbOdk9fXSD6OcORJGtv.jpg'); */
-
-    height: calc(100vh - 80px)
+    background-position: center;
+    height: calc(100vh - 80px);
   }
 
   .landing__fade {
@@ -569,6 +568,7 @@ button:active {
 
 .media__card--img {
   border-radius: 8px;
+  box-shadow: 1px 4px 8px 2px rgba(0, 0, 0, 0.3);
 }
 
 .media__link {
@@ -668,6 +668,7 @@ button:active {
   width: auto;
   max-width: 100%;
   border-radius: 16px;
+  box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.3);
 }
 
 .media__selected--description {
@@ -752,8 +753,23 @@ button:active {
 }
 
 .discover__container {
-  min-height: calc(100vh - 80px)
+  min-height: calc(100vh - 80px);
+  display: flex;
+  /* justify-content: center; */
 }
+
+.discover__filter--wrapper {
+  justify-self: center;
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* .discovery__title {
+  margin: 0;
+  padding: 0;
+} */
 
 .media__list {
   display: flex;
@@ -764,7 +780,7 @@ button:active {
 }
 
 .media__list--wrapper {
-  padding-bottom: 80px;
+  padding-bottom: 48px;
 }
 
 .media__list--img {
