@@ -41,8 +41,8 @@ const Nav = () => {
             </Link>
           </li>
           <li className="nav__list optional__link">
-            <Link to="/explore" className={underlineOption}>
-              EXPLORE
+            <Link to="/discover" className={underlineOption}>
+              DISCOVER
             </Link>
           </li>
           <li className="nav__list optional__link">
