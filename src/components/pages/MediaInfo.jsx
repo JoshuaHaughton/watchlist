@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDetails } from "../helpers/MediaInfoHelpers.js";
 import Media from "../ui/Media";
 import placeholder from "../../assets/No-Image-Placeholder.svg.png";
@@ -13,6 +13,7 @@ const MediaInfo = ({ media }) => {
   let param = location.split("/");
   let id = param[param.length - 1];
   let category = param[param.length - 2];
+  const navigate = useNavigate();
  
 
   //Movie info of current page
@@ -56,6 +57,11 @@ const MediaInfo = ({ media }) => {
     src = apiConfig.w500Image(myMedia.backdrop_path)
   }
 
+  //Navigate to the previous page
+  const navigateBack = () => {
+    navigate(-1);
+  }
+
 
 
   return (
@@ -64,14 +70,10 @@ const MediaInfo = ({ media }) => {
         <div className="media__container">
           <div className="row">
             <div className="media__selected--top">
-              <Link to="/search" className="red click">
-                <FontAwesomeIcon icon="arrow-left" />
-              </Link>
-              <Link to="/search" className="media__link click">
-                <h3 className="media__selected--title--top red">
+                <FontAwesomeIcon icon="arrow-left" className="red click" onClick={navigateBack}/>
+                <h3 className="media__selected--title--top red click" onClick={navigateBack}>
                   Back to Search
                 </h3>
-              </Link>
             </div>
             <div className="media__selected">
               <figure className="media__selected--figure">
