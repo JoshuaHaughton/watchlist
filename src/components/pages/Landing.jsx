@@ -8,50 +8,64 @@ const Landing = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(true);
+  //Used as a placeholder for the input
   const [backgroundMovieTitle, setBackgroundMovieTitle] = useState("");
   const navigate = useNavigate();
 
-  // Navigate to search with whatever input the user put in
+
+
+  // Navigate to search with whatever input the user input
   const handleSubmit = (event) => {
     event.preventDefault();
+
     // Shows rotating logo icon for UI
     setLoading(true);
 
-    if (query.trim().length > 0) {
-      setTimeout(() => {
-        setLoading(false);
-        navigate("/search", { state: query });
-      }, 500);
+
+    // If trimmed input is empty
+    if (query.trim().length < 1) {
+      setIsValid(false);
+      setLoading(false);
       return;
     }
-    setIsValid(false);
-    setLoading(false);
+
+    // Else, slight delay to show loading spinner for UX before navigating to search page with query as state
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/search", { state: query });
+    }, 500);
+
   };
 
+
+  //Handle state
   const handleChange = (e) => {
     setQuery(e.target.value);
 
+    //Reset validity once changes are made
     if (e.target.value.trim().length > 0 && !isValid) {
       setIsValid(true);
     }
   };
 
 
+
   useEffect(() => {
-    const fetchMovies = async () => {
+    //Fetch random movie backdrop from popular movies
+    const fetchBackgroundMovie = async () => {
       const response = await tmdbApi.getMoviesList('popular')
-      console.log(response);
-
       const randomIndex = Math.floor(Math.random() * response.results.length-1);
-
       const src = apiConfig.originalImage(response.results[randomIndex].backdrop_path)
 
+      //Sets background image of landing div
       document.getElementById('landing').style.backgroundImage=`url(${src})`;
 
+      //Set title of background movie to be used as placeholder for input
       setBackgroundMovieTitle(response.results[randomIndex].title)
-
     }
-    fetchMovies()
+
+    fetchBackgroundMovie()
+
   }, [])
 
   return (
@@ -82,13 +96,6 @@ const Landing = () => {
                   )}
                 </button>
               </form>
-              {/* <figure className="landing__img--wrapper">
-                <img
-                  src={landingLogo}
-                  alt="Drawing of girl beside Netflix logo"
-                  className="landing__img"
-                />
-              </figure> */}
             </div>
           </div>
         </div>

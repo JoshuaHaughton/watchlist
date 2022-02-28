@@ -7,26 +7,23 @@ import {
   fetchQueryData,
   sortResults,
 } from "../../components/helpers/SearchHepers";
-import tmdbApi from "../../api/tmdbApi";
 
 const Search = () => {
   //State given from Landing component if a search was made from there
   const { state } = useLocation();
-  //What is currently being searched for
+  //What is currently being searched for. Dependency of useEffect
   const [searchFor, setSearchFor] = useState(state || "");
   //What is currently in the input field. Will not search until enter, or button next to input is pressed
   const [query, setQuery] = useState(state || "");
-  //Results from search
   const [results, setResults] = useState("");
-  //Current sorting method for results
   const [sortValue, setSortValue] = useState("DEFAULT");
   //Renders a skeleton state for movies while movie data is being fetched
   const [loading, setLoading] = useState(false);
   //When false, won't submit a query to fetch data
   const [valid, setValid] = useState(true);
-  //If an error message is returned, this state is used to render it to the user
   const [errorMessage, setErrorMessage] = useState('')
   
+
 
   //Will populate media search while results are being fetched
   const skeletonArr = [{
@@ -58,6 +55,8 @@ const Search = () => {
     skeleton: true
   }]
 
+
+
     const validateQuery = (queryBeingValidated) => {
       if (queryBeingValidated.trim().length < 1) {
         setValid(false)
@@ -72,16 +71,9 @@ const Search = () => {
     event.preventDefault();
 
     validateQuery(query)
-    // const response = await tmdbApi.getMoviesList('popular', {});
-    // const response2 = await tmdbApi.search('popular', {});
-    // console.log(response);
-    // console.log(response2);
     if (valid) {
-      // await setTimeout(() => {
-      //   setLoading(false);
-        
-      // }, 3000)
       setLoading(false);
+      //setSearchFor triggers useEffect
       setSearchFor(query);
       setSortValue("DEFAULT");
     }
@@ -89,10 +81,10 @@ const Search = () => {
 
 
 
-
   useEffect(() => {
     setLoading(true);
-    //Returns list of movies from OMDapi for given query
+
+    //Returns list of movies from tmdbApi for given query
     fetchQueryData(searchFor, setResults, setValid, setLoading, setErrorMessage);
 
     //Runs on first mount (Initial search if there is one) and whenever the search button is clicked
@@ -158,9 +150,7 @@ const Search = () => {
 
               <div className="results__wrapper">
                 {!loading ? results.map((result) => {
-                  // if (result.Type === "movie") {
                     return <Media media={result} key={result.id} />;
-                  // }
                 }) : 
                   skeletonArr.map(result => {
                     return <Media media={result} key={result.id} />;

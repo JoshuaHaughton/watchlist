@@ -8,6 +8,9 @@ import { apiConfig } from "../../api/axiosClient.js";
 import Rating from "../ui/Rating.jsx";
 
 const MediaInfo = ({ media }) => {
+  console.log(media);
+  // const { media = lo } = useLocation();
+  // console.log(lo);
   let location = useLocation().pathname;
   let param = location.split("/");
   let id = param[param.length - 1];

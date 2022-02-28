@@ -34,59 +34,26 @@ export const sortResults = (filter, results, setResults, setSortValue) => {
   }
 };
 
-//Returns list of movies from OMDapi for given query
+
+
+//Returns list of movies from tmdbApi for given query
 export const fetchQueryData = async (query, setResults, setValid, setLoading, setErrorMessage) => {
 
   if (query !== "") {
-    // let response = await (
-    //   await fetch(
-    //     `https://www.omdbapi.com/?apikey=420fa557&s=${query}&type=movie&page=1`,
-    //   )
-    // ).json();
 
-    console.log(query)
-    console.log(String(query))
+
     let response = await tmdbApi.search(query);
-    console.log("response1", response)
 
+
+    //Filters out actors from the search of movies and tv series
     response = await response.results.filter(result => {
       return result.media_type !== 'person'
     })
 
+    console.log("response", response)
 
-
-    console.log("response2", response)
-
-    if (response.Response === "False") {
-      //This error happens because too many results come back... search is too broad
-      //Searches for the given query as a title instead of a general search
-      //(in case the user searches something like the "It" clown movie)
-      response = await (
-        await fetch(
-          `https://www.omdbapi.com/?apikey=420fa557&t=${query}&type=movie&page=1`,
-        )
-      ).json();
-
-      console.log('response2', response)
-
-      //If still false, return the error message from the API
-      if (response.Response == "False") {
-        setErrorMessage(response.Error)
-        setValid(false)
-        setLoading(false)
-        return;
-      }
-
-
-      //If second response didn't return false, set results to the returned movie (Will only be one, as we searched for a specific title)
-      setResults([response]);
-      setLoading(false)
-      return;
-    }
-
-
-    //Will set first 8 movies to state if data is returned
     console.log(response.slice(0, 8))
+    //Will set first 8 movies to state if data is returned
     setResults(response.slice(0, 8));
     setLoading(false)
 
