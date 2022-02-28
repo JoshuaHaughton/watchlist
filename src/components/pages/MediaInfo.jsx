@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getDetails } from "../helpers/MediaInfoHelpers.js";
 import Media from "../ui/Media";
 import placeholder from "../../assets/No-Image-Placeholder.svg.png";
@@ -8,9 +8,7 @@ import { apiConfig } from "../../api/axiosClient.js";
 import Rating from "../ui/Rating.jsx";
 
 const MediaInfo = ({ media }) => {
-  console.log(media);
-  // const { media = lo } = useLocation();
-  // console.log(lo);
+  //Get media category and id from url path
   let location = useLocation().pathname;
   let param = location.split("/");
   let id = param[param.length - 1];
@@ -27,16 +25,10 @@ const MediaInfo = ({ media }) => {
 
   //State for related media section below the movie info
   const [relatedMedia, setRelatedMedia] = useState("");
-  const navigate = useNavigate();
 
-  //If media was passed in, automatically use the src of that object. Else, wait until state returns and use that src instead
-  // let src = media ? (media.poster_path || media.backdrop_path || placeholder) : (myMedia.poster_path || myMedia.backdrop_path || placeholder)
-  // //f that specific movie doesn't have an image, use a placeholder to let user know
-  // if (src === 'N/A') src = placeholder;
-
-  //Get details for page everytime it is changed
+  //Get details for page everytime the url is changed
   useEffect(() => {
-    getDetails(id, category, navigate, setMyMedia, setRelatedMedia);
+    getDetails(id, category, setMyMedia, setRelatedMedia);
   }, [location]);
 
   
@@ -49,7 +41,9 @@ const MediaInfo = ({ media }) => {
   let src = placeholder
   let imdbId = myMedia.imdb_id
 
+
   let selectedClass = "media__selected skeleton"
+
 
   if (myMedia && !myMedia.poster_path && !myMedia.backdrop_path) {
     selectedClass = "media__selected"
@@ -62,7 +56,6 @@ const MediaInfo = ({ media }) => {
     src = apiConfig.w500Image(myMedia.backdrop_path)
   }
 
-  
 
 
   return (
@@ -100,15 +93,10 @@ const MediaInfo = ({ media }) => {
                 </h3>
                 <Rating rating={rating} />
                 <br />
-                {/* <h3 className="media__summary--title">
-                  Rated: {myMedia.Rated}
-                </h3> */}
                 <h3 className="media__summary--title">
                   Genres: {genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}
                 </h3>
                 <br />
-                {/* <h3 className="media__summary--title">Actors: </h3>
-                <p className="media__summary--para">{myMedia.Actors}</p> */}
                 <div className="media__summary">
                   <h3 className="media__summary--title">Summary</h3>
                   <p className="media__summary--para">{summary}</p>

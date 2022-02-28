@@ -58,6 +58,13 @@ const Discover = () => {
             type={mediaType}
           />
         ),
+        upcoming: (
+          <MediaList
+            title="Upcoming Movies"
+            category="upcoming"
+            type={mediaType}
+          />
+        )
       });
 
 
@@ -106,8 +113,9 @@ const Discover = () => {
           </div>
           <div className="media__lists">
             {categories && categories.popular}
-            {categories && categories.top_rated}
+            {(categories && categories.upcoming) && categories.upcoming}
             {categories && categories.current}
+            {categories && categories.top_rated}
           </div>
         </div>
       </div>
