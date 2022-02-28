@@ -4,8 +4,11 @@ import placeholder from "../../assets/No-Image-Placeholder.svg.png";
 import { typeFormat } from "../helpers/MediaHelpers";
 import skeleton from "../../assets/GrayBG.jpeg"
 import { apiConfig } from "../../api/axiosClient";
+import Rating from "./Rating";
 
-const Media = ({ media }) => {
+const Media = (props) => {
+  const { media, suggested } = props;
+  console.log(media, 'media');
 
   //Deside class based on if the media given was a skeleton or not (for loading state)
   let classType;
@@ -39,8 +42,8 @@ const Media = ({ media }) => {
 
   
   return (
-    <div className="media__card">
-      <Link to={`/${media.media_type}/${media.id}`}>
+    <div className={!suggested ? "media__card" : "media__card suggested__card"}>
+      <Link to={`/${media.media_type}/${media.id}`} className="media__info--link">
         <div className="media__wrapper">
           <figure className={`${classType}__card--wrapper`}>
             <img
@@ -48,11 +51,17 @@ const Media = ({ media }) => {
               alt={media.title ? media.title : media.name}
               className={`${classType}__card--img`}
             />
+          <div className="media__wrapper--bg"></div>
           </figure>
+          {!media.skeleton && 
           <div className="media__description">
             <h3 className={`${classType}__title`}>{media.title || media.name}</h3>
-            <h5 className={`${classType}__year`}>{typeFormat(year)}</h5>
+            <h5 className={`${classType}__year`}>{year}</h5>
+            {(media && media.vote_average) > 0 ? <Rating rating={media.vote_average} /> : <p>No Ratings<br /></p>}
+            <br />
+            <h3 className={`${classType}__title`}>{typeFormat(media.media_type)}</h3>
           </div>
+          }
         </div>
       </Link>
     </div>

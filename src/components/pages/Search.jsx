@@ -85,7 +85,7 @@ const Search = () => {
     setLoading(true);
 
     //Returns list of movies from tmdbApi for given query
-    fetchQueryData(searchFor, setResults, setValid, setLoading, setErrorMessage);
+    fetchQueryData(searchFor, setResults, setLoading);
 
     //Runs on first mount (Initial search if there is one) and whenever the search button is clicked
   }, [searchFor]);
@@ -120,9 +120,9 @@ const Search = () => {
 
       {results ? (
         <section className="search__results">
-          <div className="container">
+          <div className="container bgblack">
             <div className="row">
-              <div className="results__heading--wrapper">
+              <div className="results__heading--wrapper bgblack">
                 <h2 className="results__title">Search Results:</h2>
                 <div className="sort__wrapper">
                   <h3>Sort By: </h3>

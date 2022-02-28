@@ -89,9 +89,9 @@ const MediaInfo = ({ media }) => {
                   Year: {year && year.slice(0, 4)}
                 </h3>
                 <h3 className="media__summary--title">
-                  Rating: {rating}
+                 {rating > 0 ? `Rating: ${rating}` : 'Unreleased'}
                 </h3>
-                <Rating rating={rating} />
+                {rating > 0 && <Rating rating={rating} />}
                 <br />
                 <h3 className="media__summary--title">
                   Genres: {genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}
@@ -128,11 +128,12 @@ const MediaInfo = ({ media }) => {
               </div>
               <div className="media">
                 {relatedMedia &&
-                  relatedMedia.slice(0, 4).map((media) => {
+                  relatedMedia.slice(0, 3).map((media) => {
                     return (
                       <Media
                         media={media}
                         key={media.id}
+                        suggested={true}
                       />
                     );
                   })}

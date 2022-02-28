@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import tmdbApi from "../../api/tmdbApi";
 import { apiConfig } from "../../api/axiosClient";
 
@@ -11,6 +11,7 @@ const Landing = () => {
   //Used as a placeholder for the input
   const [backgroundMovieTitle, setBackgroundMovieTitle] = useState("");
   const navigate = useNavigate();
+  let location = useLocation().pathname;
 
 
 
@@ -66,7 +67,7 @@ const Landing = () => {
 
     fetchBackgroundMovie()
 
-  }, [])
+  }, [location])
 
   return (
     <section id="landing">

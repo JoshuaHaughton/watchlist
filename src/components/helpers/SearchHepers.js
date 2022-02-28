@@ -37,7 +37,7 @@ export const sortResults = (filter, results, setResults, setSortValue) => {
 
 
 //Returns list of movies from tmdbApi for given query
-export const fetchQueryData = async (query, setResults, setValid, setLoading, setErrorMessage) => {
+export const fetchQueryData = async (query, setResults, setLoading) => {
 
   if (query !== "") {
 
@@ -52,9 +52,9 @@ export const fetchQueryData = async (query, setResults, setValid, setLoading, se
 
     console.log("response", response)
 
-    console.log(response.slice(0, 8))
+    console.log(response.slice(0, 9))
     //Will set first 8 movies to state if data is returned
-    setResults(response.slice(0, 8));
+    setResults(response.slice(0, 9));
     setLoading(false)
 
     return response;
