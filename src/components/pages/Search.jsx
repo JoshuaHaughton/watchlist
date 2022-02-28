@@ -33,25 +33,29 @@ const Search = () => {
     id: 1,
     title: '-',
     media_type: '-',
-    release_date: '-'
+    release_date: '-',
+    skeleton: true
   },
   {
     id: 2,
     title: '-',
     media_type: '-',
-    release_date: '-'
+    release_date: '-',
+    skeleton: true
   },
   {
     id: 3,
     title: '-',
     media_type: '-',
-    release_date: '-'
+    release_date: '-',
+    skeleton: true
   },
   {
     id: 4,
     title: '-',
     media_type: '-',
-    release_date: '-'
+    release_date: '-',
+    skeleton: true
   }]
 
     const validateQuery = (queryBeingValidated) => {
@@ -66,31 +70,23 @@ const Search = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     validateQuery(query)
-    const response = await tmdbApi.getMoviesList('popular', {});
-    const response2 = await tmdbApi.search('popular', {});
-    console.log(response);
-    console.log(response2);
+    // const response = await tmdbApi.getMoviesList('popular', {});
+    // const response2 = await tmdbApi.search('popular', {});
+    // console.log(response);
+    // console.log(response2);
     if (valid) {
+      // await setTimeout(() => {
+      //   setLoading(false);
+        
+      // }, 3000)
+      setLoading(false);
       setSearchFor(query);
       setSortValue("DEFAULT");
-      setLoading(false);
     }
   };
 
-  const handleKeyDown = (event) => {
-    //If key pressed was enter, validate the query
-    if (event.key === "Enter") {
-      validateQuery(query);
-      if(valid) {
-        setSearchFor(query);
-        setSortValue("DEFAULT");
-        setLoading(false);
-      }
-    } else {
-      setValid(true)
-    }
-  };
 
 
 
@@ -119,7 +115,6 @@ const Search = () => {
                   className="header__input"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={handleKeyDown}
                 />
                 <button className="btn btn__search" >
                   <FontAwesomeIcon icon="search" />

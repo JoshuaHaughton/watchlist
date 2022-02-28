@@ -90,17 +90,18 @@ const MediaInfo = ({ media }) => {
                   {title}
                 </h2>
                 <h3 className="media__summary--title">
-                  Year: {year}
+                  Year: {year && year.slice(0, 4)}
                 </h3>
-                <Rating rating={rating} />
                 <h3 className="media__summary--title">
                   Rating: {rating}
                 </h3>
+                <Rating rating={rating} />
+                <br />
                 {/* <h3 className="media__summary--title">
                   Rated: {myMedia.Rated}
                 </h3> */}
                 <h3 className="media__summary--title">
-                  Genres: {genre.map(g => `${g.name}, `)}
+                  Genres: {genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}
                 </h3>
                 <br />
                 {/* <h3 className="media__summary--title">Actors: </h3>
@@ -109,7 +110,13 @@ const MediaInfo = ({ media }) => {
                   <h3 className="media__summary--title">Summary</h3>
                   <p className="media__summary--para">{summary}</p>
                 </div>
-                {
+                {myMedia.homepage &&
+                  <a href={myMedia.homepage} target="_blank">
+                    {" "}
+                    <button className="btn btn__effect">More Details</button>
+                  </a>
+                }
+                {(imdbId && !myMedia.homepage) &&
                   <a href={`https://m.imdb.com/title/${imdbId}/`} target="_blank">
                     {" "}
                     <button className="btn btn__effect">More Details</button>
@@ -134,7 +141,7 @@ const MediaInfo = ({ media }) => {
                     return (
                       <Media
                         media={media}
-                        key={media.imdbId}
+                        key={media.id}
                       />
                     );
                   })}

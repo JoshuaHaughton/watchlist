@@ -6,22 +6,30 @@ export const sortResults = (filter, results, setResults, setSortValue) => {
 
   if (filter === "OLDEST") {
     setResults(results.slice().sort((a, b) => {
-      return a.Year - b.Year
+      let aTime = a.release_date || a.first_air_date
+      let bTime = b.release_date || b.first_air_date
+      return new Date(aTime).getTime() - new Date(bTime).getTime()
     }));
   }
 
   if (filter === "NEWEST") {
-    setResults(results.slice().sort((a, b) => b.Year - a.Year));
+    setResults(results.slice().sort((a, b) => {
+      let aTime = a.release_date || a.first_air_date
+      let bTime = b.release_date || b.first_air_date
+      return new Date(bTime).getTime() - new Date(aTime).getTime()
+    }));
   }
 
   if (filter === "TITLE") {
     setResults(
-      results.slice().sort((a, b) =>
-        a.Title.localeCompare(b.Title, undefined, {
+      results.slice().sort((a, b) => {
+        let aTitle = a.title || a.name;
+        let bTitle = b.title || b.name;
+        return aTitle.localeCompare(bTitle, undefined, {
           numeric: true,
           sensitivity: "base",
-        }),
-      ),
+        })
+      }),
     );
   }
 };

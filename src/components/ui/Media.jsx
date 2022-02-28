@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import placeholder from "../../assets/No-Image-Placeholder.svg.png";
 import { typeFormat, yearFormat } from "../helpers/MediaHelpers";
-import skeleton from "../../assets/GrayBG.jpeg"
+import skeletonImg from "../../assets/GrayBG.jpeg"
 import { apiConfig } from "../../api/axiosClient";
 
 const Media = ({ media }) => {
+  const [skeleton, setSkeleton] = useState(skeletonImg);
   let classType;
   media.id ? classType = 'media' : classType = 'skeleton'
+
+  
   let year 
 
   if (!media.release_date && !media.first_air_date) {
@@ -29,6 +32,8 @@ const Media = ({ media }) => {
     imagePath = apiConfig.w500Image(media.poster_path)
   } else if (media.backdrop_path) {
     imagePath = apiConfig.w500Image(media.backdrop_path)
+  } else if (media.skeleton) {
+    imagePath = skeleton;
   } else {
     imagePath = placeholder;
   }
@@ -44,7 +49,7 @@ const Media = ({ media }) => {
         <div className="media__wrapper">
           <figure className={`${classType}__card--wrapper`}>
             <img
-              src={imagePath}
+              src={imagePath ? imagePath : skeleton}
               alt={media.title ? media.title : media.name}
               className={`${classType}__card--img`}
             />
