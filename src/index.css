@@ -781,6 +781,10 @@ button:active {
   color: #242424;
 }
 
+.suggested__container {
+  padding-bottom: 40px;
+}
+
 .fa-arrow-left {
   font-size: 30px;
 }
@@ -821,7 +825,57 @@ button:active {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+}
+
+.cast__container {
+  padding-bottom: 56px;
+  background-color: #242424;
+}
+
+.cast__container--fade {
+  height: 100%;
+  background-image: linear-gradient(0deg,transparent,rgba(37,37,37,.61),#121212);
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.cast__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cast__wrapper {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 20px;
+  width: 75%
+}
+
+.actor__name,
+.actor__character {
+  text-align: center;
+}
+
+.actor__img {
+  max-width: 168px;
+  width: auto;
+  border-radius: 12px;
+  transition: all 300ms ease;
+}
+
+.actor__img--wrapper {
+  position: relative;
+  margin: 12px;
+  max-height: 250px;
+  max-width: 168px;
+  border-radius: 12px;
+  box-shadow: -4px 2px 8px 2px rgba(0, 0, 0, 0.2);
+  transition: all 300ms ease;
+  cursor: pointer;
 }
 
 .btn__effect:hover {
@@ -912,13 +966,15 @@ button:active {
   transform: scale(1.05)
 }
 
-.media__list::-webkit-scrollbar {
+.media__list::-webkit-scrollbar,
+.cast__wrapper::-webkit-scrollbar {
   height: 6px;
   width: 6px;
   background: #ba181b;
 }
 
-.media__list::-webkit-scrollbar-thumb:horizontal{
+.media__list::-webkit-scrollbar-thumb:horizontal,
+.cast__wrapper::-webkit-scrollbar-thumb:horizontal {
   background: #c78f03;
   border-radius: 20px;
 }
@@ -942,7 +998,13 @@ button:active {
 
 footer {
   background-color: #242424;
+  /* background-color: #c78f03; */
+}
+
+.footer__fade {
   padding-bottom: 36px;
+  height: 100%;
+  background-image: linear-gradient(0deg,transparent,rgba(37,37,37,.9),#242424);
 }
 
 .footer__logo {

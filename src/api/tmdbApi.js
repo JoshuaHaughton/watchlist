@@ -22,6 +22,10 @@ const tmdbApi = {
     const url = `movie/${String(type)}?api_key=${apiConfig.apiKey}&page=1`;
     return axiosClient.get(url, params)
   },
+  getMediaCredits: (category, id, params = {}) => {
+    const url = `${category}/${id}/credits?api_key=${apiConfig.apiKey}`;
+    return axiosClient.get(url, params)
+  },
   getTvList: (type, params = {}) => {
     const url = `tv/${String(type)}?api_key=${apiConfig.apiKey}`;
     return axiosClient.get(url, params)

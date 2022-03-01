@@ -1,10 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import logo from "../assets/Logo.png"
 
 const Footer = () => {
+  const location = useLocation().pathname;
+  console.log('footer', location);
   return (
     <footer>
+      {/* <div className="footer__fade"> */}
       <div className="container">
         <div className="row row__column">
             <figure className="footer__logo">
@@ -23,6 +26,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      {/* </div> */}
     </footer>
   )
 }

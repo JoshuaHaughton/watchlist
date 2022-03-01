@@ -2,7 +2,7 @@ import { apiConfig } from "../../api/axiosClient";
 import tmdbApi from "../../api/tmdbApi";
 
 //Detailed information retrieved from tmdbApi about this specific movie
-export const getDetails = async (id, category, setMyMedia, setRelatedMedia) => {
+export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setCast) => {
 
   //CURRENT MOVIE PAGE DETAILS
 
@@ -20,6 +20,22 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia) => {
     //Sets background image of landing div
     document.getElementById('media__container').style.backgroundImage=`url(${src})`;
   }
+
+
+
+
+  // CAST
+
+  const resp = await tmdbApi.getMediaCredits('movie', id);
+  console.log(resp, 'WOOGA')
+  // const pic = apiConfig.w500Image(resp.cast[0].profile_path)
+  // console.log(pic)
+
+  const castArray = resp.cast.slice(0, 10);
+
+  setCast(castArray)
+
+
 
 
   // RECOMMENDED MOVIES

@@ -6,6 +6,7 @@ import Media from "../ui/Media";
 import placeholder from "../../assets/No-Image-Placeholder.svg.png";
 import { apiConfig } from "../../api/axiosClient.js";
 import Rating from "../ui/Rating.jsx";
+import Actor from "../ui/Actor.jsx";
 
 const MediaInfo = ({ media }) => {
   //Get media category and id from url path
@@ -26,10 +27,11 @@ const MediaInfo = ({ media }) => {
 
   //State for related media section below the movie info
   const [relatedMedia, setRelatedMedia] = useState("");
+  const [cast, setCast] = useState([])
 
   //Get details for page everytime the url is changed
   useEffect(() => {
-    getDetails(id, category, setMyMedia, setRelatedMedia);
+    getDetails(id, category, setMyMedia, setRelatedMedia, setCast);
     
   }, [location]);
 
@@ -74,8 +76,8 @@ const MediaInfo = ({ media }) => {
 
           <div className="row">
             <div className="media__selected--top">
-                <FontAwesomeIcon icon="arrow-left" className="red click" onClick={navigateBack}/>
-                <h3 className="media__selected--title--top red click" onClick={navigateBack}>
+                <FontAwesomeIcon icon="arrow-left" className="white click" onClick={navigateBack}/>
+                <h3 className="media__selected--title--top white click" onClick={navigateBack}>
                   Back to Search
                 </h3>
             </div>
@@ -149,14 +151,42 @@ const MediaInfo = ({ media }) => {
         </div>
 
 
+        {/* CAST */}
+
+
+        <div className="cast__container">
+          <div className="cast__container--fade">
+            <div className="row">
+            {/* <div className="row bgblack"> */}
+              <div className="cast__section">
+                <h2 className="white">Cast</h2>
+                <div className="cast__wrapper">
+                  {cast && cast.map(actor => {
+                    return <Actor
+                    name={actor.name}
+                    character={actor.character}
+                    src={apiConfig.w500Image(actor.profile_path)} 
+                    />
+                  })}
+                </div>
+              </div>
+            {/* </div> */}
+            </div>
+          </div>
+
+            </div>
+
+          
+          
+
 
         {/* Suggested */}
 
         {relatedMedia.length > 0 ? (
-          <div className="media__container">
+          <div className="suggested__container bgblack">
             <div className="row">
               <div className="media__selected--top">
-                <h2 className="media__selected--title--top black">
+                <h2 className="media__selected--title--top gold">
                   You may also like:
                 </h2>
               </div>
