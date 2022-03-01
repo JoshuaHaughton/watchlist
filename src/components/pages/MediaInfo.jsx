@@ -30,6 +30,7 @@ const MediaInfo = ({ media }) => {
   //Get details for page everytime the url is changed
   useEffect(() => {
     getDetails(id, category, setMyMedia, setRelatedMedia);
+    
   }, [location]);
 
   
@@ -64,10 +65,13 @@ const MediaInfo = ({ media }) => {
 
 
 
+
   return (
     <div id="media__body">
-      <main id="media__main">
-        <div className="media__container">
+      {/* <main id="media__main"> */}
+        <div id="media__container">
+          <div className="container__fade">
+
           <div className="row">
             <div className="media__selected--top">
                 <FontAwesomeIcon icon="arrow-left" className="red click" onClick={navigateBack}/>
@@ -75,6 +79,7 @@ const MediaInfo = ({ media }) => {
                   Back to Search
                 </h3>
             </div>
+
             <div className="media__selected">
               <figure className="media__selected--figure">
                 <img
@@ -90,25 +95,47 @@ const MediaInfo = ({ media }) => {
                 <h3 className="media__summary--title">
                   Year: {year && year.slice(0, 4)}
                 </h3>
+
+                {rating > 0 ?
                 <h3 className="media__summary--title">
-                 {rating > 0 ? `Rating: ${rating}` : 'Unreleased'}
+                  Rating: <div className="media__score">{rating}</div>
                 </h3>
+                :
+                <h3 className="media__summary--title">
+                  Unreleased
+                </h3>
+                }
+
                 {rating > 0 && <Rating rating={rating} />}
+
+                
+
                 <br />
+
+               {
+               genre.length > 0 &&  
                 <h3 className="media__summary--title">
                   Genres: {genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}
                 </h3>
+                }
+
+
                 <br />
+
+
                 <div className="media__summary">
                   <h3 className="media__summary--title">Summary</h3>
                   <p className="media__summary--para">{summary}</p>
                 </div>
+
+                {/* Button to movie homepage if there is one */}
                 {myMedia.homepage &&
                   <a href={myMedia.homepage} target="_blank">
                     {" "}
                     <button className="btn btn__effect">More Details</button>
                   </a>
                 }
+                {/* Button to movie imdb page if there isn't a homepage */}
                 {(imdbId && !myMedia.homepage) &&
                   <a href={`https://m.imdb.com/title/${imdbId}/`} target="_blank">
                     {" "}
@@ -118,7 +145,12 @@ const MediaInfo = ({ media }) => {
               </div>
             </div>
           </div>
+          </div>
         </div>
+
+
+
+        {/* Suggested */}
 
         {relatedMedia.length > 0 ? (
           <div className="media__container">
@@ -130,7 +162,7 @@ const MediaInfo = ({ media }) => {
               </div>
               <div className="media">
                 {relatedMedia &&
-                  relatedMedia.slice(0, 3).map((media) => {
+                  relatedMedia.slice(0, 4).map((media) => {
                     return (
                       <Media
                         media={media}
@@ -145,7 +177,7 @@ const MediaInfo = ({ media }) => {
         ) : (
           <h2 className="spacer">{"Sorry, no related media for this title"}</h2>
         )}
-      </main>
+      {/* </main> */}
     </div>
   );
 };

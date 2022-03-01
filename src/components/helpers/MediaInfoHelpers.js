@@ -1,3 +1,4 @@
+import { apiConfig } from "../../api/axiosClient";
 import tmdbApi from "../../api/tmdbApi";
 
 //Detailed information retrieved from tmdbApi about this specific movie
@@ -12,6 +13,13 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia) => {
   //save to state
   setMyMedia(detailedResponse);
 
+
+  if(detailedResponse.backdrop_path) {
+    const src = apiConfig.originalImage(detailedResponse.backdrop_path)
+
+    //Sets background image of landing div
+    document.getElementById('media__container').style.backgroundImage=`url(${src})`;
+  }
 
 
   // RECOMMENDED MOVIES
