@@ -82,7 +82,6 @@ const Search = () => {
 
 
   useEffect(() => {
-    setLoading(true);
 
     //Returns list of movies from tmdbApi for given query
     fetchQueryData(searchFor, setResults, setLoading);
@@ -109,7 +108,12 @@ const Search = () => {
                   onChange={(e) => setQuery(e.target.value)}
                 />
                 <button className="btn btn__search" >
-                  <FontAwesomeIcon icon="search" />
+                  {/* <FontAwesomeIcon icon="search" /> */}
+                  {!loading ? (
+                      <FontAwesomeIcon icon="search" />
+                    ) : (
+                      <FontAwesomeIcon icon="spinner" className="spinner gold" />
+                    )}
                 </button>
               </form>
               {!valid && <p className="warning">{errorMessage}</p>}
@@ -156,6 +160,7 @@ const Search = () => {
                     return <Media media={result} key={result.id} />;
                   })
                 }
+                {results.length < 1 && <h2 className="red spacer bgblack">No Results Found!</h2>}
               </div>
             </div>
           </div>

@@ -26,11 +26,11 @@ export default function Rating( {rating} ) {
   return (
     <div className="media__ratings">
         {
-          new Array(Math.floor(rating / 2)).fill(0).map((_, index) => <FontAwesomeIcon icon="star" key={index} className='no-click'/>)
+          new Array(Math.floor(rating / 2)).fill(0).map((_, index) => <FontAwesomeIcon icon="star" key={index}/>)
 
         }
         {
-          Number.isInteger(rating / 2) ? '' : <FontAwesomeIcon icon="star-half-alt" className='no-click'/>
+          Number.isInteger(rating / 2) ? '' : <FontAwesomeIcon icon="star-half-alt"/>
         }
           {
             emptyStarsLength > 0 && emptyStars

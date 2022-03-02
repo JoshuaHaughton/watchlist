@@ -7,6 +7,7 @@ import placeholder from "../../assets/No-Image-Placeholder.svg.png";
 import { apiConfig } from "../../api/axiosClient.js";
 import Rating from "../ui/Rating.jsx";
 import Actor from "../ui/Actor.jsx";
+import DarkBg from '../../assets/GrayBG2.jpeg'
 
 const MediaInfo = ({ media }) => {
   //Get media category and id from url path
@@ -78,7 +79,7 @@ const MediaInfo = ({ media }) => {
             <div className="media__selected--top">
                 <FontAwesomeIcon icon="arrow-left" className="white click" onClick={navigateBack}/>
                 <h3 className="media__selected--title--top white click" onClick={navigateBack}>
-                  Back to Search
+                  Previous Page
                 </h3>
             </div>
 
@@ -110,7 +111,7 @@ const MediaInfo = ({ media }) => {
                   Rating: <div className="media__score">{rating}</div>
                 </h3>
                 :
-                <h3 className="media__summary--title">
+                <h3 className="media__summary--title red">
                   No Rating Available
                 </h3>
                 }
@@ -119,7 +120,7 @@ const MediaInfo = ({ media }) => {
 
                 
 
-                <br />
+                {rating > 0 && <br />}
 
                {
                genre.length > 0 ?  
@@ -171,7 +172,7 @@ const MediaInfo = ({ media }) => {
         {/* CAST */}
 
 
-        <div className="cast__container">
+        {cast.length > 0 ? <div className="cast__container">
           <div className="cast__container--fade">
             <div className="row">
             {/* <div className="row bgblack"> */}
@@ -192,8 +193,14 @@ const MediaInfo = ({ media }) => {
             {/* </div> */}
             </div>
           </div>
-
-            </div>
+        </div>
+        :
+        <div className="cast__container--alt">
+          <div className="cast__container--fade">
+              <h2 className="cast__title--alt red">{"Sorry, no Cast listed for this title via Api"}</h2>
+          </div>
+        </div>
+        }
 
           
           
@@ -224,7 +231,7 @@ const MediaInfo = ({ media }) => {
             </div>
           </div>
         ) : (
-          <h2 className="spacer">{"Sorry, no related media for this title"}</h2>
+          <h2 className="related__title red bgblack">{"Sorry, no related media for this title"}</h2>
         )}
       {/* </main> */}
     </div>

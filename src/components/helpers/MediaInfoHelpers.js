@@ -27,7 +27,7 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
   // CAST
 
   const resp = await tmdbApi.getMediaCredits('movie', id);
-  console.log(resp, 'WOOGA')
+
   // const pic = apiConfig.w500Image(resp.cast[0].profile_path)
   // console.log(pic)
 

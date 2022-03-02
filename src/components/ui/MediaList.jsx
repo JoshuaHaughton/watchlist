@@ -50,7 +50,8 @@ const MediaList = (props) => {
 
   return (
     <div className='media__list--wrapper'>
-      <h2 className='white'>{props.title}</h2>
+      <h2 className='media__list--title'>{props.title}</h2>
+      <p className='media__list--description'>{props.description}</p>
       <div className="media__list">
         {
           mediaList ? 
@@ -63,7 +64,7 @@ const MediaList = (props) => {
               <div className="list__item--description">
                 <h3 className={`media__title`}>{media.title || media.name}</h3>
                 <h5 className={`media__year`}>{media.release_date || media.first_air_date}</h5>
-                {(media && media.vote_average) > 0 ? <Rating rating={media.vote_average} /> : 'Unreleased'}
+                {(media && media.vote_average) > 0 ? <Rating rating={media.vote_average} /> : <p className='red'>No Rating</p>}
                 <br />
                 <h3 className={`media__title`}>{typeFormat(props.type)}</h3>
               </div>

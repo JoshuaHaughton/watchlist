@@ -40,6 +40,7 @@ export const sortResults = (filter, results, setResults, setSortValue) => {
 export const fetchQueryData = async (query, setResults, setLoading) => {
 
   if (query !== "") {
+    setLoading(true)
 
 
     let response = await tmdbApi.search(query);

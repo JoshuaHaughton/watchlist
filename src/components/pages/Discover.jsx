@@ -41,6 +41,7 @@ const Discover = () => {
           <MediaList
             title="Popular Movies"
             category="popular"
+            description="Browse a collection of today's most popular movies!"
             type={mediaType}
           />
         ),
@@ -48,6 +49,7 @@ const Discover = () => {
           <MediaList
             title="Top Rated Movies"
             category="top_rated"
+            description="Browse a collection of the highest rated movies on TMDB"
             type={mediaType}
           />
         ),
@@ -55,6 +57,7 @@ const Discover = () => {
           <MediaList
             title="Movies Out Now"
             category="now_playing"
+            description="Browse a collection of movies out now"
             type={mediaType}
           />
         ),
@@ -62,6 +65,7 @@ const Discover = () => {
           <MediaList
             title="Upcoming Movies"
             category="upcoming"
+            description="Browse a collection of both unreleased and recently released movies"
             type={mediaType}
           />
         )
@@ -76,6 +80,7 @@ const Discover = () => {
           <MediaList
             title="Popular Shows"
             category="popular"
+            description="Browse a collection of today's most popular series"
             type={mediaType}
           />
         ),
@@ -83,6 +88,7 @@ const Discover = () => {
           <MediaList
             title="Top Rated TV Shows"
             category="top_rated"
+            description='Browse a collection of the highest rated Tv Shows on TMDB'
             type={mediaType}
           />
         ),
@@ -90,6 +96,7 @@ const Discover = () => {
           <MediaList
             title="Tv Series Out Now"
             category="on_the_air"
+            description="Browse a collection of ongoing Tv Shows"
             type={mediaType}
           />
         ),
@@ -101,6 +108,7 @@ const Discover = () => {
     <section id="discover">
       <div className="container discover__container">
         <div className="discover__row">
+        <h1 className="page__header gold">Discover</h1>
           <div className="discover__filter--wrapper">
             <select
               id="discover__filter"
@@ -113,9 +121,9 @@ const Discover = () => {
           </div>
           <div className="media__lists">
             {categories && categories.popular}
+            {categories && categories.top_rated}
             {(categories && categories.upcoming) && categories.upcoming}
             {categories && categories.current}
-            {categories && categories.top_rated}
           </div>
         </div>
       </div>

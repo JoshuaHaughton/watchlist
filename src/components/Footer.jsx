@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import logo from "../assets/Logo.png"
+import logo from "../assets/Logo.svg"
 
 const Footer = () => {
   const location = useLocation().pathname;
@@ -26,12 +26,13 @@ const Footer = () => {
             </figure>
           <div className="footer__list">
             <Link to="/" className="footer__link">Home</Link>
-            <span className="footer__link no-cursor">About</span>
+            {/* <span className="footer__link no-cursor">About</span> */}
             <Link to="/search" className="footer__link">Search</Link>
-            <span className="footer__link no-cursor">Contact</span>
+            <Link to="/discover" className="footer__link">Discover</Link>
+            {/* <span className="footer__link no-cursor">Contact</span> */}
           </div>
           <div className="footer__copyright">
-            Copyright &copy; 2022 Find-It!
+            Copyright &copy; 2022 WatchList!
           </div>
         </div>
       </div>
