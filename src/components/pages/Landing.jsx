@@ -81,22 +81,29 @@ const Landing = () => {
               {!isValid && (
                 <p className="warning">Your search cannot be empty!</p>
               )}
-              <form className="search__wrapper" onSubmit={handleSubmit}>
-                <input
-                  type="search"
-                  placeholder={backgroundMovieTitle}
-                  className="landing__input"
-                  value={query}
-                  onChange={handleChange}
-                />
-                <button className="btn btn__search">
-                  {!loading ? (
-                    <FontAwesomeIcon icon="search" />
-                  ) : (
-                    <FontAwesomeIcon icon="spinner" className="spinner" />
-                  )}
-                </button>
-              </form>
+
+              
+              {/* <div className="landing__search--wrapper"> */}
+                <form className="landing__search--wrapper" onSubmit={handleSubmit}>
+                  <input
+                    type="search"
+                    placeholder={backgroundMovieTitle}
+                    className="landing__input"
+                    value={query}
+                    onChange={handleChange}
+                  />
+                  <button className="btn landing__search--btn">
+                    {!loading ? (
+                      <FontAwesomeIcon icon="search" />
+                    ) : (
+                      <FontAwesomeIcon icon="spinner" className="spinner" />
+                    )}
+                  </button>
+                </form>
+                {/* <FontAwesomeIcon icon="search" className="landing__search--icon"/> */}
+              {/* </div> */}
+
+
             </div>
           </div>
         </div>
