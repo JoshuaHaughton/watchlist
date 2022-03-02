@@ -28,15 +28,17 @@ const MediaList = (props) => {
       let newList = response.results
 
       //For the upcoming list, only return movies that haven't been released
-      if (props.category === 'upcoming') {
-        const now = new Date().getTime()
-        console.log(now, 'UPCOME');
+      // if (props.category === 'upcoming') {
+      //   const now = new Date().getTime()
+      //   console.log(now, 'UPCOME');
 
-        newList = newList.filter(media => {
-          let releaseDate = new Date(media.release_date);
-          return releaseDate > now;
-        })
-      }
+      //   newList = newList.filter(media => {
+      //     let releaseDate = new Date(media.release_date);
+      //     return releaseDate > now;
+      //   })
+      // }
+
+      //The above currently doesn't't currently render a lot of movies because more need to be announced! Will comment out for now
 
       setMediaList(newList)
     }

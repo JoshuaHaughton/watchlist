@@ -94,9 +94,16 @@ const MediaInfo = ({ media }) => {
                 <h2 className="media__selected--title">
                   {title}
                 </h2>
-                <h3 className="media__summary--title">
+
+
+                {year ? <h3 className="media__summary--title">
                   Year: {year && year.slice(0, 4)}
                 </h3>
+                :
+                <h3 className="media__summary--title red">
+                  Year Not Listed by Api
+                </h3>
+                }
 
                 {rating > 0 ?
                 <h3 className="media__summary--title">
@@ -104,7 +111,7 @@ const MediaInfo = ({ media }) => {
                 </h3>
                 :
                 <h3 className="media__summary--title">
-                  Unreleased
+                  No Rating Available
                 </h3>
                 }
 
@@ -115,9 +122,13 @@ const MediaInfo = ({ media }) => {
                 <br />
 
                {
-               genre.length > 0 &&  
+               genre.length > 0 ?  
                 <h3 className="media__summary--title">
                   Genres: {genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}
+                </h3>
+                :
+                <h3 className="media__summary--title red">
+                  No Genres Listed
                 </h3>
                 }
 
@@ -125,10 +136,16 @@ const MediaInfo = ({ media }) => {
                 <br />
 
 
+                {summary ? 
                 <div className="media__summary">
                   <h3 className="media__summary--title">Summary</h3>
                   <p className="media__summary--para">{summary}</p>
                 </div>
+                :
+                <div className="media__summary">
+                  <h3 className="media__summary--title red">No Summary Available</h3>
+                </div>
+                }
 
                 {/* Button to movie homepage if there is one */}
                 {myMedia.homepage &&

@@ -125,7 +125,7 @@ const Search = () => {
               <div className="results__heading--wrapper bgblack">
                 <h2 className="results__title">Search Results:</h2>
                 <div className="sort__wrapper">
-                  <h3>Sort By: </h3>
+                  <h3 className="white">Sort By: </h3>
                   <select
                     id="filter"
                     value={sortValue}

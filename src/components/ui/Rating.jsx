@@ -18,7 +18,7 @@ export default function Rating( {rating} ) {
     emptyStarsLength = 5 - (fullStars.length + 1)
   }
 
-  const emptyStars = new Array(emptyStarsLength).fill(0).map((_, index) => <FontAwesomeIcon icon={faStar} key={index}/>)
+  const emptyStars = new Array(emptyStarsLength).fill(0).map((_, index) => <FontAwesomeIcon icon={faStar} key={index} className='no-click'/>)
   
   
 
@@ -26,11 +26,11 @@ export default function Rating( {rating} ) {
   return (
     <div className="media__ratings">
         {
-          new Array(Math.floor(rating / 2)).fill(0).map((_, index) => <FontAwesomeIcon icon="star" key={index}/>)
+          new Array(Math.floor(rating / 2)).fill(0).map((_, index) => <FontAwesomeIcon icon="star" key={index} className='no-click'/>)
 
         }
         {
-          Number.isInteger(rating / 2) ? '' : <FontAwesomeIcon icon="star-half-alt"/>
+          Number.isInteger(rating / 2) ? '' : <FontAwesomeIcon icon="star-half-alt" className='no-click'/>
         }
           {
             emptyStarsLength > 0 && emptyStars

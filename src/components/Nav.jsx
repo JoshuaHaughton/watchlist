@@ -45,11 +45,11 @@ const Nav = () => {
               DISCOVER
             </Link>
           </li>
-          <li className="nav__list optional__link">
+          {/* <li className="nav__list optional__link">
             <Link to="/search" className={underlineOption}>
               MY LIST
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         <div className="menu__backdrop">
@@ -69,6 +69,13 @@ const Nav = () => {
                 <span className="red">Search</span>
               </Link>
             </li>
+
+            <li className="menu__list" onClick={closeMenu}>
+              <Link to="/discover" className="menu__link">
+                <span className="red">Discover</span>
+              </Link>
+            </li>
+
           </ul>
         </div>
       </div>
