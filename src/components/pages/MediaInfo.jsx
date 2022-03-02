@@ -159,13 +159,15 @@ const MediaInfo = ({ media }) => {
             <div className="row">
             {/* <div className="row bgblack"> */}
               <div className="cast__section">
-                <h2 className="white">Cast</h2>
+                <h2 className="gold">Cast</h2>
                 <div className="cast__wrapper">
                   {cast && cast.map(actor => {
                     return <Actor
+                    key={actor.id}
+                    id={actor.id}
                     name={actor.name}
                     character={actor.character}
-                    src={apiConfig.w500Image(actor.profile_path)} 
+                    src={actor.profile_path ? apiConfig.w500Image(actor.profile_path) : placeholder} 
                     />
                   })}
                 </div>

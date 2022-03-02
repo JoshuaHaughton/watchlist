@@ -1,13 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import logo from "../assets/Logo.png"
 
 const Footer = () => {
   const location = useLocation().pathname;
   console.log('footer', location);
+
+  let footerClass = 'footer'
+  let footerFadeClass = 'footer__fade';
+
+  if (location === '/') {
+    footerFadeClass = 'landing__footer--fade';
+    // footerClass = 'landing__footer'
+  }
+
   return (
-    <footer>
-      {/* <div className="footer__fade"> */}
+    <footer className={footerClass}>
+      <div className={footerFadeClass}>
       <div className="container">
         <div className="row row__column">
             <figure className="footer__logo">
@@ -26,7 +35,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      {/* </div> */}
+      </div>
     </footer>
   )
 }
