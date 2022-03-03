@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/Logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { closeMenu, openMenu } from "./helpers/NavHelpers";
+import LoginModal from "./ui/LoginModal";
 
 const Nav = () => {
+  const [openAuthModal, setOpenAuthModal] = useState(false);
   const location = useLocation();
   let option = "bgblack";
   let underlineOption = "nav__link link__hover-effect--alt";
@@ -17,7 +19,21 @@ const Nav = () => {
     primaryNav = "nav__link nav__link--primary--alt";
   }
 
+  const openModal = () => {
+    setOpenAuthModal(true)
+  }
+
+  const closeModal = () => {
+    setOpenAuthModal(false)
+  }
+
   return (
+    <>
+    {openAuthModal && <LoginModal 
+    title={'test title'}
+    message={'test message'}
+    closeModal={closeModal}
+    />}
     <nav className={option}>
       <div className="nav__container">
         <Link to="/">
@@ -44,17 +60,24 @@ const Nav = () => {
 
           
           <li className="nav__list optional__link">
-            <Link to="/discover" className={"nav__link nav__link--primary"}>
+            <Link to="/discover" className={"nav__link link__hover-effect"}>
               DISCOVER
             </Link>
           </li>
 
 
+          <li className="nav__list optional__link">
+            <div className={"nav__link nav__link--primary click"} onClick={openModal}>
+              REGISTER/LOGIN
+            </div>
+          </li>
+          
           {/* <li className="nav__list optional__link">
             <Link to="/search" className={underlineOption}>
               MY LIST
             </Link>
           </li> */}
+
         </ul>
 
         <div className="menu__backdrop">
@@ -85,6 +108,7 @@ const Nav = () => {
         </div>
       </div>
     </nav>
+    </>
   );
 };
 

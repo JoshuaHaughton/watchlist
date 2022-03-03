@@ -1,0 +1,156 @@
+.body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  /* top: 20vh;
+  left: 10%; */
+  width: 30%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  overflow: hidden;
+  width: 55%;
+}
+
+.header {
+  background: #242424;
+  height: 10vh;
+  padding: 1rem 0 12px 0;
+}
+
+.title {
+  margin: 0;
+  padding-bottom: 16px;
+  color: #c78f03;
+}
+
+.exit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 8px 16px 0 0;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.row {
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 275px;
+}
+
+.modal input {
+  padding: 8px;
+  margin: 8px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.toggle {
+  font-weight: bold;
+  cursor: pointer;
+  color: #c78f03;
+}
+
+
+.actions {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+}
+
+.option {
+  text-align: center;
+}
+
+.button {
+  font: inherit;
+  border: 1px solid #ba181b;
+  background: #ba181b;
+  border-radius: 4px;
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 450ms ease;
+  margin: 16px 0;
+  width: 80%;
+}
+
+button:hover,
+button:active {
+  background: #c78f03;
+  border-color: #c78f03;
+}
+
+button:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #c78f03;
+  transform: scale(1.015);
+}
+
+button:focus {
+  outline: none;
+}
+
+
+@media (min-width: 768px) {
+  .modal {
+    /* left: calc(50% - 20rem); */
+    /* position: absolute; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 80%;
+  }
+  .input {
+
+  }
+}
+
