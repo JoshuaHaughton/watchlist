@@ -43,9 +43,12 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
   const similarMedia = await tmdbApi.similar(category, id)
   console.log(similarMedia.results, 'sim')
 
+  //Removes any duplicates (rare issue)
+  const uniqueSimilarMovie = similarMedia.filter(item => item.id !== id)
+
   
   //Attatch a property to every result that identifies the type (movie or tv series)
-  const formattedSimilarMedia = similarMedia.results.map(media => ({...media, media_type: category}))
+  const formattedSimilarMedia = uniqueSimilarMovie.results.map(media => ({...media, media_type: category}))
 
   if (formattedSimilarMedia.length > 0) {
     setRelatedMedia(formattedSimilarMedia);
