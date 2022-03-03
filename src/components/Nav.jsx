@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/Logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { closeMenu, openMenu } from "./helpers/NavHelpers";
-import LoginModal from "./ui/LoginModal";
+import LoginModal from "./ui/LoginModal/LoginModal";
+
 
 const Nav = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);

@@ -283,14 +283,6 @@ button:active {
   transition: all 650ms ease;
 }
 
-.nav__link--primary--alt {
-  /* padding: 8px;
-  border: 2px solid #ba181b;
-  color: #c78f03;
-  border-radius: 4px;
-  transition: all 650ms ease; */
-}
-
 .nav__link--primary:hover {
   text-decoration: none !important;
   background-color: #ba181b;
@@ -1283,7 +1275,7 @@ button:active {
 
 
 /* NAV MENU RESPONSIVENESS */
-@media (max-width: 630px) {
+@media (max-width: 765px) {
   .btn__menu {
     display: block;
   }
