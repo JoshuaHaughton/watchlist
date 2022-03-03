@@ -43,7 +43,7 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
   const similarMedia = await tmdbApi.similar(category, id)
   console.log(similarMedia.results, 'sim')
 
-  //Removes any duplicates (rare issue)
+  //Prevents the selected movie from showing up in the suggested movie section (rare issue)
   const uniqueSimilarMovie = similarMedia.filter(item => item.id !== id)
 
   

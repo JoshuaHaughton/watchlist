@@ -49,7 +49,7 @@ const Discover = () => {
           <MediaList
             title="Top Rated Movies"
             category="top_rated"
-            description="Browse a collection of the highest rated movies on TMDB"
+            description="Check out the highest rated movies on TMDB!"
             type={mediaType}
           />
         ),
@@ -57,7 +57,7 @@ const Discover = () => {
           <MediaList
             title="Movies Out Now"
             category="now_playing"
-            description="Browse a collection of movies out now"
+            description="Browse a list of movies out now!"
             type={mediaType}
           />
         ),
@@ -88,7 +88,7 @@ const Discover = () => {
           <MediaList
             title="Top Rated TV Shows"
             category="top_rated"
-            description='Browse a collection of the highest rated Tv Shows on TMDB'
+            description='Check out the highest rated Tv Shows on TMDB'
             type={mediaType}
           />
         ),
@@ -96,7 +96,7 @@ const Discover = () => {
           <MediaList
             title="Tv Series Out Now"
             category="on_the_air"
-            description="Browse a collection of ongoing Tv Shows"
+            description="Browse a list of ongoing Tv Shows"
             type={mediaType}
           />
         ),
@@ -108,7 +108,10 @@ const Discover = () => {
     <section id="discover">
       <div className="container discover__container">
         <div className="discover__row">
-        <h1 className="page__header gold">Discover</h1>
+        <div className="page__description">
+          <h1 className="page__header gold">Discover</h1>
+          <p className="white">In search of something bingeworthy? Look no further!</p>
+        </div>
           <div className="discover__filter--wrapper">
             <select
               id="discover__filter"
