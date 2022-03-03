@@ -56,10 +56,16 @@ const Landing = () => {
     const fetchBackgroundMovie = async () => {
       const response = await tmdbApi.getMoviesList('popular')
       const randomIndex = Math.floor(Math.random() * response.results.length-1);
-      const src = apiConfig.originalImage(response.results[randomIndex].backdrop_path)
+
+      let src = null;
+      if (response.results[randomIndex].backdrop_path) {
+        src = apiConfig.originalImage(response.results[randomIndex].backdrop_path)
+      } else if (response.results[randomIndex].poster_path) {
+        src = apiConfig.originalImage(response.results[randomIndex].poster_path)
+      }
 
       //Sets background image of landing div
-      document.getElementById('landing').style.backgroundImage=`url(${src})`;
+      {src && (document.getElementById('landing').style.backgroundImage=`url(${src})`)};
 
       //Set title of background movie to be used as placeholder for input
       setBackgroundMovieTitle(response.results[randomIndex].title)

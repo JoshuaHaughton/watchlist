@@ -1,9 +1,9 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import Backdrop from "./Backdrop";
-import ModalOverlay from "./ModalOverlay";
+import Backdrop from "../Backdrop";
+import ModalOverlay from "./AuthModalOverlay";
 
-const LoginModal = (props) => {
+const AuthModal = (props) => {
   return (
     <>
       {createPortal(
@@ -21,4 +21,4 @@ const LoginModal = (props) => {
   );
 };
 
-export default LoginModal;
+export default AuthModal;

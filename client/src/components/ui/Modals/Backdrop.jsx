@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from "./LoginModal.module.css";
+import classes from "./AuthModal/AuthModal.module.css";
 
 const Backdrop = (props) => {
   return (

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/Logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { closeMenu, openMenu } from "./helpers/NavHelpers";
-import LoginModal from "./ui/LoginModal/LoginModal";
+import AuthModal from "./ui/Modals/AuthModal/AuthModal";
 
 
 const Nav = () => {
@@ -30,7 +30,7 @@ const Nav = () => {
 
   return (
     <>
-    {openAuthModal && <LoginModal 
+    {openAuthModal && <AuthModal 
     title={'test title'}
     message={'test message'}
     closeModal={closeModal}
