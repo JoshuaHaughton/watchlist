@@ -15,14 +15,14 @@
 
 .modal {
   /* left: calc(50% - 20rem); */
-    /* position: absolute; */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 45%;
-    max-width: 500px;
-    z-index: 100;
+  /* position: absolute; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  max-width: 500px;
+  z-index: 100;
   overflow: hidden;
 }
 
@@ -81,7 +81,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* width: 275px; */
 }
 
 .modal input {

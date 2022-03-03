@@ -7,7 +7,7 @@ import classes from "./AuthModal.module.css";
 
 const ModalOverlay = (props) => {
   const [error, setError] = useState(null);
-  const [isSignUp, setIsSignUp] = useState(true);
+  const { isSignUp, setIsSignUp } = props;
 
   const {
     value: enteredName,
@@ -102,12 +102,10 @@ const ModalOverlay = (props) => {
         })
         .catch((res) => {
 
-          //Reset email field and set error if email is already in use
+          //Reset email field and set error to whatever the response error was
           if (res.response.status === 409) {
             resetEmailInput();
-            setError(
-              "User already exists! Please Login or Sign Up with a new email.",
-            );
+            setError(res.response.data);
             return;
           }
         });
@@ -122,6 +120,7 @@ const ModalOverlay = (props) => {
         resetPasswordInput();
         resetPasswordConfirmInput();
 
+        props.openSuccessModal();
         props.closeModal();
 
         //Signed Up!

@@ -40,7 +40,7 @@ app.post('/signup', async (req, res) => {
     //Return error if email is already in use
     if(existingUser) {
       console.log('here')
-      return res.status(409).send('User already exists. Please login or Sign Up with another email')
+      return res.status(409).send('User already exists! Please Login or Sign Up with another email.')
     }
 
     //If no error, create user
