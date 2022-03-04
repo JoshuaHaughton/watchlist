@@ -5,23 +5,17 @@ import { Link, useLocation } from "react-router-dom";
 import { closeMenu, openMenu } from "./helpers/NavHelpers";
 import AuthModal from "./ui/Modals/AuthModal/AuthModal";
 import SuccessModal from "./ui/Modals/SuccessModal/SuccessModal";
+import { useCookies } from "react-cookie";
 
 
 const Nav = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [cookies, setCookies, removeCookies] = useCookies(['user'])
   const location = useLocation();
-  let option = "bgblack";
-  let underlineOption = "nav__link link__hover-effect--alt";
-  let primaryNav = "nav__link nav__link--primary";
 
-  //If the current pathname is the index, render the alternate coloour theme for the nav
-  if (location.pathname === "/") {
-    option = "";
-    underlineOption = "nav__link link__hover-effect";
-    primaryNav = "nav__link nav__link--primary--alt";
-  }
 
   const openAuthModalHandler = () => {
     setOpenAuthModal(true)
@@ -40,6 +34,18 @@ const Nav = () => {
     setOpenSuccessModal(false)
   }
 
+  const logoutHandler = async () => {
+    await removeCookies(["AuthToken"])
+    await removeCookies(["Username"])
+    setIsLoggedIn(false);
+  }
+
+  const navLoginHandler = async () => {
+    setIsLoggedIn(true)
+  }
+
+
+
   return (
     <>
     {openSuccessModal && <SuccessModal 
@@ -56,8 +62,9 @@ const Nav = () => {
     openSuccessModal={openSuccessModalHandler}
     isSignUp={isSignUp}
     setIsSignUp={setIsSignUp}
+    navLogin={navLoginHandler}
     />}
-    <nav className={option}>
+    <nav className="bgblack">
       <div className="nav__container">
         <Link to="/">
           <img src={logo} alt="" className="logo" />
@@ -89,11 +96,17 @@ const Nav = () => {
           </li>
 
 
-          <li className="nav__list optional__link">
+          {!isLoggedIn && <li className="nav__list optional__link">
             <div className={"nav__link nav__link--primary click"} onClick={openAuthModalHandler}>
               REGISTER/LOGIN
             </div>
-          </li>
+          </li>}
+
+          {isLoggedIn && <li className="nav__list optional__link">
+            <div className={"nav__link nav__link--primary click"} onClick={logoutHandler}>
+              LOGOUT
+            </div>
+          </li>}
           
           {/* <li className="nav__list optional__link">
             <Link to="/search" className={underlineOption}>

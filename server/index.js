@@ -21,7 +21,7 @@ app.post('/signup', async (req, res) => {
   const client = new MongoClient(uri);
   console.log(req.body)
 
-  const { email, password } = req.body
+  const { email, username, password } = req.body
 
 
   //Generates unique user ids
@@ -50,6 +50,7 @@ app.post('/signup', async (req, res) => {
     const data = {
       user_id: generatedUserId,
       email: sanitizedEmail,
+      username,
       hashed_password: hashedPassword
     }
 
@@ -95,6 +96,8 @@ app.post('/login', async(req, res) => {
     const token = jwt.sign({user: user.user_id}, process.env.JWT_SECRET, {
       expiresIn: '1h'
     })
+    console.log(username)
+    console.log(user)
 
     // userId: user.user_id,
     res.status(201).json({ token, username })

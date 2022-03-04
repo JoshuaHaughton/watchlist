@@ -17,6 +17,7 @@ const AuthModal = (props) => {
           closeModal={props.closeModal}
           isSignUp={props.isSignUp}
           setIsSignUp={props.setIsSignUp}
+          navLogin={props.navLogin}
           openSuccessModal={props.openSuccessModal}
         />, document.getElementById('overlay-root')
       )}

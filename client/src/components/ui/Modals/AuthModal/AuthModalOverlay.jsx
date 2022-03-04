@@ -164,10 +164,9 @@ const ModalOverlay = (props) => {
         console.log(response.data, 'loginyaaa');
 
 
-        setCookie('Username', response.data.username)
-        // setCookie('Email', response.data.email)
-        // setCookie('UserId', response.data.userId)
-        setCookie('AuthToken', response.data.token)
+        await setCookie('Username', response.data.username)
+        await setCookie('AuthToken', response.data.token)
+
 
 
 
@@ -175,6 +174,7 @@ const ModalOverlay = (props) => {
         resetPasswordInput();
 
         props.openSuccessModal();
+        props.navLogin();
         props.closeModal();
 
         //Logged In!
