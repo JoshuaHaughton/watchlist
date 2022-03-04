@@ -56,11 +56,49 @@ app.post('/signup', async (req, res) => {
     const insertedUser = await users.insertOne(data)
     console.log('inserted', insertedUser)
 
-    const token = jwt.sign({user: insertedUser.insertedId}, process.env.JWT_SECRET, {
+    const token = jwt.sign({user: generatedUserId}, process.env.JWT_SECRET, {
       expiresIn: '1h'
     })
 
-    res.status(201).json({ token, userId: generatedUserId, email: sanitizedEmail, username: req.body.username })
+    // userId: generatedUserId,
+    res.status(201).json({ token, username: req.body.username })
+
+  } catch(err) {
+    console.log(err)
+  }
+
+})
+
+app.post('/login', async(req, res) => {
+  const client = new MongoClient(uri)
+  const { email, password } = req.body
+
+  try {
+    //Connect to MongoDB
+    await client.connect()
+    const database = client.db('app-data')
+    const users = database.collection('users')
+
+    //Attempt to retrieve user info from db by email
+    const user = await users.findOne({ email });
+    console.log(user)
+    const username = user.username;
+
+    const passwordMatch = bcrypt.compare(password, user.hashed_password)
+
+    //If credentials are invalid, let user know
+    if(!user || !passwordMatch) {
+      return res.status(400).send('Invalid Credentials');
+    }
+
+    //Else, generate a token and return data to client
+    const token = jwt.sign({user: user.user_id}, process.env.JWT_SECRET, {
+      expiresIn: '1h'
+    })
+
+    // userId: user.user_id,
+    res.status(201).json({ token, username })
+
 
   } catch(err) {
     console.log(err)
