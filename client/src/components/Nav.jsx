@@ -8,7 +8,7 @@ import SuccessModal from "./ui/Modals/SuccessModal/SuccessModal";
 import { useCookies } from "react-cookie";
 
 
-const Nav = () => {
+const Nav = (props) => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true);
@@ -43,10 +43,12 @@ const Nav = () => {
     // document.cookie = 'Username' + '=; Max-Age=0'
     // document.cookie = 'Email' + '=; Max-Age=0'
     setIsLoggedIn(false);
+    props.setIsLoggedIn(false)
   }
 
   const navLoginHandler = async () => {
     setIsLoggedIn(true)
+    props.setIsLoggedIn(true)
   }
 
 

@@ -12,12 +12,13 @@ import DarkBg from '../../assets/GrayBG2.jpeg'
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 
-const MediaInfo = ({ media }) => {
+const MediaInfo = (props) => {
   //Get media category and id from url path
   let location = useLocation().pathname;
   let param = location.split("/");
   let id = param[param.length - 1];
   let category = param[param.length - 2];
+  const { media } = props;
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(['Email'])
   console.log('fuck',cookies);
@@ -34,6 +35,7 @@ const MediaInfo = ({ media }) => {
   //State for related media section below the movie info
   const [relatedMedia, setRelatedMedia] = useState("");
   const [cast, setCast] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [addMediaClicked, setAddMediaClicked] = useState(false);
 
   //Get details for page everytime the url is changed
@@ -96,7 +98,7 @@ const MediaInfo = ({ media }) => {
     // if (cookies.AuthToken) {
     //   const response = axios.get('http://localhost:3001/my-list', {});
     // }
-  }, [cookies.AuthToken])
+  }, [isLoggedIn])
 
 
 
@@ -199,7 +201,7 @@ const MediaInfo = ({ media }) => {
                     </a>
                   }
 
-                  {cookies.AuthToken && <span className="add-media" onClick={addMediaToWatchlist}>
+                  {props.isLoggedIn && <span className="add-media" onClick={addMediaToWatchlist}>
                     <FontAwesomeIcon icon={faTimes} className='add-media__icon' />
                   </span>}
 

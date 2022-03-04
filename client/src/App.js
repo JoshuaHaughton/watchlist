@@ -9,13 +9,15 @@ import ScrollToTop from './components/ui/ScrollToTop';
 import Discover from './components/pages/Discover';
 import MyList from './components/pages/MyList';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import { useState } from 'react';
 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <Router>
       <ScrollToTop>
-        <Nav />
+        <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
         <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/search" element={<Search />} />
@@ -24,7 +26,7 @@ function App() {
               {/* <ProtectedRoutes /> */}
               <Route
                 path="/:media/:id"
-                element={<MediaInfo />}
+                element={<MediaInfo isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}
               />
             </Routes>
         <Footer/>
