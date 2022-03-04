@@ -7,6 +7,7 @@ import MediaInfo from './components/pages/MediaInfo';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ui/ScrollToTop';
 import Discover from './components/pages/Discover';
+import MyList from './components/pages/MyList';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/search" element={<Search />} />
               <Route path="/discover" element={<Discover />} />
+              <Route path="/my-list" element={<MyList />} />
               <Route
                 path="/:media/:id"
                 element={<MediaInfo />}

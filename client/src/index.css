@@ -1133,6 +1133,28 @@ button:active {
 
 
 
+/* MY LIST */
+
+
+
+
+
+.my-list__container {
+  padding: 48px 0;
+  background-color: #242424;
+}
+
+.my-list__title {
+  margin: 0;
+}
+
+.my-list__text {
+  text-align: center;
+}
+
+
+
+
 
 /* FOOTER */
 

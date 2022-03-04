@@ -102,11 +102,20 @@ const Nav = () => {
             </div>
           </li>}
 
-          {isLoggedIn && <li className="nav__list optional__link">
+          {isLoggedIn && <>
+          <li className="nav__list optional__link">
+            <Link to="/my-list" className={"nav__link link__hover-effect"}>
+              MY LIST
+            </Link>
+          </li>
+          
+          <li className="nav__list optional__link">
             <div className={"nav__link nav__link--primary click"} onClick={logoutHandler}>
               LOGOUT
             </div>
-          </li>}
+          </li>
+          </>
+          }
           
           {/* <li className="nav__list optional__link">
             <Link to="/search" className={underlineOption}>
