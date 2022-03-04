@@ -841,6 +841,35 @@ button:active {
   color: #242424;
 }
 
+.media__info--actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-media {
+  cursor: pointer;
+  margin-left: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  border-radius: 25px;
+  transition: all 300ms ease;
+}
+
+.add-media__icon {
+  transform: rotate(45deg);
+}
+
+.add-media:hover {
+  background-color: #fff;
+  color: green;
+  transform: scale(1.05);
+}
+
 .suggested__container {
   padding-bottom: 40px;
 }

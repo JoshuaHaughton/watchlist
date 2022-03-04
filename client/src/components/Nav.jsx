@@ -12,8 +12,9 @@ const Nav = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState();
   const [cookies, setCookies, removeCookies] = useCookies(['user'])
+  console.log('fucking cookies', cookies);
+  const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
   const location = useLocation();
 
 
@@ -35,8 +36,12 @@ const Nav = () => {
   }
 
   const logoutHandler = async () => {
-    await removeCookies(["AuthToken"])
-    await removeCookies(["Username"])
+    removeCookies("AuthToken")
+    removeCookies("Username")
+    removeCookies("Email")
+    // document.cookie = 'AuthToken' + '=; Max-Age=0'
+    // document.cookie = 'Username' + '=; Max-Age=0'
+    // document.cookie = 'Email' + '=; Max-Age=0'
     setIsLoggedIn(false);
   }
 

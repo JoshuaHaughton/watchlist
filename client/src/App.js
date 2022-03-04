@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ui/ScrollToTop';
 import Discover from './components/pages/Discover';
 import MyList from './components/pages/MyList';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
               <Route path="/search" element={<Search />} />
               <Route path="/discover" element={<Discover />} />
               <Route path="/my-list" element={<MyList />} />
+              {/* <ProtectedRoutes /> */}
               <Route
                 path="/:media/:id"
                 element={<MediaInfo />}

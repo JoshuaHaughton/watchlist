@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars, faTimes, faSearch, faArrowLeft, faSpinner, faStar, faStarHalfAlt, } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons'
+import { CookiesProvider } from 'react-cookie';
 
 library.add(faBars, faTimes, faSearch, faArrowLeft, faSpinner, faStar, faStarHalfAlt, faStarRegular);
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -119,9 +119,11 @@ const ModalOverlay = (props) => {
         console.log(response.data, 'yaaa');
 
 
+        removeCookie('Username')
+        removeCookie('Email')
+        removeCookie('AuthToken')
         setCookie('Username', response.data.username)
-        // setCookie('Email', response.data.email)
-        // setCookie('UserId', response.data.userId)
+        setCookie('Email', response.data.sanitizedEmail)
         setCookie('AuthToken', response.data.token)
 
 
@@ -132,6 +134,7 @@ const ModalOverlay = (props) => {
         resetPasswordConfirmInput();
 
         props.openSuccessModal();
+        props.navLogin();
         props.closeModal();
 
         //Signed Up!
@@ -164,8 +167,12 @@ const ModalOverlay = (props) => {
         console.log(response.data, 'loginyaaa');
 
 
-        await setCookie('Username', response.data.username)
-        await setCookie('AuthToken', response.data.token)
+        removeCookie('Username')
+        removeCookie('Email')
+        removeCookie('AuthToken')
+        setCookie('Username', response.data.username)
+        setCookie('Email', response.data.email)
+        setCookie('AuthToken', response.data.token)
 
 
 

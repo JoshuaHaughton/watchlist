@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { getDetails } from "../helpers/MediaInfoHelpers.js";
 import Media from "../ui/Media";
 import placeholder from "../../assets/No-Image-Placeholder.svg.png";
@@ -8,6 +9,8 @@ import { apiConfig } from "../../api/axiosClient.js";
 import Rating from "../ui/Rating.jsx";
 import Actor from "../ui/Actor.jsx";
 import DarkBg from '../../assets/GrayBG2.jpeg'
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useCookies } from "react-cookie";
 
 const MediaInfo = ({ media }) => {
   //Get media category and id from url path
@@ -16,6 +19,8 @@ const MediaInfo = ({ media }) => {
   let id = param[param.length - 1];
   let category = param[param.length - 2];
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['Email'])
+  console.log('fuck',cookies);
  
 
   //Movie info of current page
@@ -29,6 +34,7 @@ const MediaInfo = ({ media }) => {
   //State for related media section below the movie info
   const [relatedMedia, setRelatedMedia] = useState("");
   const [cast, setCast] = useState([])
+  const [addMediaClicked, setAddMediaClicked] = useState(false);
 
   //Get details for page everytime the url is changed
   useEffect(() => {
@@ -65,6 +71,32 @@ const MediaInfo = ({ media }) => {
   const navigateBack = () => {
     navigate(-1);
   }
+
+  const addMediaToWatchlist = async () => {
+    const saveData = { title, id, category, email: cookies.Email, img_path: src, rating }
+    console.log(cookies, 'cookies');
+    console.log(saveData);
+    const response = await axios.put('http://localhost:3001/my-list', saveData)
+      .catch((res) => {
+        console.log('ERROR RES MEDIA INFO save media', res.response);
+        // setError(res.response.data);
+        return;
+      });
+
+      const success = response.status == 201;
+
+      if (success) {
+
+        console.log(response.data, 'yaaa');
+
+      }
+  }
+
+  useEffect(() => {
+    // if (cookies.AuthToken) {
+    //   const response = axios.get('http://localhost:3001/my-list', {});
+    // }
+  }, [cookies.AuthToken])
 
 
 
@@ -108,7 +140,7 @@ const MediaInfo = ({ media }) => {
 
                 {rating > 0 ?
                 <h3 className="media__summary--title">
-                  Rating: <div className="media__score">{rating}</div>
+                  Rating: <span className="media__score">{rating}</span>
                 </h3>
                 :
                 <h3 className="media__summary--title red">
@@ -148,20 +180,35 @@ const MediaInfo = ({ media }) => {
                 </div>
                 }
 
-                {/* Button to movie homepage if there is one */}
-                {myMedia.homepage &&
-                  <a href={myMedia.homepage} target="_blank">
-                    {" "}
-                    <button className="btn btn__effect">More Details</button>
-                  </a>
-                }
-                {/* Button to movie imdb page if there isn't a homepage */}
-                {(imdbId && !myMedia.homepage) &&
-                  <a href={`https://m.imdb.com/title/${imdbId}/`} target="_blank">
-                    {" "}
-                    <button className="btn btn__effect">More Details</button>
-                  </a>
-                }
+
+
+
+                <div className="media__info--actions">
+                  {/* Button to movie homepage if there is one */}
+                  {myMedia.homepage &&
+                    <a href={myMedia.homepage} target="_blank">
+                      {" "}
+                      <button className="btn btn__effect">More Details</button>
+                    </a>
+                  }
+                  {/* Button to movie imdb page if there isn't a homepage */}
+                  {(imdbId && !myMedia.homepage) &&
+                    <a href={`https://m.imdb.com/title/${imdbId}/`} target="_blank">
+                      {" "}
+                      <button className="btn btn__effect">More Details</button>
+                    </a>
+                  }
+
+                  {cookies.AuthToken && <span className="add-media" onClick={addMediaToWatchlist}>
+                    <FontAwesomeIcon icon={faTimes} className='add-media__icon' />
+                  </span>}
+
+                </div>
+
+
+
+
+
               </div>
             </div>
           </div>

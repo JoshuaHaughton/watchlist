@@ -51,7 +51,8 @@ app.post('/signup', async (req, res) => {
       user_id: generatedUserId,
       email: sanitizedEmail,
       username,
-      hashed_password: hashedPassword
+      hashed_password: hashedPassword,
+      watchlist: []
     }
 
     const insertedUser = await users.insertOne(data)
@@ -62,7 +63,7 @@ app.post('/signup', async (req, res) => {
     })
 
     // userId: generatedUserId,
-    res.status(201).json({ token, username: req.body.username })
+    res.status(201).json({ token, username: req.body.username, sanitizedEmail })
 
   } catch(err) {
     console.log(err)
@@ -82,7 +83,7 @@ app.post('/login', async(req, res) => {
 
     //Attempt to retrieve user info from db by email
     const user = await users.findOne({ email });
-    console.log(user)
+    console.log('USER', user)
     const username = user.username;
 
     const passwordMatch = bcrypt.compare(password, user.hashed_password)
@@ -96,11 +97,11 @@ app.post('/login', async(req, res) => {
     const token = jwt.sign({user: user.user_id}, process.env.JWT_SECRET, {
       expiresIn: '1h'
     })
-    console.log(username)
+    console.log('USERNAME', username)
     console.log(user)
 
     // userId: user.user_id,
-    res.status(201).json({ token, username })
+    res.status(201).json({ token, username, email })
 
 
   } catch(err) {
@@ -108,6 +109,91 @@ app.post('/login', async(req, res) => {
   }
 
 })
+
+app.put('/my-list', async (req, res) => {
+  const client = new MongoClient(uri);
+  console.log(req.body)
+
+  const { title, id, category, email, img_path, rating } = req.body
+
+
+  try {
+    //Connect to MongoDB database
+    await client.connect()
+    const database = client.db('app-data')
+    const users = database.collection('users')
+
+    const filter = { email };
+
+    const updateDoc = {
+      $addToSet: {
+        watchlist: {title, id, category, img_path, rating}
+      },
+    };
+
+    // const options = { upsert: true };
+
+    console.log(filter, updateDoc)
+
+    const result = await users.updateOne(filter, updateDoc);
+    console.log(result)
+
+
+
+    // res.status(201).json({ token, username })
+
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+
+app.post('/my-list', async (req, res) => {
+  const client = new MongoClient(uri);
+  console.log(req.body)
+
+  const { id, email, img_path, rating } = req.body
+
+
+  try {
+    //Connect to MongoDB database
+    await client.connect()
+    const database = client.db('app-data')
+    const users = database.collection('users')
+
+    //Attempt to retrieve user info from db by email
+    const user = await users.findOne({ email });
+    console.log(user)
+
+    if (user.watchlist.includes(id)) {
+      console.log("user already has this media!")
+      return res.status(201).json({ token, username, email })
+    }
+
+
+
+    const filter = { email };
+
+    const updateDoc = {
+      $addToSet: {
+        watchlist: {title, id, category, img_path, rating}
+      },
+    };
+
+    // const options = { upsert: true };
+
+    const result = await users.updateOne(filter, updateDoc);
+    console.log(result)
+
+
+
+    // res.status(201).json({ token, username })
+
+  } catch(err) {
+    console.log(err)
+  }
+})
+
 
 //FOR TESTING, WILL BE REMOVED
 app.get('/users', async (req, res) => {
