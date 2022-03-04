@@ -103,13 +103,11 @@ const ModalOverlay = (props) => {
           password: enteredPassword,
         })
         .catch((res) => {
-
+          console.log('ERROR RES', res.response);
           //Reset email field and set error to whatever the response error was
-          if (res.response.status === 409) {
             resetEmailInput();
             setError(res.response.data);
             return;
-          }
         });
 
 
@@ -122,8 +120,8 @@ const ModalOverlay = (props) => {
 
 
         setCookie('Username', response.data.username)
-        setCookie('Email', response.data.email)
-        setCookie('UserId', response.data.userId)
+        // setCookie('Email', response.data.email)
+        // setCookie('UserId', response.data.userId)
         setCookie('AuthToken', response.data.token)
 
 
@@ -140,6 +138,48 @@ const ModalOverlay = (props) => {
       }
     } else {
       //If Login form, attempt to Login
+      const response = await axios
+        .post("http://localhost:3001/login", {
+          email: enteredEmail,
+          password: enteredPassword,
+        })
+        .catch((res) => {
+
+          //Reset input fields and set error to whatever the response error was
+          if (res.response.status === 409) {
+            resetEmailInput();
+            resetPasswordInput();
+            setError(res.response.data);
+            return;
+          }
+        });
+
+        console.log(response, 'login');
+
+      // If response comes back successfull
+      const success = response.status == 201;
+
+      if (success) {
+
+        console.log(response.data, 'loginyaaa');
+
+
+        setCookie('Username', response.data.username)
+        // setCookie('Email', response.data.email)
+        // setCookie('UserId', response.data.userId)
+        setCookie('AuthToken', response.data.token)
+
+
+
+        resetEmailInput();
+        resetPasswordInput();
+
+        props.openSuccessModal();
+        props.closeModal();
+
+        //Logged In!
+      }
+
     }
   };
 
