@@ -27,7 +27,7 @@ const Actor = ({ id, name, character, src }) => {
         href={imdbId ? `https://www.imdb.com/name/${imdbId}` : ''}
         target={imdbId && "_blank"}
         className="actor__link"
-        onClick={!imdbId && preventReload}
+        onClick={!imdbId ? preventReload : undefined}
       >
         <div className="actor__wrapper">
           <figure className="actor__img--wrapper" >

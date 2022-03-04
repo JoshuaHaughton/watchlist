@@ -2,11 +2,13 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useCookies } from 'react-cookie';
 import useInputValidate from "../../../hooks/input-validation";
 import classes from "./AuthModal.module.css";
 
 const ModalOverlay = (props) => {
   const [error, setError] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(['user'])
   const { isSignUp, setIsSignUp } = props;
 
   const {
@@ -115,6 +117,17 @@ const ModalOverlay = (props) => {
       const success = response.status == 201;
 
       if (success) {
+
+        console.log(response.data, 'yaaa');
+
+
+        setCookie('Username', response.data.username)
+        setCookie('Email', response.data.email)
+        setCookie('UserId', response.data.userId)
+        setCookie('AuthToken', response.data.token)
+
+
+
         resetNameInput();
         resetEmailInput();
         resetPasswordInput();
@@ -224,7 +237,7 @@ const ModalOverlay = (props) => {
             {isSignUp && (
               <div className={passwordConfirmInputClasses}>
                 <input
-                  type="password-confirmation"
+                  type="password"
                   id="password-confirmation"
                   name="password-confirmation"
                   placeholder="Confirm your Password"

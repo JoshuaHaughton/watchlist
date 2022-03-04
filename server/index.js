@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 
 app.post('/signup', async (req, res) => {
   const client = new MongoClient(uri);
+  console.log(req.body)
 
   const { email, password } = req.body
 
@@ -59,7 +60,7 @@ app.post('/signup', async (req, res) => {
       expiresIn: '1h'
     })
 
-    res.status(201).json({ token, userId: generatedUserId, email: sanitizedEmail })
+    res.status(201).json({ token, userId: generatedUserId, email: sanitizedEmail, username: req.body.username })
 
   } catch(err) {
     console.log(err)

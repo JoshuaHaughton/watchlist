@@ -133,20 +133,20 @@
   width: 80%;
 }
 
-button:hover,
-button:active {
+.button:hover,
+.button:active {
   background: #c78f03;
   border-color: #c78f03;
 }
 
-button:hover {
+.button:hover {
   background-color: #fff;
   border-color: #c78f03;
   color: #c78f03;
   transform: scale(1.015);
 }
 
-button:focus {
+.button:focus {
   outline: none;
 }
 

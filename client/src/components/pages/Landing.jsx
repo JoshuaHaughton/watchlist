@@ -90,7 +90,7 @@ const Landing = () => {
 
               
               {/* <div className="landing__search--wrapper"> */}
-                <form className="landing__search--wrapper" onSubmit={handleSubmit}>
+                <form className="landing__search--wrapper" onSubmit={handleSubmit} autoComplete="on">
                   <input
                     type="search"
                     placeholder={backgroundMovieTitle}

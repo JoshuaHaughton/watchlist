@@ -44,11 +44,13 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
   console.log(similarMedia.results, 'sim')
 
   //Prevents the selected movie from showing up in the suggested movie section (rare issue)
-  const uniqueSimilarMovie = similarMedia.filter(item => item.id !== id)
+  const uniqueSimilarMovies = similarMedia.results.filter(item => item.id !== id)
+
+  console.log(uniqueSimilarMovies, 'yyy')
 
   
   //Attatch a property to every result that identifies the type (movie or tv series)
-  const formattedSimilarMedia = uniqueSimilarMovie.results.map(media => ({...media, media_type: category}))
+  const formattedSimilarMedia = uniqueSimilarMovies.map(media => ({...media, media_type: category}))
 
   if (formattedSimilarMedia.length > 0) {
     setRelatedMedia(formattedSimilarMedia);
