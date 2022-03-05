@@ -114,7 +114,19 @@ app.put('/my-list', async (req, res) => {
   const client = new MongoClient(uri);
   console.log(req.body)
 
-  const { title, id, category, email, img_path, rating } = req.body
+  const { title, id, category, email, poster_path, backrop_path, rating, year } = req.body
+  const newWatchlistItem = {
+    title,
+    tmdb_id: id,
+    type: category,
+    poster_path,
+    backrop_path,
+    release_date: year,
+    tmdb_rating: rating,
+    my_rating: null,
+    watched: false,
+    liked: false
+  }
 
 
   try {
@@ -127,7 +139,7 @@ app.put('/my-list', async (req, res) => {
 
     const updateDoc = {
       $addToSet: {
-        watchlist: {title, id, category, img_path, rating}
+        watchlist: newWatchlistItem
       },
     };
 
@@ -148,11 +160,12 @@ app.put('/my-list', async (req, res) => {
 })
 
 
+// Get my watchlist
 app.post('/my-list', async (req, res) => {
   const client = new MongoClient(uri);
   console.log(req.body)
 
-  const { id, email, img_path, rating } = req.body
+  const { email } = req.body
 
 
   try {
@@ -165,29 +178,9 @@ app.post('/my-list', async (req, res) => {
     const user = await users.findOne({ email });
     console.log(user)
 
-    if (user.watchlist.includes(id)) {
-      console.log("user already has this media!")
-      return res.status(201).json({ token, username, email })
-    }
 
+    return res.status(201).json(user.watchlist)
 
-
-    const filter = { email };
-
-    const updateDoc = {
-      $addToSet: {
-        watchlist: {title, id, category, img_path, rating}
-      },
-    };
-
-    // const options = { upsert: true };
-
-    const result = await users.updateOne(filter, updateDoc);
-    console.log(result)
-
-
-
-    // res.status(201).json({ token, username })
 
   } catch(err) {
     console.log(err)

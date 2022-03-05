@@ -10,10 +10,12 @@ import Discover from './components/pages/Discover';
 import MyList from './components/pages/MyList';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cookies, setCookies, removeCookies] = useCookies(['user'])
+  const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
   return (
     <Router>
       <ScrollToTop>
@@ -22,7 +24,7 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/search" element={<Search />} />
               <Route path="/discover" element={<Discover />} />
-              <Route path="/my-list" element={<MyList />} />
+              <Route path="/my-list" element={<MyList isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
               {/* <ProtectedRoutes /> */}
               <Route
                 path="/:media/:id"

@@ -103,6 +103,12 @@ const ModalOverlay = (props) => {
           password: enteredPassword,
         })
         .catch((res) => {
+
+          if(res.response === undefined && res.message) {
+            setError(res.message + ", please try again later!")
+            return;
+          }
+          
           console.log('ERROR RES', res.response);
           //Reset email field and set error to whatever the response error was
             resetEmailInput();
@@ -148,13 +154,18 @@ const ModalOverlay = (props) => {
         })
         .catch((res) => {
 
+          if(res.response === undefined && res.message) {
+            setError(res.message + ", please try again later!")
+            return;
+          }
+
+
           //Reset input fields and set error to whatever the response error was
-          if (res.response.status === 409) {
+
             resetEmailInput();
             resetPasswordInput();
             setError(res.response.data);
             return;
-          }
         });
 
         console.log(response, 'login');

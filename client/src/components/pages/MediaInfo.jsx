@@ -20,9 +20,7 @@ const MediaInfo = (props) => {
   let category = param[param.length - 2];
   const { media } = props;
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['Email'])
-  console.log('fuck',cookies);
- 
+  const [cookies, setCookie, removeCookie] = useCookies(['user'])
 
   //Movie info of current page
   const [myMedia, setMyMedia] = useState(media || {
@@ -75,7 +73,13 @@ const MediaInfo = (props) => {
   }
 
   const addMediaToWatchlist = async () => {
-    const saveData = { title, id, category, email: cookies.Email, img_path: src, rating }
+    const poster_path = src;
+    let backdrop_path = null;
+    if(myMedia.backdrop_path) {
+      backdrop_path = myMedia.backdrop_path;
+
+    }
+    const saveData = { title, id, category, email: cookies.Email, poster_path, backdrop_path, rating, year }
     console.log(cookies, 'cookies');
     console.log(saveData);
     const response = await axios.put('http://localhost:3001/my-list', saveData)

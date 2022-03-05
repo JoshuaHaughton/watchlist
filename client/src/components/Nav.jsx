@@ -13,8 +13,9 @@ const Nav = (props) => {
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true);
   const [cookies, setCookies, removeCookies] = useCookies(['user'])
-  console.log('fucking cookies', cookies);
   const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
+  console.log(props.isLoggedIn, 'islog');
+  console.log(cookies, 'cookah');
   const location = useLocation();
 
 
