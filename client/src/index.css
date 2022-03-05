@@ -1183,6 +1183,8 @@ button:active {
 
 .my-list__media--content {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   padding: 72px 0;
 }

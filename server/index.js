@@ -114,16 +114,16 @@ app.put('/my-list', async (req, res) => {
   const client = new MongoClient(uri);
   console.log(req.body)
 
-  const { title, id, category, email, poster_path, backrop_path, rating, year } = req.body
+  const { title, id, category, email, poster_path, backdrop_path, rating, year } = req.body
   const newWatchlistItem = {
     title,
     tmdb_id: id,
     type: category,
     poster_path,
-    backrop_path,
+    backdrop_path,
     release_date: year,
     tmdb_rating: rating,
-    my_rating: null,
+    my_rating: 0,
     watched: false,
     liked: false
   }

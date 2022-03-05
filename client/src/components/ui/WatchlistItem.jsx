@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import placeholder from "../../assets/No-Image-Placeholder.svg.png";
 import { typeFormat } from "../helpers/MediaHelpers";
@@ -6,9 +6,18 @@ import skeleton from "../../assets/GrayBG.jpeg"
 import { apiConfig } from "../../api/axiosClient";
 import Rating from "./Rating";
 import classes from './WatchlistItem.module.css'
+import UserRating from "./UserRating";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import UserLike from "./UserLike";
+import WatchedIcon from "./WatchedIcon";
+import { set } from "lodash";
+
 
 const WatchlistItem = (props) => {
   const { media } = props;
+  const [frontendRating, setFrontendRating] = useState(media.my_rating)
+  const [frontendWatched, setFrontendWatched] = useState(media.watched)
   console.log(media, 'media');
 
   //Deside class based on if the media given was a skeleton or not (for loading state)
@@ -29,10 +38,10 @@ const WatchlistItem = (props) => {
   //Format image path based on what images are available
   let imagePath;
 
-  if (media.poster_path) {
-    imagePath = apiConfig.w500Image(media.poster_path)
-  } else if (media.backdrop_path) {
+  if (media.backdrop_path) {
     imagePath = apiConfig.w500Image(media.backdrop_path)
+  } else if (media.poster_path) {
+    imagePath = apiConfig.w500Image(media.poster_path)
   } else if (media.skeleton) {
     //Blank background for loading state
     imagePath = skeleton;
@@ -41,12 +50,20 @@ const WatchlistItem = (props) => {
     imagePath = placeholder;
   }
 
+  useEffect(() => {
+    if(frontendWatched)
+    if (frontendRating && !frontendWatched) {
+      setFrontendWatched(true)
+    }
+
+  }, [frontendWatched, frontendRating])
+
   
   return (
     <div className={classes.card}>
       <Link to={`/${media.type}/${media.tmdb_id}`}>
-        <div className={classes.wrapper}>
-          <figure className={classes[`${classType}Wrapper`]}>
+        <div className={classes.mediaWrapper}>
+          <figure className={classes[`${classType}ImgWrapper`]}>
             <img
               src={imagePath ? imagePath : skeleton}
               alt={media.title}
@@ -65,6 +82,26 @@ const WatchlistItem = (props) => {
           }
         </div>
       </Link>
+
+      <div className={classes.description}>
+        <h3 className={classes.mediaTitles}>{media.title}</h3>
+        <p className={classes.mediaParagraph}>My rating: <UserRating frontendRating={frontendRating} setFrontendRating={setFrontendRating} frontendWatched={frontendWatched} setFrontendWatched={setFrontendWatched}/></p>
+        <p className={`${classes.mediaParagraph} ${classes.watchedIcon}`}>Watched: <WatchedIcon frontendWatched={frontendWatched} setFrontendWatched={setFrontendWatched} frontendRating={frontendRating} setFrontendRating={setFrontendRating}/> </p>
+        <br />
+
+        <div className={classes.descriptionBottomRow}>
+          <p className={classes.mediaParagraph}>{typeFormat(media.type)}</p>
+          <div className={classes.userActions}>
+            <UserLike liked={media.liked}/>
+            <FontAwesomeIcon icon={faTrashCan} className={`${classes.actionIcon} ${classes.deleteIcon}`}/>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
     </div>
   );
 };

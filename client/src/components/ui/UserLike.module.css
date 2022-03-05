@@ -1,0 +1,23 @@
+.liked {
+  color: #c78f03;
+  cursor: pointer;
+  transition: all 300ms ease;
+  margin: 0 3px;
+}
+
+.liked:hover {
+  /* color: #ba181b; */
+  transform: scale(1.1);
+}
+
+.notLiked {
+  color: #ba181b;
+  cursor: pointer;
+  transition: all 300ms ease;
+  margin: 0 3px;
+}
+
+.notLiked:hover {
+  color: #c78f03;
+  transform: scale(1.1);
+}

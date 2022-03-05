@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faTimes, faSearch, faArrowLeft, faSpinner, faStar, faStarHalfAlt, } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons'
+import { faBars, faTimes, faSearch, faArrowLeft, faSpinner, faStar, faStarHalfAlt, faHeart, } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular, faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { CookiesProvider } from 'react-cookie';
 
-library.add(faBars, faTimes, faSearch, faArrowLeft, faSpinner, faStar, faStarHalfAlt, faStarRegular);
+library.add(faBars, faTimes, faSearch, faArrowLeft, faSpinner, faStar, faStarHalfAlt, faStarRegular, faHeart);
 
 
 ReactDOM.render(

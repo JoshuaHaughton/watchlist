@@ -1,0 +1,33 @@
+.watched {
+  font-size: 18px;
+  color: green;
+  display: inline;
+  margin-left: 6px;
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+.watched:hover {
+  color: green;
+  transform: scale(1.1);
+}
+
+.notWatched {
+  font-size: 18px;
+  color: #ba181b;
+  display: inline;
+  margin-left: 6px;
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+.notWatched:hover {
+  color: #c78f03;
+  transform: scale(1.1);
+}
+
+.watchedIcon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}

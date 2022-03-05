@@ -1,6 +1,8 @@
 .card {
   width: calc(100% / 3);
   padding: 32px 32px;
+  display: flex;
+  flex-direction: column;
 }
 
 .media__card--wrapper {
@@ -14,6 +16,7 @@
   width: 100%;
   height: 100%;
   margin: 0;
+  max-width: none;
 }
 
 .media__link {
@@ -23,14 +26,14 @@
   justify-content: center;
 }
 
-.wrapper {
+.mediaWrapper {
   border-radius: 4px;
   transition: all 300ms ease;
   background-color: transparent;
   position: relative;
 }
 
-.mediaWrapper {
+.mediaImgWrapper {
   display: flex;
   position: relative;
 }
@@ -58,7 +61,7 @@
 }
 
 
-.wrapper:hover {
+.mediaWrapper:hover {
   transform: scale(1.025);
 }
 
@@ -89,16 +92,66 @@
   align-items: center;
 }
 
-.wrapper:hover .hoverDetails {
+.description {
+  margin-top: 8px;
+}
+
+.mediaTitles {
+  color: white;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 2px 0;
+}
+
+.mediaParagraph {
+  color: white;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.descriptionBottomRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userActions {
+  display: flex;
+}
+
+.actionIcon {
+  margin: 0 3px;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  color: #ba181b;
+  transition: all 300ms ease;
+}
+
+.deleteIcon:hover {
+  transform: scale(1.1);
+  opacity: 0.7;
+}
+
+.deleteIcon:active {
+  transform: scale(0.8);
+}
+
+.watchedIcon {
+  display: flex;
+  align-items: center;
+}
+
+.mediaWrapper:hover .hoverDetails {
   opacity: 1;
   transform: translate(-50%, -50%);
   z-index: 5;
 }
 
-.wrapper:hover .mediaWrapperBg {
+.mediaWrapper:hover .mediaWrapperBg {
   opacity: 0.7;
 }
 
-.mediaWrapper:active {
+.mediaImgWrapper:active {
   transform: scale(0.95);
 }
