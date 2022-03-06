@@ -67,6 +67,8 @@ app.post('/signup', async (req, res) => {
 
   } catch(err) {
     console.log(err)
+  } finally {
+    await client.close()
   }
 
 })
@@ -106,6 +108,8 @@ app.post('/login', async(req, res) => {
 
   } catch(err) {
     console.log(err)
+  } finally {
+    await client.close()
   }
 
 })
@@ -156,6 +160,8 @@ app.put('/my-list', async (req, res) => {
 
   } catch(err) {
     console.log(err)
+  } finally {
+    await client.close()
   }
 })
 
@@ -184,7 +190,131 @@ app.post('/my-list', async (req, res) => {
 
   } catch(err) {
     console.log(err)
+  } finally {
+    await client.close()
   }
+})
+
+app.put('/user-rating', async (req, res) => {
+  const client = new MongoClient(uri);
+
+  console.log(req.body)
+
+  const { email, frontendRating, mediaId } = req.body
+
+
+  try {
+    //Connect to MongoDB database
+    await client.connect()
+    const database = client.db('app-data')
+    const users = database.collection('users')
+
+    //Attempt to retrieve user info from db by email
+    const user = await users.findOne({ email });
+    console.log(user)
+
+    const userWatchlist = user.watchlist;
+    console.log('watchlist:', userWatchlist)
+
+    const selectedWatchlistItemIndex = userWatchlist.findIndex(item => item.tmdb_id === mediaId)
+    console.log('index', selectedWatchlistItemIndex)
+
+    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex]
+
+    const updatedWatchlistItem = {...selectedWatchlistItem, my_rating: frontendRating}
+    console.log("updated item", updatedWatchlistItem)
+
+    const updatedWatchlist = [...userWatchlist]
+    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem
+
+    const filter = { email };
+
+    const updateDoc = {
+      $set: {
+        watchlist: updatedWatchlist
+      },
+    };
+
+    // const options = { upsert: true };
+
+    console.log(filter, updatedWatchlist, updatedWatchlistItem)
+
+    const result = await users.updateOne(filter, updateDoc);
+    console.log(result)
+
+
+
+    return res.status(201).json(updatedWatchlist)
+
+
+  } catch(err) {
+    console.log(err)
+  } finally {
+    await client.close()
+  }
+
+})
+
+
+
+app.put('/user-watched', async (req, res) => {
+  const client = new MongoClient(uri);
+
+  console.log(req.body)
+
+  const { email, frontendWatched, mediaId } = req.body
+
+
+  try {
+    //Connect to MongoDB database
+    await client.connect()
+    const database = client.db('app-data')
+    const users = database.collection('users')
+
+    //Attempt to retrieve user info from db by email
+    const user = await users.findOne({ email });
+    console.log(user)
+
+    const userWatchlist = user.watchlist;
+    console.log('watchlist:', userWatchlist)
+
+    const selectedWatchlistItemIndex = userWatchlist.findIndex(item => item.tmdb_id === mediaId)
+    console.log('index', selectedWatchlistItemIndex)
+
+    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex]
+
+    const updatedWatchlistItem = {...selectedWatchlistItem, watched: frontendWatched}
+    console.log("updated item", updatedWatchlistItem)
+
+    const updatedWatchlist = [...userWatchlist]
+    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem
+
+    const filter = { email };
+
+    const updateDoc = {
+      $set: {
+        watchlist: updatedWatchlist
+      },
+    };
+
+    // const options = { upsert: true };
+
+    console.log(filter, updatedWatchlist, updatedWatchlistItem)
+
+    const result = await users.updateOne(filter, updateDoc);
+    console.log(result)
+
+
+
+    return res.status(201).json(updatedWatchlist)
+
+
+  } catch(err) {
+    console.log(err)
+  } finally {
+    await client.close()
+  }
+
 })
 
 
