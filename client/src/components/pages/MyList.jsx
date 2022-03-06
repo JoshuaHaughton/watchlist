@@ -11,9 +11,11 @@ const MyList = (props) => {
 
   useEffect(() => {
     const fetchWatchlist = async () => {
+      console.log('posting');
       const response = await axios.post('http://localhost:3001/my-list', {email: cookies.Email});
 
       // const formattedWatchlist = response.data
+      console.log(response.data[0]);
       setMyWatchlist(response.data)
       console.log('Actual response from DB', response.data);
       console.log('watchlist: (may be delayed)', myWatchlist);

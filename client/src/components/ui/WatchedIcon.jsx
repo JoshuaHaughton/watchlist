@@ -2,16 +2,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import classes from './WatchedIcon.module.css'
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
-const WatchedIcon = ({ frontendWatched, setFrontendWatched, frontendRating, setFrontendRating }) => {
+const WatchedIcon = ({ frontendWatched, setFrontendWatched, frontendRating, setFrontendRating, mediaId }) => {
+  const [cookies] = useCookies();
 
-  const watchedHandler = () => {
-    if (frontendRating && frontendWatched) {
+  const watchedHandler = async () => {
+    //If user unwatches an item with a rating, remove the rating
+    if (frontendRating > 0 && frontendWatched) {
       setFrontendRating(0)
-      setFrontendWatched(!frontendWatched)
     }
+
+    //Set to opposite of what it was before
     setFrontendWatched(!frontendWatched)
+
+    
+    console.log('id for watch', mediaId);
+    console.log('setting watch');
+
+    const response = await axios.put('http://localhost:3001/user-watched', {frontendWatched: !frontendWatched, email: cookies.Email, mediaId});
+    console.log(response);
+    console.log(response.data);
   }
+
 
   return (
     <div className={classes.watchedIcon}>
@@ -24,7 +38,7 @@ const WatchedIcon = ({ frontendWatched, setFrontendWatched, frontendRating, setF
       ) : (
         <FontAwesomeIcon
           icon={faTimes}
-          onClick={() => setFrontendWatched((prev) => !prev)}
+          onClick={watchedHandler}
           className={classes.notWatched}
         />
       )}

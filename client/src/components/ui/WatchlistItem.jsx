@@ -85,8 +85,8 @@ const WatchlistItem = (props) => {
 
       <div className={classes.description}>
         <h3 className={classes.mediaTitles}>{media.title}</h3>
-        <p className={classes.mediaParagraph}>My rating: <UserRating frontendRating={frontendRating} setFrontendRating={setFrontendRating} frontendWatched={frontendWatched} setFrontendWatched={setFrontendWatched}/></p>
-        <p className={`${classes.mediaParagraph} ${classes.watchedIcon}`}>Watched: <WatchedIcon frontendWatched={frontendWatched} setFrontendWatched={setFrontendWatched} frontendRating={frontendRating} setFrontendRating={setFrontendRating}/> </p>
+        <div className={classes.mediaParagraph}>My rating: <UserRating frontendRating={frontendRating} setFrontendRating={setFrontendRating} frontendWatched={frontendWatched} setFrontendWatched={setFrontendWatched} mediaId={media.tmdb_id}/></div>
+        <div className={`${classes.mediaParagraph} ${classes.watchedIcon}`}>Watched: <WatchedIcon frontendWatched={frontendWatched} setFrontendWatched={setFrontendWatched} frontendRating={frontendRating} setFrontendRating={setFrontendRating} mediaId={media.tmdb_id}/> </div>
         <br />
 
         <div className={classes.descriptionBottomRow}>
