@@ -11,6 +11,8 @@ import Actor from "../ui/Actor.jsx";
 import DarkBg from '../../assets/GrayBG2.jpeg'
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
+import { elementType } from "prop-types";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const MediaInfo = (props) => {
   //Get media category and id from url path
@@ -34,13 +36,44 @@ const MediaInfo = (props) => {
   const [relatedMedia, setRelatedMedia] = useState("");
   const [cast, setCast] = useState([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [addMediaClicked, setAddMediaClicked] = useState(false);
+  const [addedToWatchlist, setAddedToWatchlist] = useState(false);
+
+  const checkWatchlistForItem = async () => {
+    const response = await axios.post('http://localhost:3001/my-list', {email: cookies.Email});
+    console.log(response.data, 'check watchlist item for mediainfo');
+
+
+    const foundItem = response.data.find(element => {
+      return element.tmdb_id === id
+    })
+
+
+
+    if (foundItem !== undefined) {
+      setAddedToWatchlist(true)
+      console.log("watched this");
+    } else {
+      setAddedToWatchlist(false)
+      console.log('didnt watch');
+    }
+
+  }
+
 
   //Get details for page everytime the url is changed
   useEffect(() => {
+    id = param[param.length - 1];
+    category = param[param.length - 2];
     getDetails(id, category, setMyMedia, setRelatedMedia, setCast);
+
+
+    checkWatchlistForItem()
     
   }, [location]);
+
+  // useEffect(() => {
+    
+  // }, [addedToWatchlist])
 
   
   console.log(myMedia, 'test');
@@ -90,19 +123,18 @@ const MediaInfo = (props) => {
       });
 
       const success = response.status == 201;
+      console.log(success);
+      console.log(response);
 
       if (success) {
+        if (!addedToWatchlist) {
+          setAddedToWatchlist(true)
+        }
 
         console.log(response.data, 'yaaa');
 
       }
   }
-
-  useEffect(() => {
-    // if (cookies.AuthToken) {
-    //   const response = axios.get('http://localhost:3001/my-list', {});
-    // }
-  }, [isLoggedIn])
 
 
 
@@ -205,8 +237,8 @@ const MediaInfo = (props) => {
                     </a>
                   }
 
-                  {props.isLoggedIn && <span className="add-media" onClick={addMediaToWatchlist}>
-                    <FontAwesomeIcon icon={faTimes} className='add-media__icon' />
+                  {props.isLoggedIn && <span className={ addedToWatchlist ? "added-media" : "add-media"} onClick={addMediaToWatchlist} title="Already added to your watchlist!">
+                    { addedToWatchlist ? <p>Added to Watchlist!</p> : <FontAwesomeIcon icon={faTimes} className='add-media__icon' />}
                   </span>}
 
                 </div>

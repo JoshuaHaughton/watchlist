@@ -650,6 +650,7 @@ button:active {
   border-radius: 4px;
   transition: all 300ms ease;
   background-color: transparent;
+  position: relative;
 }
 
 .media__wrapper:hover {
@@ -860,14 +861,35 @@ button:active {
   transition: all 300ms ease;
 }
 
+
+.added-media {
+  cursor: not-allowed;
+  margin-left: 24px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ba181b;
+  color: #c78f03;
+  border-radius: 4px;
+  transition: all 300ms ease;
+  font-weight: bold;
+  font-size: medium;
+}
+
 .add-media__icon {
   transform: rotate(45deg);
 }
+
 
 .add-media:hover {
   background-color: #fff;
   color: green;
   transform: scale(1.05);
+}
+
+.add-media:active {
+  transform: scale(0.75);
 }
 
 .suggested__container {
