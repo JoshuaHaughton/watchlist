@@ -15,7 +15,7 @@ const DeleteItemModalOverlay = (props) => {
     console.log('id for deletion', mediaId);
     console.log('initiating backend delete');
 
-    const response = await axios.put('http://localhost:3001/delete-item', { email: cookies.Email, mediaId});
+    const response = await axios.put('http://localhost:3001/delete-item', { email: cookies.Email, mediaId}, {withCredentials: true});
     console.log(response);
     console.log(response.data);
     closeModal()

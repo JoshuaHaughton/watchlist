@@ -6,6 +6,8 @@ import { closeMenu, openMenu } from "./helpers/NavHelpers";
 import AuthModal from "./ui/Modals/AuthModal/AuthModal";
 import SuccessModal from "./ui/Modals/SuccessModal/SuccessModal";
 import { useCookies } from "react-cookie";
+import axios from "axios";
+import { useAuth } from "./contexts/auth-context";
 
 
 const Nav = (props) => {
@@ -13,9 +15,11 @@ const Nav = (props) => {
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true);
   const [cookies, setCookies, removeCookies] = useCookies(['user'])
-  const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
+  const { isLoggedIn, setIsLoggedIn, logout } = useAuth();
+  // const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
   console.log(props.isLoggedIn, 'islog');
   console.log(cookies, 'cookah');
+  console.log(isLoggedIn, 'logged in?');
   const location = useLocation();
 
 
@@ -37,20 +41,32 @@ const Nav = (props) => {
   }
 
   const logoutHandler = async () => {
-    removeCookies("AuthToken")
-    removeCookies("Username")
-    removeCookies("Email")
-    // document.cookie = 'AuthToken' + '=; Max-Age=0'
-    // document.cookie = 'Username' + '=; Max-Age=0'
-    // document.cookie = 'Email' + '=; Max-Age=0'
-    setIsLoggedIn(false);
+
+    const response = await logout();
+    console.log(response)
+    setIsLoggedIn(false)
     props.setIsLoggedIn(false)
   }
 
   const navLoginHandler = async () => {
-    setIsLoggedIn(true)
+    setIsLoggedIn(true);
     props.setIsLoggedIn(true)
   }
+
+  useEffect(() => {
+    const fetchLoggedState = async () => {
+      const response = await axios.get('http://localhost:3001/logged', {withCredentials: true});
+      console.log(response, 'logged????');
+
+      if(response.status === 201 || response.status === 200) {
+        setIsLoggedIn(true)
+      } else {
+        setIsLoggedIn(false)
+      }
+    }
+
+    fetchLoggedState();
+  }, [])
 
 
 

@@ -1,20 +1,27 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { useAuth } from '../contexts/auth-context';
 import WatchlistItem from '../ui/WatchlistItem';
 
 
 const MyList = (props) => {
-  const [cookies, setCookies, removeCookies] = useCookies(['user']);
+  const [cookies] = useCookies();
   const [myWatchlist, setMyWatchlist] = useState([]);
-  const { isLoggedIn } = props;
-
+  const [errorMessage, setErrorMessage] = useState(false);
+  const { isLoggedIn } = useAuth();
+  
 
 
   useEffect(() => {
     const fetchWatchlist = async () => {
       console.log('posting');
-      const response = await axios.post('http://localhost:3001/my-list', {email: cookies.Email});
+      console.log(cookies);
+      const response = await axios.get('http://localhost:3001/my-list', {withCredentials: true})
+      .catch(err => {
+        console.log(err.message);
+        setErrorMessage("Please Login to view your list!")
+      })
 
       // const formattedWatchlist = response.data
       console.log(response.data[0]);
@@ -24,9 +31,16 @@ const MyList = (props) => {
 
 
     }
-    console.log(isLoggedIn, 'my list here');
-    if(isLoggedIn) {
+
+
+
       fetchWatchlist()
+    
+  }, [])
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setErrorMessage("Please Login to view your list!")
     }
   }, [isLoggedIn])
 
@@ -34,6 +48,11 @@ const MyList = (props) => {
     <div className="my-list__container">
       <div className="row">
         <div className="my-list__content">
+
+          {errorMessage ? 
+          <h1>{errorMessage}</h1> 
+          :
+          <>
           <div className="my-list__header">
             <h1 className='my-list__title'>My List</h1>
             <p className='my-list__text white'>Browse your list</p>
@@ -50,6 +69,11 @@ const MyList = (props) => {
             })
             }
           </div>
+          </> 
+          }
+
+
+
         </div>
       </div>
     </div>

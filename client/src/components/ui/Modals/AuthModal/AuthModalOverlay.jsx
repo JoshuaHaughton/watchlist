@@ -3,11 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from 'react-cookie';
+import { useAuth } from "../../../contexts/auth-context";
 import useInputValidate from "../../../hooks/input-validation";
 import classes from "./AuthModal.module.css";
 
 const ModalOverlay = (props) => {
   const [error, setError] = useState(null);
+  const { signup, login } = useAuth();
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
   const { isSignUp, setIsSignUp } = props;
 
@@ -96,43 +98,18 @@ const ModalOverlay = (props) => {
     //If everything passes validation and works, attempt to submit
     if (isSignUp) {
       //If signup form, attempt to signup
-      const response = await axios
-        .post("http://localhost:3001/signup", {
-          username: enteredName,
-          email: enteredEmail,
-          password: enteredPassword,
-        })
-        .catch((res) => {
-
-          if(res.response === undefined && res.message) {
-            setError(res.message + ", please try again later!")
-            return;
-          }
-          
-          console.log('ERROR RES', res.response);
-          //Reset email field and set error to whatever the response error was
-            resetEmailInput();
-            setError(res.response.data);
-            return;
-        });
 
 
-      // If response comes back successfull
-      const success = response.status == 201;
+      const response = await signup(enteredName, enteredEmail, enteredPassword, setError, resetEmailInput);
+
+
+      console.log(response)
+
+      const success = response.status === 200;
 
       if (success) {
 
         console.log(response.data, 'yaaa');
-
-
-        removeCookie('Username')
-        removeCookie('Email')
-        removeCookie('AuthToken')
-        setCookie('Username', response.data.username)
-        setCookie('Email', response.data.sanitizedEmail)
-        setCookie('AuthToken', response.data.token)
-
-
 
         resetNameInput();
         resetEmailInput();
@@ -147,46 +124,18 @@ const ModalOverlay = (props) => {
       }
     } else {
       //If Login form, attempt to Login
-      const response = await axios
-        .post("http://localhost:3001/login", {
-          email: enteredEmail,
-          password: enteredPassword,
-        })
-        .catch((res) => {
 
-          if(res.response === undefined && res.message) {
-            setError(res.message + ", please try again later!")
-            return;
-          }
-
-
-          //Reset input fields and set error to whatever the response error was
-
-            resetEmailInput();
-            resetPasswordInput();
-            setError(res.response.data);
-            return;
-        });
+      const response = await login(enteredEmail, enteredPassword, resetEmailInput, resetPasswordInput, setError);
+   
 
         console.log(response, 'login');
 
       // If response comes back successfull
-      const success = response.status == 201;
+      const success = response.status == 200;
 
       if (success) {
 
-        console.log(response.data, 'loginyaaa');
-
-
-        removeCookie('Username')
-        removeCookie('Email')
-        removeCookie('AuthToken')
-        setCookie('Username', response.data.username)
-        setCookie('Email', response.data.email)
-        setCookie('AuthToken', response.data.token)
-
-
-
+        console.log(response.data, 'login');
 
         resetEmailInput();
         resetPasswordInput();

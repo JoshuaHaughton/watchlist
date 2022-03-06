@@ -13,8 +13,10 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import { elementType } from "prop-types";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../contexts/auth-context.js";
 
 const MediaInfo = (props) => {
+  const { isLoggedIn } = useAuth();
   //Get media category and id from url path
   let location = useLocation().pathname;
   let param = location.split("/");
@@ -22,7 +24,7 @@ const MediaInfo = (props) => {
   let category = param[param.length - 2];
   const { media } = props;
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['user'])
+  const [cookies] = useCookies()
 
   //Movie info of current page
   const [myMedia, setMyMedia] = useState(media || {
@@ -35,11 +37,10 @@ const MediaInfo = (props) => {
   //State for related media section below the movie info
   const [relatedMedia, setRelatedMedia] = useState("");
   const [cast, setCast] = useState([])
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [addedToWatchlist, setAddedToWatchlist] = useState(false);
 
   const checkWatchlistForItem = async () => {
-    const response = await axios.post('http://localhost:3001/my-list', {email: cookies.Email});
+    const response = await axios.post('http://localhost:3001/my-list', {email: cookies.Email}, {withCredentials: true});
     console.log(response.data, 'check watchlist item for mediainfo');
 
 
@@ -115,7 +116,7 @@ const MediaInfo = (props) => {
     const saveData = { title, id, category, email: cookies.Email, poster_path, backdrop_path, rating, year }
     console.log(cookies, 'cookies');
     console.log(saveData);
-    const response = await axios.put('http://localhost:3001/my-list', saveData)
+    const response = await axios.put('http://localhost:3001/my-list', saveData, {withCredentials: true})
       .catch((res) => {
         console.log('ERROR RES MEDIA INFO save media', res.response);
         // setError(res.response.data);
@@ -237,7 +238,7 @@ const MediaInfo = (props) => {
                     </a>
                   }
 
-                  {props.isLoggedIn && <span className={ addedToWatchlist ? "added-media" : "add-media"} onClick={addMediaToWatchlist} title="Already added to your watchlist!">
+                  {isLoggedIn && <span className={ addedToWatchlist ? "added-media" : "add-media"} onClick={addMediaToWatchlist} title="Already added to your watchlist!">
                     { addedToWatchlist ? <p>Added to Watchlist!</p> : <FontAwesomeIcon icon={faTimes} className='add-media__icon' />}
                   </span>}
 

@@ -15,7 +15,7 @@ const UserLike = ({ liked, mediaId }) => {
     console.log('id for like', mediaId);
     console.log('setting backend like');
 
-    const response = await axios.put('http://localhost:3001/user-liked', {frontendLike: !frontendLike, email: cookies.Email, mediaId});
+    const response = await axios.put('http://localhost:3001/user-liked', {frontendLike: !frontendLike, email: cookies.Email, mediaId}, {withCredentials: true});
     console.log(response);
     console.log(response.data);
   }

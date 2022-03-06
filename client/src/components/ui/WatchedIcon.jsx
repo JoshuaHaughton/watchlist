@@ -21,7 +21,7 @@ const WatchedIcon = ({ frontendWatched, setFrontendWatched, frontendRating, setF
     console.log('id for watch', mediaId);
     console.log('setting watch');
 
-    const response = await axios.put('http://localhost:3001/user-watched', {frontendWatched: !frontendWatched, email: cookies.Email, mediaId});
+    const response = await axios.put('http://localhost:3001/user-watched', {frontendWatched: !frontendWatched, email: cookies.Email, mediaId}, {withCredentials: true});
     console.log(response);
     console.log(response.data);
   }

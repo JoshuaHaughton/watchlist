@@ -15,7 +15,7 @@ export default function UserRating({ frontendRating, setFrontendRating, frontend
     console.log(ratingValue);
     setFrontendRating(ratingValue)
     console.log('id for like', mediaId);
-    const response = await axios.put('http://localhost:3001/user-rating', {frontendRating: ratingValue, email: cookies.Email, mediaId});
+    const response = await axios.put('http://localhost:3001/user-rating', {frontendRating: ratingValue, mediaId}, {withCredentials: true});
     console.log(response);
     console.log(response.data);
   }
