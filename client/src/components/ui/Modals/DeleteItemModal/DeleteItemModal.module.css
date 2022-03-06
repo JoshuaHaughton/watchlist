@@ -1,0 +1,146 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  max-width: 500px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.header {
+  background: #242424;
+  height: 10vh;
+  padding: 1rem 0 12px 0;
+}
+
+.title {
+  margin: 0;
+  padding-bottom: 16px;
+  color: #ba181b;
+}
+
+.actions {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+}
+
+.text {
+  text-align: center;
+  font-weight: bold;
+}
+
+.button {
+  margin: 0 6px;
+  cursor: pointer;
+  transition: all 450ms ease;
+}
+
+.deleteButton {
+  font: inherit;
+  border: 1px solid #ba181b;
+  background: #ba181b;
+  border-radius: 4px;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.cancelButton {
+  font: inherit;
+  border: 1px solid #c78f03;
+  background: #c78f03;
+  border-radius: 4px;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.button:active {
+  background: #ba181b;
+  border-color: #ba181b;
+}
+
+.cancelButton:hover {
+  background-color: #fff;
+  border-color: #c78f03;
+  color: #c78f03;
+  transform: scale(1.015);
+}
+
+.deleteButton:hover {
+  background-color: #fff;
+  border-color: #ba181b;
+  color: #ba181b;
+  transform: scale(1.015);
+}
+
+.button:focus {
+  outline: none;
+}
+
+.exit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0;
+  margin: 12px 20px 0 0;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.exitIcon {
+  color: #fff;
+  transition: all 300ms ease;
+}
+
+.exitIcon:hover {
+  color: #ba181b;
+  transform: scale(1.1);
+}
+
+.content {
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+@media (max-width: 768px) {
+  .modal {
+  /* top: 20vh;
+  left: 10%; */
+  width: 30%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55%;
+  }
+}
+
+@media (max-width: 375px) {
+  .modal {
+    width: 95%;
+    }
+}
+

@@ -12,13 +12,23 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import UserLike from "./UserLike";
 import WatchedIcon from "./WatchedIcon";
 import { set } from "lodash";
+import DeleteItemModal from "./Modals/DeleteItemModal/DeleteItemModal";
 
 
 const WatchlistItem = (props) => {
-  const { media } = props;
+  const { media, reloadWatchlist } = props;
   const [frontendRating, setFrontendRating] = useState(media.my_rating)
   const [frontendWatched, setFrontendWatched] = useState(media.watched)
+  const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false)
   console.log(media, 'media');
+
+  const openDeleteItemModalHandler = () => {
+    setOpenDeleteItemModal(true)
+  }
+
+  const closeDeleteItemModalHandler = () => {
+    setOpenDeleteItemModal(false)
+  }
 
   //Deside class based on if the media given was a skeleton or not (for loading state)
   let classType;
@@ -51,15 +61,24 @@ const WatchlistItem = (props) => {
   }
 
   useEffect(() => {
-    if(frontendWatched)
+    // if(frontendWatched)
     if (frontendRating && !frontendWatched) {
       setFrontendWatched(true)
     }
 
   }, [frontendWatched, frontendRating])
 
+
   
   return (
+    <>
+    {openDeleteItemModal && <DeleteItemModal 
+      title={'Delete Item Confirmation'}
+      message={"Are you sure you want to delete this item from your watchlist? You'll lose all of your ratings for this title."}
+      closeModal={closeDeleteItemModalHandler}
+      mediaId={media.tmdb_id}
+      reloadWatchlist={reloadWatchlist}
+      />}
     <div className={classes.card}>
       <Link to={`/${media.type}/${media.tmdb_id}`}>
         <div className={classes.mediaWrapper}>
@@ -75,9 +94,11 @@ const WatchlistItem = (props) => {
           <div className={classes.hoverDetails}>
             <h3 className={classes[`${classType}Title`]}>{media.title || media.name}</h3>
             <h5 className={classes[`${classType}Year`]}>{media.release_date}</h5>
-            {(media && media.tmdb_rating) > 0 ? <Rating rating={media.tmdb_rating} /> : <p>No Ratings<br /></p>}
+            <h3 className={`${classes.mediaTitle} ${classes.gold}`}>Click for more details!</h3>
+            {/* <h3 className={classes.mediaTitle}>TMDB rating:</h3>
+            {(media && media.tmdb_rating) > 0 ? <Rating rating={media.tmdb_rating} /> : <p>No Ratings<br /></p>} */}
             <br />
-            <h3 className={`${classType}Title`}>{typeFormat(media.type)}</h3>
+            <h3 className={classes.mediaTitle}>{typeFormat(media.type)}</h3>
           </div>
           }
         </div>
@@ -92,8 +113,8 @@ const WatchlistItem = (props) => {
         <div className={classes.descriptionBottomRow}>
           <p className={classes.mediaParagraph}>{typeFormat(media.type)}</p>
           <div className={classes.userActions}>
-            <UserLike liked={media.liked}/>
-            <FontAwesomeIcon icon={faTrashCan} className={`${classes.actionIcon} ${classes.deleteIcon}`}/>
+            <UserLike liked={media.liked} mediaId={media.tmdb_id}/>
+            <FontAwesomeIcon icon={faTrashCan} className={`${classes.actionIcon} ${classes.deleteIcon}`} onClick={openDeleteItemModalHandler}/>
           </div>
         </div>
 
@@ -103,6 +124,7 @@ const WatchlistItem = (props) => {
 
 
     </div>
+    </>
   );
 };
 

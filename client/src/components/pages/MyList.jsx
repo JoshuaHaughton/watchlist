@@ -9,6 +9,8 @@ const MyList = (props) => {
   const [myWatchlist, setMyWatchlist] = useState([]);
   const { isLoggedIn } = props;
 
+
+
   useEffect(() => {
     const fetchWatchlist = async () => {
       console.log('posting');
@@ -43,6 +45,7 @@ const MyList = (props) => {
               return <WatchlistItem
                 media={media}
                 key={media.tmdb_id}
+                reloadWatchlist={setMyWatchlist}
               />
             })
             }

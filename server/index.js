@@ -318,6 +318,125 @@ app.put('/user-watched', async (req, res) => {
 })
 
 
+
+
+app.put('/user-liked', async (req, res) => {
+  const client = new MongoClient(uri);
+
+  console.log(req.body)
+
+  const { email, frontendLike, mediaId } = req.body
+
+
+  try {
+    //Connect to MongoDB database
+    await client.connect()
+    const database = client.db('app-data')
+    const users = database.collection('users')
+
+    //Attempt to retrieve user info from db by email
+    const user = await users.findOne({ email });
+    console.log(user)
+
+    const userWatchlist = user.watchlist;
+    console.log('watchlist:', userWatchlist)
+
+    const selectedWatchlistItemIndex = userWatchlist.findIndex(item => item.tmdb_id === mediaId)
+    console.log('index', selectedWatchlistItemIndex)
+
+    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex]
+
+    const updatedWatchlistItem = {...selectedWatchlistItem, liked: frontendLike}
+    console.log("updated item", updatedWatchlistItem)
+
+    const updatedWatchlist = [...userWatchlist]
+    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem
+
+    const filter = { email };
+
+    const updateDoc = {
+      $set: {
+        watchlist: updatedWatchlist
+      },
+    };
+
+    // const options = { upsert: true };
+
+    console.log(filter, updatedWatchlist, updatedWatchlistItem)
+
+    const result = await users.updateOne(filter, updateDoc);
+    console.log(result)
+
+
+
+    return res.status(201).json(updatedWatchlist)
+
+
+  } catch(err) {
+    console.log(err)
+  } finally {
+    await client.close()
+  }
+
+})
+
+
+
+app.put('/delete-item', async (req, res) => {
+  const client = new MongoClient(uri);
+
+  console.log('body', req.body)
+
+  const { email, mediaId } = req.body
+
+
+  try {
+    //Connect to MongoDB database
+    await client.connect()
+    const database = client.db('app-data')
+    const users = database.collection('users')
+
+    //Attempt to retrieve user info from db by email
+    const user = await users.findOne({ email });
+    console.log(user)
+
+    const userWatchlist = user.watchlist;
+    console.log('watchlist:', userWatchlist)
+
+
+    const updatedWatchlist = userWatchlist.filter(item => {
+      console.log('ids!', item.tmbd_id, mediaId)
+      return item.tmdb_id !== mediaId
+    })
+
+    const filter = { email };
+
+    const updateDoc = {
+      $set: {
+        watchlist: updatedWatchlist
+      },
+    };
+
+
+    console.log(filter, updatedWatchlist)
+
+    const result = await users.updateOne(filter, updateDoc);
+    console.log(result)
+
+
+
+    return res.status(201).json(updatedWatchlist)
+
+
+  } catch(err) {
+    console.log(err)
+  } finally {
+    await client.close()
+  }
+
+})
+
+
 //FOR TESTING, WILL BE REMOVED
 app.get('/users', async (req, res) => {
   const client = new MongoClient(uri);
