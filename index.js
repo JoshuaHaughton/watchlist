@@ -116,7 +116,7 @@ app.post('/login', async(req, res) => {
 
 app.put('/my-list', async (req, res) => {
   const client = new MongoClient(uri);
-  console.log(req.body)
+  console.log('my list')
 
   const { title, id, category, email, poster_path, backdrop_path, rating, year } = req.body
   const newWatchlistItem = {
@@ -138,6 +138,14 @@ app.put('/my-list', async (req, res) => {
     await client.connect()
     const database = client.db('app-data')
     const users = database.collection('users')
+    const user = await users.findOne({email})
+    console.log('USER', user)
+    const foundItem = user.watchlist.find(item => item.tmdb_id === id)
+
+    // If item already exists, dont add it
+    if(foundItem !== undefined) {
+      throw new Error("item already exists!")
+    }
 
     const filter = { email };
 
@@ -149,14 +157,14 @@ app.put('/my-list', async (req, res) => {
 
     // const options = { upsert: true };
 
-    console.log(filter, updateDoc)
+    // console.log()
 
     const result = await users.updateOne(filter, updateDoc);
-    console.log(result)
+    console.log(result, 'added')
 
 
 
-    // res.status(201).json({ token, username })
+    res.status(201).send('Added!');
 
   } catch(err) {
     console.log(err)
