@@ -526,25 +526,11 @@ app.put('/delete-item', authenticateToken, async (req, res) => {
 })
 
 app.get('/logged', authenticateToken, async (req, res) => {
-//   const client = new MongoClient(uri);
 
 
   const userId = req.userId.userId;
   console.log(userId)
   console.log(req.userId, 'user id first')
-
-
-
-
-//   try {
-//     //Connect to MongoDB database
-//     await client.connect()
-//     const database = client.db('app-data')
-//     const users = database.collection('users')
-
-//     //Attempt to retrieve user info from db by email
-//     const user = await users.findOne({ user_id: userId });
-//     console.log(user)
 
 
     return res.status(201).send("Auth passed, user logged in!")

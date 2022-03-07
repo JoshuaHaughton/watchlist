@@ -12,7 +12,7 @@ export default function MediaListItem(props) {
     >
       <img
         src={
-          !media.poster_path ? GrayBG : apiConfig.originalImage(media.poster_path)
+          !props.src ? GrayBG : props.src
         }
         alt={props.skeleton ? "Skeleton Placheholder" : media.title}
         className="media__list--img"

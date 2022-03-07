@@ -41,10 +41,11 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
   // RECOMMENDED MOVIES
 
   const similarMedia = await tmdbApi.similar(category, id)
-  console.log(similarMedia.results, 'sim')
+  console.log(similarMedia.results, 'similar')
+  console.log(id, 'id')
 
   //Prevents the selected movie from showing up in the suggested movie section (rare issue)
-  const uniqueSimilarMovies = similarMedia.results.filter(item => item.id !== id)
+  const uniqueSimilarMovies = similarMedia.results.filter(item => Number(item.id) !== Number(id))
 
   console.log(uniqueSimilarMovies, 'yyy')
 

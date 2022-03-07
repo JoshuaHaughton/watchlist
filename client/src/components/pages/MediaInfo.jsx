@@ -53,6 +53,9 @@ const MediaInfo = (props) => {
 
 
 
+
+
+
     if (foundItem !== undefined) {
       setAddedToWatchlist(true)
       console.log("watched this");
@@ -68,6 +71,7 @@ const MediaInfo = (props) => {
   //Get details for page everytime the url is changed
   useEffect(() => {
     id = param[param.length - 1];
+    console.log(id, 'param?');
     category = param[param.length - 2];
     getDetails(id, category, setMyMedia, setRelatedMedia, setCast);
 
@@ -186,7 +190,7 @@ const MediaInfo = (props) => {
 
                 {rating > 0 ?
                 <h3 className="media__summary--title">
-                  Rating: <span className="media__score">{rating}</span>
+                  Tmdb Rating: <span className="media__score">{rating}</span>
                 </h3>
                 :
                 <h3 className="media__summary--title red">
@@ -195,6 +199,9 @@ const MediaInfo = (props) => {
                 }
 
                 {rating > 0 && <Rating rating={rating} />}
+
+
+                
 
                 
 

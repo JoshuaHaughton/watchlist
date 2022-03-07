@@ -5,7 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 import { closeMenu, openMenu } from "./helpers/NavHelpers";
 import AuthModal from "./ui/Modals/AuthModal/AuthModal";
 import SuccessModal from "./ui/Modals/SuccessModal/SuccessModal";
-import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useAuth } from "./contexts/auth-context";
 
@@ -14,11 +13,8 @@ const Nav = (props) => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true);
-  const [cookies, setCookies, removeCookies] = useCookies(['user'])
   const { isLoggedIn, setIsLoggedIn, logout } = useAuth();
-  // const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
   console.log(props.isLoggedIn, 'islog');
-  console.log(cookies, 'cookah');
   console.log(isLoggedIn, 'logged in?');
   const location = useLocation();
 

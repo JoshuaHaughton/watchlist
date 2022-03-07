@@ -1,8 +1,11 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import MediaList from "../ui/MediaList";
 
 const Discover = () => {
   const [mediaType, setMediaType] = useState("movie");
+  const navigate = useNavigate();
   const [categories, setCategories] = useState({
     popular: (
       <MediaList 
@@ -30,7 +33,11 @@ const Discover = () => {
 
   const sortMedia = (filter) => {
     setMediaType(filter);
-  };
+  }
+
+  const navigateBack = () => {
+    navigate(-1);
+  }
 
 
   useEffect(() => {
@@ -109,19 +116,37 @@ const Discover = () => {
       <div className="container discover__container">
         <div className="discover__row">
         <div className="page__description">
-          <h1 className="page__header gold">Discover</h1>
-          <p className="white">In search of something bingeworthy? Look no further!</p>
-        </div>
-          <div className="discover__filter--wrapper">
-            <select
-              id="discover__filter"
-              value={mediaType}
-              onChange={(e) => sortMedia(e.target.value)}
-            >
-              <option value="movie">Movies</option>
-              <option value="tv">Series</option>
-            </select>
+
+
+          <div className="discover__header--row">
+
+            <div className="discover__arrow--wrapper">
+              <FontAwesomeIcon icon="arrow-left" className="discover__arrow white click" onClick={navigateBack}/>
+            </div>
+
+              <h1 className="page__header gold">Discover</h1>
+
+
+              <div className="discover__filter--wrapper">
+                <select
+                  className="discover__filter"
+                  value={mediaType}
+                  onChange={(e) => sortMedia(e.target.value)}
+                >
+                  <option value="movie">Movies</option>
+                  <option value="tv">Series</option>
+                </select>
+              </div>
+
+
           </div>
+
+        <p className="white">In search of something bingeworthy? Look no further!</p>
+
+        <hr />
+        </div>
+
+        
           <div className="media__lists">
             {categories && categories.popular}
             {categories && categories.top_rated}

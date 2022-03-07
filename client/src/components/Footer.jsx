@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import logo from "../assets/Logo.svg"
+import { useAuth } from './contexts/auth-context';
 
 const Footer = () => {
   const location = useLocation().pathname;
+  const { isLoggedIn } = useAuth();
   console.log('footer', location);
 
   let footerClass = 'footer'
@@ -29,6 +31,7 @@ const Footer = () => {
             {/* <span className="footer__link no-cursor">About</span> */}
             <Link to="/search" className="footer__link">Search</Link>
             <Link to="/discover" className="footer__link">Discover</Link>
+            {isLoggedIn && <Link to="/my-list" className="footer__link">My List</Link>}
             {/* <span className="footer__link no-cursor">Contact</span> */}
           </div>
           <div className="footer__copyright">

@@ -95,6 +95,7 @@ const MediaList = (props) => {
              <MediaListItem 
              handleClick={handleClick} 
              media={media}
+             src={apiConfig.w500Image(media.poster_path)}
              type={props.type} 
              typeFormat={typeFormat}  />
             )

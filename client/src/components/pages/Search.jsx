@@ -82,6 +82,16 @@ const Search = () => {
   };
 
 
+  const handleChange = (event) => {
+
+    if (!valid) {
+      setValid(true)
+    }
+
+    setQuery(event.target.value)
+  }
+
+
 
   useEffect(() => {
 
@@ -95,19 +105,20 @@ const Search = () => {
   return (
     <>
       <section id="search__header">
-        <div className="search__header--container">
-          <div className="row">
+        <div className="row">
+          <div className="search__header--container">
             <div className="search__header--wrapper">
-              <h1>
+              <h1 className="search__title">
                 What are <span className="gold title__font">you </span>watching?
               </h1>
+              {!valid && <p className="warning">{errorMessage}</p>}
               <form className="search__wrapper" onSubmit={handleSubmit}>
                 <input
                   type="search"
                   placeholder="Search by Title"
                   className="header__input"
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={handleChange}
                 />
                 <button className="btn btn__search" >
                   {/* <FontAwesomeIcon icon="search" /> */}
@@ -118,7 +129,6 @@ const Search = () => {
                     )}
                 </button>
               </form>
-              {!valid && <p className="warning">{errorMessage}</p>}
             </div>
           </div>
         </div>
@@ -127,7 +137,7 @@ const Search = () => {
       
         <section className="search__results">
           <div className="container bgblack">
-            <div className="row">
+            <div className="row search__row">
               <div className="results__heading--wrapper bgblack">
                 <h2 className="results__title">Search Results:</h2>
                 <div className="sort__wrapper">
@@ -169,14 +179,14 @@ const Search = () => {
               </div>
          
 
-            </div>
-          </div>
-        </section>
        {results.length < 1 && !loading &&(
         <figure className="search__img--wrapper">
           <img src={image} alt="" />
         </figure>
       )}
+            </div>
+          </div>
+        </section>
     </>
   );
 };
