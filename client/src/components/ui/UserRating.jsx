@@ -5,10 +5,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import classes from "./UserRating.module.css";
 
-export default function UserRating({ frontendRating, setFrontendRating, frontendWatched, setFrontendWatched, mediaId  }) {
+export default function UserRating(props) {
   const [hover, setHover] = useState(null);
   const [cookies] = useCookies()
   const isMounted = useRef(false);
+  const { frontendRating, setFrontendRating, frontendWatched, setFrontendWatched, mediaId  } = props;
   console.log(cookies);
 
   const setRating = async (ratingValue) => {
@@ -57,7 +58,7 @@ export default function UserRating({ frontendRating, setFrontendRating, frontend
               icon="star"
               key={i}
               color={ratingValue <= (hover || frontendRating) ? `#c78f03` : "#ba181b"}
-              className={classes.star}
+              className={props.skeleton ? classes.skeleton : classes.star}
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}
               onClick={() => setRating(ratingValue)}

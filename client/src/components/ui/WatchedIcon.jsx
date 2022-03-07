@@ -5,8 +5,9 @@ import classes from './WatchedIcon.module.css'
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
-const WatchedIcon = ({ frontendWatched, setFrontendWatched, frontendRating, setFrontendRating, mediaId }) => {
+const WatchedIcon = (props) => {
   const [cookies] = useCookies();
+  const { frontendWatched, setFrontendWatched, frontendRating, setFrontendRating, mediaId } = props;
 
   const watchedHandler = async () => {
     //If user unwatches an item with a rating, remove the rating
@@ -39,7 +40,7 @@ const WatchedIcon = ({ frontendWatched, setFrontendWatched, frontendRating, setF
         <FontAwesomeIcon
           icon={faTimes}
           onClick={watchedHandler}
-          className={classes.notWatched}
+          className={props.skeleton ? classes.skeleton : classes.notWatched}
         />
       )}
     </div>

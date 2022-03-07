@@ -1,5 +1,5 @@
-import React from 'react'
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from 'react'
+import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classes from './DeleteItemModal.module.css'
 import axios from 'axios';
@@ -7,6 +7,7 @@ import { useCookies } from 'react-cookie';
 
 const DeleteItemModalOverlay = (props) => {
   const { mediaId, closeModal, reloadWatchlist } = props;
+  const [loading, setLoading] = useState(false)
   const [cookies] = useCookies()
 
   const handleDeleteItem = async () => {
@@ -15,11 +16,15 @@ const DeleteItemModalOverlay = (props) => {
     console.log('id for deletion', mediaId);
     console.log('initiating backend delete');
 
+    setLoading(true)
+
     const response = await axios.put('http://localhost:3001/delete-item', { email: cookies.Email, mediaId}, {withCredentials: true});
     console.log(response);
     console.log(response.data);
     closeModal()
     reloadWatchlist(response.data)
+
+    setLoading(false)
   }
   
   return (
@@ -35,7 +40,9 @@ const DeleteItemModalOverlay = (props) => {
           <br />   
       </div>
       <footer className={classes.actions}>
-        <button className={`${classes.deleteButton} ${classes.button}`} onClick={handleDeleteItem}>Delete</button>
+        <button className={`${classes.deleteButton} ${classes.button}`} onClick={handleDeleteItem}>
+          {loading ? <FontAwesomeIcon icon={faSpinner} className={classes.spinner} /> : 'Delete'}
+          </button>
         <button className={`${classes.cancelButton} ${classes.button}`} onClick={closeModal}>Cancel</button>
       </footer>
     </div>

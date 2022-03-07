@@ -150,6 +150,36 @@
   outline: none;
 }
 
+.loadingButton {
+  font: inherit;
+  border: 1px solid #c78f03;
+  background: transition;
+  border-radius: 4px;
+  color: #c78f03;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 450ms ease;
+  margin: 16px 0;
+  width: 80%;
+  transition: all 300ms ease;
+}
+
+.spinner {
+  animation: loading 600ms infinite linear;
+  transition: all 300ms ease;
+  font-size: 26px;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .control {
   width: 100%;
   display: flex;

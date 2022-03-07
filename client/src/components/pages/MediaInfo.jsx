@@ -9,7 +9,7 @@ import { apiConfig } from "../../api/axiosClient.js";
 import Rating from "../ui/Rating.jsx";
 import Actor from "../ui/Actor.jsx";
 import DarkBg from '../../assets/GrayBG2.jpeg'
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import { elementType } from "prop-types";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -38,9 +38,12 @@ const MediaInfo = (props) => {
   const [relatedMedia, setRelatedMedia] = useState("");
   const [cast, setCast] = useState([])
   const [addedToWatchlist, setAddedToWatchlist] = useState(false);
+  const [loading, setLoading] = useState(true)
 
   const checkWatchlistForItem = async () => {
-    const response = await axios.post('http://localhost:3001/my-list', {email: cookies.Email}, {withCredentials: true});
+
+    setLoading(true)
+    const response = await axios.get('http://localhost:3001/my-list', {withCredentials: true});
     console.log(response.data, 'check watchlist item for mediainfo');
 
 
@@ -57,6 +60,7 @@ const MediaInfo = (props) => {
       setAddedToWatchlist(false)
       console.log('didnt watch');
     }
+    setLoading(false)
 
   }
 
@@ -116,6 +120,7 @@ const MediaInfo = (props) => {
     const saveData = { title, id, category, email: cookies.Email, poster_path, backdrop_path, rating, year }
     console.log(cookies, 'cookies');
     console.log(saveData);
+    setLoading(true)
     const response = await axios.put('http://localhost:3001/my-list', saveData, {withCredentials: true})
       .catch((res) => {
         console.log('ERROR RES MEDIA INFO save media', res.response);
@@ -135,6 +140,8 @@ const MediaInfo = (props) => {
         console.log(response.data, 'yaaa');
 
       }
+
+      setLoading(false)
   }
 
 
@@ -238,9 +245,20 @@ const MediaInfo = (props) => {
                     </a>
                   }
 
-                  {isLoggedIn && <span className={ addedToWatchlist ? "added-media" : "add-media"} onClick={addMediaToWatchlist} title="Already added to your watchlist!">
-                    { addedToWatchlist ? <p>Added to Watchlist!</p> : <FontAwesomeIcon icon={faTimes} className='add-media__icon' />}
-                  </span>}
+                  {isLoggedIn && 
+                  
+                  <span className={ addedToWatchlist ? "added-media" : "add-media"} onClick={addMediaToWatchlist} title="Already added to your watchlist!">
+
+
+                    {loading && <FontAwesomeIcon icon={faSpinner} className='spinner' />}
+
+                    {(!addedToWatchlist && !loading) && <FontAwesomeIcon icon={faTimes} className='add-media__icon' />}
+
+                    { (addedToWatchlist && !loading) && <p>Added to Watchlist!</p> }
+                    {/* { addedToWatchlist ? <p>Added to Watchlist!</p> : <FontAwesomeIcon icon={faTimes} className='add-media__icon' />} */}
+                  </span>
+                  
+                  }
 
                 </div>
 

@@ -15,13 +15,14 @@ const Search = () => {
   const [searchFor, setSearchFor] = useState(state || "");
   //What is currently in the input field. Will not search until enter, or button next to input is pressed
   const [query, setQuery] = useState(state || "");
-  const [results, setResults] = useState("");
+  const [results, setResults] = useState([]);
   const [sortValue, setSortValue] = useState("DEFAULT");
   //Renders a skeleton state for movies while movie data is being fetched
   const [loading, setLoading] = useState(false);
   //When false, won't submit a query to fetch data
   const [valid, setValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState('')
+  const [searchComplete, setSearchComplete] = useState(false)
   
 
 
@@ -61,19 +62,20 @@ const Search = () => {
       if (queryBeingValidated.trim().length < 1) {
         setValid(false)
         setErrorMessage("Error! Cannot make a search for an empty string.")
-        return;
+        return false;
       }
       setValid(true)
+      return true
     }
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    validateQuery(query)
-    if (valid) {
-      setLoading(false);
+    const validated = validateQuery(query)
+    if (validated){
       //setSearchFor triggers useEffect
+      setLoading(true);
       setSearchFor(query);
       setSortValue("DEFAULT");
     }
@@ -84,7 +86,7 @@ const Search = () => {
   useEffect(() => {
 
     //Returns list of movies from tmdbApi for given query
-    fetchQueryData(searchFor, setResults, setLoading);
+    fetchQueryData(searchFor, setResults, setLoading, setSearchComplete);
 
     //Runs on first mount (Initial search if there is one) and whenever the search button is clicked
   }, [searchFor]);
@@ -122,7 +124,7 @@ const Search = () => {
         </div>
       </section>
 
-      {results ? (
+      
         <section className="search__results">
           <div className="container bgblack">
             <div className="row">
@@ -152,20 +154,25 @@ const Search = () => {
                 </div>
               </div>
 
+              
               <div className="results__wrapper">
-                {!loading ? results.map((result) => {
-                    return <Media media={result} key={result.id} />;
-                }) : 
+                {(results.length > 0 && !loading) && results.map((result) => {
+                    return <Media media={result} key={result.id} />
+                }) 
+              }
+                { (loading) &&
                   skeletonArr.map(result => {
                     return <Media media={result} key={result.id} />;
                   })
                 }
-                {results.length < 1 && <h2 className="red spacer bgblack">No Results Found!</h2>}
+                {(results.length < 1 && searchComplete) && <h2 className="red spacer bgblack">No Results Found!</h2>}
               </div>
+         
+
             </div>
           </div>
         </section>
-      ) : (
+       {results.length < 1 && !loading &&(
         <figure className="search__img--wrapper">
           <img src={image} alt="" />
         </figure>

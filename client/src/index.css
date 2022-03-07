@@ -233,6 +233,10 @@ button:active {
   text-align: center;
 }
 
+.error-page {
+  height: calc(100vh - 540px);
+}
+
 
 
 

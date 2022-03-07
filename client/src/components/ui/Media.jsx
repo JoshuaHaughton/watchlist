@@ -12,7 +12,7 @@ const Media = (props) => {
 
   //Deside class based on if the media given was a skeleton or not (for loading state)
   let classType;
-  media.id ? classType = 'media' : classType = 'skeleton'
+  !media.skeleton ? classType = 'media' : classType = 'skeleton'
 
   //Format year based on if media is a tv series or a movie
   let year ;
@@ -43,13 +43,13 @@ const Media = (props) => {
   
   return (
     <div className={!suggested ? "media__card" : "media__card suggested__card"}>
-      <Link to={`/${media.media_type}/${media.id}`} className="media__info--link">
+      <Link to={!media.skeleton ? `/${media.media_type}/${media.id}` : '#'} className="media__info--link">
         <div className="media__wrapper">
-          <figure className={`${classType}__card--wrapper`}>
+          <figure className={`media__card--wrapper`}>
             <img
               src={imagePath ? imagePath : skeleton}
               alt={media.title ? media.title : media.name}
-              className={`${classType}__card--img`}
+              className={`media__card--img`}
             />
           <div className="media__wrapper--bg"></div>
           </figure>

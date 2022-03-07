@@ -5,12 +5,44 @@ import GrayBG from '../../assets/GrayBG.jpeg'
 import tmdbApi from '../../api/tmdbApi'
 import Rating from './Rating';
 import { typeFormat } from '../helpers/MediaHelpers';
+import MediaListItem from './MediaListItem';
 
 const MediaList = (props) => {
   const [mediaList, setMediaList] = useState();
+  const [loading, setLoading] = useState(false)
 
   //Skeleton array used for loading state
-  const loadingArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const loadingArray = [
+    {
+      id: 1,
+    },
+    {
+      id: 2,
+    },
+    {
+      id: 3,
+    },
+    {
+      id: 4,
+    },
+    {
+      id: 5,
+    },
+    {
+      id: 6,
+    },
+    {
+      id: 7,
+    },
+    {
+      id: 8,
+    },
+    {
+      id: 9,
+    }
+  ];
+
+
   const navigate = useNavigate();
 
 
@@ -24,6 +56,7 @@ const MediaList = (props) => {
     setMediaList(null)
 
     const fetchMediaList = async () => {
+      setLoading(true)
       const response = await tmdbApi.getMediaList(props.category, props.type);
       let newList = response.results
 
@@ -41,6 +74,7 @@ const MediaList = (props) => {
       //The above currently doesn't't currently render a lot of movies because more need to be announced! Will comment out for now
 
       setMediaList(newList)
+      setLoading(false)
     }
 
     fetchMediaList();
@@ -54,29 +88,29 @@ const MediaList = (props) => {
       <p className='media__list--description'>{props.description}</p>
       <div className="media__list">
         {
-          mediaList ? 
+         ( mediaList && !loading) ? 
           mediaList.map(media => {
             console.log(media);
             return (
-              <figure className='list__img--wrapper' onClick={() => handleClick(media.id)}>
-              <img src={apiConfig.originalImage(media.poster_path)} alt={media.title} className='media__list--img' key={media.id}/>
-              <div className="media__wrapper--bg"></div>
-              <div className="list__item--description">
-                <h3 className={`media__title`}>{media.title || media.name}</h3>
-                <h5 className={`media__year`}>{media.release_date || media.first_air_date}</h5>
-                {(media && media.vote_average) > 0 ? <Rating rating={media.vote_average} /> : <p className='red'>No Rating</p>}
-                <br />
-                <h3 className={`media__title`}>{typeFormat(props.type)}</h3>
-              </div>
-          </figure>
+             <MediaListItem 
+             handleClick={handleClick} 
+             media={media}
+             type={props.type} 
+             typeFormat={typeFormat}  />
             )
           }) :
-          loadingArray.map(num => {
+          loadingArray.map(item => {
             return (
-              <figure className='list__img--wrapper'>
-                <img src={GrayBG} alt={'Skeleton Placeholder'} className='media__list--img' key={num}/>
-                <div className="media__wrapper--bg"></div>
-              </figure>
+
+            <MediaListItem 
+             handleClick={handleClick} 
+             media={item}
+             skeleton={true}
+             typeFormat={typeFormat}  />
+              // <figure className='list__img--wrapper'>
+              //   <img src={GrayBG} alt={'Skeleton Placeholder'} className='media__list--img' key={num}/>
+              //   <div className="media__wrapper--bg"></div>
+              // </figure>
             )
           })
 
@@ -86,4 +120,4 @@ const MediaList = (props) => {
   )
 }
 
-export default MediaList
+  export default MediaList

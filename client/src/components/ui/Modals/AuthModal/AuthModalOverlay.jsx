@@ -1,6 +1,7 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useCookies } from 'react-cookie';
 import { useAuth } from "../../../contexts/auth-context";
@@ -9,6 +10,7 @@ import classes from "./AuthModal.module.css";
 
 const ModalOverlay = (props) => {
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false)
   const { signup, login } = useAuth();
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
   const { isSignUp, setIsSignUp } = props;
@@ -100,12 +102,15 @@ const ModalOverlay = (props) => {
       //If signup form, attempt to signup
 
 
+      setLoading(true)
       const response = await signup(enteredName, enteredEmail, enteredPassword, setError, resetEmailInput);
 
 
       console.log(response)
 
       const success = response.status === 200;
+
+      setLoading(false)
 
       if (success) {
 
@@ -125,6 +130,8 @@ const ModalOverlay = (props) => {
     } else {
       //If Login form, attempt to Login
 
+      setLoading(true)
+
       const response = await login(enteredEmail, enteredPassword, resetEmailInput, resetPasswordInput, setError);
    
 
@@ -132,6 +139,8 @@ const ModalOverlay = (props) => {
 
       // If response comes back successfull
       const success = response.status == 200;
+
+      setLoading(false)
 
       if (success) {
 
@@ -260,9 +269,15 @@ const ModalOverlay = (props) => {
               </div>
             )}
 
-            <button className={classes.button}>
+           {loading ? 
+           <button className={classes.loadingButton}>
+             <FontAwesomeIcon icon={faSpinner} className={classes.spinner}/>
+           </button>
+           :
+           <button className={classes.button}>
               {isSignUp ? `Sign Up` : `Log In`}
             </button>
+            }
             {error && <p className={classes.formError}>{error}</p>}
           </form>
           
