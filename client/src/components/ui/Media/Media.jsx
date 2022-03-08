@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import placeholder from "../../assets/No-Image-Placeholder.svg.png";
-import { typeFormat } from "../helpers/MediaHelpers";
-import skeleton from "../../assets/GrayBG.jpeg"
-import { apiConfig } from "../../api/axiosClient";
-import Rating from "./Rating";
+import placeholder from "../../../assets/No-Image-Placeholder.svg.png";
+import { typeFormat } from "../../helpers/MediaHelpers";
+import skeleton from "../../../assets/GrayBG.jpeg"
+import { apiConfig } from "../../../api/axiosClient";
+import Rating from "../Rating/Rating";
+import classes from './Media.module.css'
 
 const Media = (props) => {
   const { media, suggested } = props;
@@ -42,24 +43,24 @@ const Media = (props) => {
 
   
   return (
-    <div className={!suggested ? "media__card" : "media__card suggested__card"}>
-      <Link to={!media.skeleton ? `/${media.media_type}/${media.id}` : '#'} className="media__info--link">
-        <div className="media__wrapper">
-          <figure className={`media__card--wrapper`}>
+    <div className={!suggested ? classes.mediaCard : `${classes.mediaCard} ${classes.suggestedCard}`}>
+      <Link to={!media.skeleton ? `/${media.media_type}/${media.id}` : '#'} >
+        <div className={classes.mediaWrapper}>
+          <figure className={classes.mediaCardWrapper}>
             <img
               src={imagePath ? imagePath : skeleton}
               alt={media.title ? media.title : media.name}
-              className={`media__card--img`}
+              className={classes.mediaCardImg}
             />
-          <div className="media__wrapper--bg"></div>
+          <div className={classes.mediaWrapperBg}></div>
           </figure>
           {!media.skeleton && 
-          <div className="media__description">
-            <h3 className={`${classType}__title`}>{media.title || media.name}</h3>
-            <h5 className={`${classType}__year`}>{year}</h5>
+          <div className={classes.mediaDescription}>
+            <h3 className={classes[`${classType}Title`]}>{media.title || media.name}</h3>
+            <h5 className={classes[`${classType}Year`]}>{year}</h5>
             {(media && media.vote_average) > 0 ? <Rating rating={media.vote_average} /> : <p>No Ratings<br /></p>}
             <br />
-            <h3 className={`${classType}__title`}>{typeFormat(media.media_type)}</h3>
+            <h3 className={classes[`${classType}Title`]}>{typeFormat(media.media_type)}</h3>
           </div>
           }
         </div>

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import placeholder from "../../assets/No-Image-Placeholder.svg.png";
-import { typeFormat } from "../helpers/MediaHelpers";
-import skeletonImg from "../../assets/WatchlistSkeleton.png";
-import { apiConfig } from "../../api/axiosClient";
-import Rating from "./Rating";
+import placeholder from "../../../assets/No-Image-Placeholder.svg.png";
+import { typeFormat } from "../../helpers/MediaHelpers";
+import skeletonImg from "../../../assets/WatchlistSkeleton.png";
+import { apiConfig } from "../../../api/axiosClient";
+import Rating from "../Rating/Rating";
 import classes from "./WatchlistItem.module.css";
-import UserRating from "./UserRating";
+import UserRating from "../UserRating/UserRating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import UserLike from "./UserLike";
-import WatchedIcon from "./WatchedIcon";
+import UserLike from "../UserLike/UserLike";
+import WatchedIcon from "../WatchedIcon/WatchedIcon";
 import { set } from "lodash";
-import DeleteItemModal from "./Modals/DeleteItemModal/DeleteItemModal";
+import DeleteItemModal from "../Modals/DeleteItemModal/DeleteItemModal";
 
 const WatchlistItem = (props) => {
   const { media, reloadWatchlist } = props;

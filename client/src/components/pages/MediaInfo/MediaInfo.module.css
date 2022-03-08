@@ -1,0 +1,300 @@
+.body {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  background-color: #242424;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding-top: 24px;
+}
+
+.row {
+  width: 100%;
+  height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+.containerFade {
+  height: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(180deg,transparent,rgba(37,37,37,.61),#111);
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  padding: 12px 0 32px 24px;
+  font-size: 32px;
+  color: #242424;
+  display: flex;
+  align-items: center;
+}
+
+.arrowBack {
+  color: white;
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.arrowBack:hover {
+  transform: scale(1.15);
+  color: #ba181b;
+}
+
+.arrowBack:active {
+  transform: scale(0.9)
+}
+
+.headerTitle {
+  margin-left: 15px;
+  margin-bottom: 0;
+  padding-bottom: 0 !important;
+}
+
+.selectedMedia {
+  display: flex;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  box-shadow: 5px 5px 8px 4px rgba(0, 0, 0, 0.4);
+  padding: 16px;
+}
+
+.selectedMediaFigure {
+  width: 40%;
+  padding: 16px 80px 16px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectedMediaImg {
+  max-height: 500px;
+  width: auto;
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.3);
+}
+
+.selectedMediaDescription {
+  width: 60%;
+  padding: 16px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+}
+
+.selectedMediaTitle {
+  margin-bottom: 8px
+}
+
+.mediaRating {
+  width: 36px;
+  display: inline-flex;
+  justify-content: center;
+  align-content: center;
+  background-color: gray;
+  border-radius: 40px;
+  border: none;
+  padding: 8px;
+  margin-left: 8px;
+}
+
+.mediaSummary {
+  margin-bottom: 16px;
+}
+
+.mediaInfoActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  background-color: #ba181b;
+  color: #e6e6e6;
+  padding: 12px 24px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: none;
+  transition: all 300ms ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:hover {
+  transform: scale(1.025);
+  color: #c78f03;
+}
+
+.addMedia {
+  cursor: pointer;
+  margin-left: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  border-radius: 25px;
+  transition: all 300ms ease;
+}
+
+.addMedia:hover {
+  background-color: #fff;
+  color: green;
+  transform: scale(1.05);
+}
+
+.addMedia:active {
+  transform: scale(0.75);
+}
+
+
+.addedMedia {
+  cursor: not-allowed;
+  margin-left: 24px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ba181b;
+  color: #c78f03;
+  border-radius: 4px;
+  transition: all 300ms ease;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.addMediaIcon {
+  transform: rotate(45deg);
+}
+
+.spinner {
+  animation: loading 600ms infinite linear;
+  transition: all 300ms ease;
+  font-size: 28px;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+/* CAST */
+
+
+
+
+
+.castContainer {
+  padding-bottom: 56px;
+  background-color: #242424;
+}
+
+.castContainerFade {
+  height: 100%;
+  background-image: linear-gradient(0deg,transparent,rgb(37 37 37),#111111);
+}
+
+.castSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.castWrapper {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 20px;
+  width: 90%
+}
+
+.castContainerAlt {
+  padding-bottom: 32px;
+  background-color: #242424;
+}
+
+.castTitle {
+  margin: 0;
+  padding-top: 32px;
+  color: #ba181b;
+}
+
+.castWrapper::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+  background: #ba181b;
+}
+
+.castWrapper::-webkit-scrollbar-thumb:horizontal {
+  background: #c78f03;
+  border-radius: 20px;
+}
+
+
+
+
+
+/* SUGGESTED */
+
+
+
+
+
+.suggestedContainer {
+  padding-bottom: 40px;
+  background-color: #242424;
+}
+
+.suggestedMedia {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.suggestedTitle {
+  margin: 0;
+  padding-bottom: 24px;
+  background-color: #242424;
+  color: red;
+}
+
+
+
+
+
+/* GENERAL */
+
+
+
+
+
+.red {
+  color: #ba181b;
+}
+
+.gold {
+  color: #c78f03;
+}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { apiConfig } from '../../api/axiosClient';
-import GrayBG from '../../assets/GrayBG.jpeg'
-import tmdbApi from '../../api/tmdbApi'
-import Rating from './Rating';
-import { typeFormat } from '../helpers/MediaHelpers';
+import { apiConfig } from '../../../api/axiosClient';
+import GrayBG from '../../../assets/GrayBG.jpeg'
+import tmdbApi from '../../../api/tmdbApi'
+import Rating from '../Rating/Rating';
+import { typeFormat } from '../../helpers/MediaHelpers';
 import MediaListItem from './MediaListItem';
+import classes from './MediaList.module.css'
 
 const MediaList = (props) => {
   const [mediaList, setMediaList] = useState();
@@ -83,10 +84,10 @@ const MediaList = (props) => {
   
 
   return (
-    <div className='media__list--wrapper'>
-      <h2 className='media__list--title'>{props.title}</h2>
-      <p className='media__list--description'>{props.description}</p>
-      <div className="media__list">
+    <div className={classes.mediaListWrapper}>
+      <h2 className={classes.mediaListTitle}>{props.title}</h2>
+      <p className={classes.mediaListDescription}>{props.description}</p>
+      <div className={classes.mediaList}>
         {
          ( mediaList && !loading) ? 
           mediaList.map(media => {
@@ -108,10 +109,6 @@ const MediaList = (props) => {
              media={item}
              skeleton={true}
              typeFormat={typeFormat}  />
-              // <figure className='list__img--wrapper'>
-              //   <img src={GrayBG} alt={'Skeleton Placeholder'} className='media__list--img' key={num}/>
-              //   <div className="media__wrapper--bg"></div>
-              // </figure>
             )
           })
 

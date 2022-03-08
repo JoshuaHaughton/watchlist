@@ -1,13 +1,14 @@
-import { apiConfig } from "../../api/axiosClient";
-import Rating from "./Rating";
-import GrayBG from '../../assets/GrayBG.jpeg'
+import { apiConfig } from "../../../api/axiosClient";
+import Rating from "../Rating/Rating";
+import GrayBG from '../../../assets/GrayBG.jpeg'
+import classes from './MediaListItem.module.css'
 
 export default function MediaListItem(props) {
   const { handleClick, media, typeFormat, type } = props;
 
   return (
     <figure
-      className="list__img--wrapper"
+      className={classes.imageWrapper}
       onClick={() => handleClick(media.id)}
     >
       <img
@@ -15,23 +16,23 @@ export default function MediaListItem(props) {
           !props.src ? GrayBG : props.src
         }
         alt={props.skeleton ? "Skeleton Placheholder" : media.title}
-        className="media__list--img"
+        className={classes.img}
         key={media.id}
       />
-      <div className="media__wrapper--bg"></div>
+      <div className={classes.imageWrapperBg}></div>
       {!props.skeleton &&
-      <div className="list__item--description">
-        <h3 className={`media__title`}>{media.title || media.name}</h3>
-        <h5 className={`media__year`}>
+      <div className={classes.mediaDescription}>
+        <h3 className={classes.mediaTitle}>{media.title || media.name}</h3>
+        <h5 className={classes.mediaSubtitle}>
           {media.release_date || media.first_air_date}
         </h5>
         {(media && media.vote_average) > 0 ? (
           <Rating rating={media.vote_average} />
         ) : (
-          <p className="red">No Rating</p>
+          <p className={classes.red}>No Rating</p>
         )}
         <br />
-        <h3 className={`media__title`}>{typeFormat(type)}</h3>
+        <h3 className={classes.mediaSubtitle}>{typeFormat(type)}</h3>
       </div>
 }
     </figure>

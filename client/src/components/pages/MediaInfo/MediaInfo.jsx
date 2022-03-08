@@ -2,18 +2,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { getDetails } from "../helpers/MediaInfoHelpers.js";
-import Media from "../ui/Media";
-import placeholder from "../../assets/No-Image-Placeholder.svg.png";
-import { apiConfig } from "../../api/axiosClient.js";
-import Rating from "../ui/Rating.jsx";
-import Actor from "../ui/Actor.jsx";
-import DarkBg from '../../assets/GrayBG2.jpeg'
+import { getDetails } from "../../helpers/MediaInfoHelpers.js";
+import Media from "../../ui/Media/Media";
+import placeholder from "../../../assets/No-Image-Placeholder.svg.png";
+import { apiConfig } from "../../../api/axiosClient.js";
+import Rating from "../../ui/Rating/Rating.jsx";
+import Actor from "../../ui/Actor/Actor.jsx";
+import DarkBg from '../../../assets/GrayBG2.jpeg'
 import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import { elementType } from "prop-types";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../contexts/auth-context.js";
+import { useAuth } from "../../contexts/auth-context.js";
+import classes from './MediaInfo.module.css'
 
 const MediaInfo = (props) => {
   const { isLoggedIn } = useAuth();
@@ -152,48 +153,48 @@ const MediaInfo = (props) => {
 
 
   return (
-    <div id="media__body">
+    <div className={classes.body}>
       {/* <main id="media__main"> */}
-        <div id="media__container">
-          <div className="container__fade">
+        <div id="media__container" className={classes.container}>
+          <div className={classes.containerFade}>
 
-          <div className="row">
-            <div className="media__selected--top">
-                <FontAwesomeIcon icon="arrow-left" className="white click" onClick={navigateBack}/>
-                <h3 className="media__selected--title--top white click" onClick={navigateBack}>
+          <div className={classes.row}>
+            <div className={classes.header}>
+                <FontAwesomeIcon icon="arrow-left" className={classes.arrowBack} onClick={navigateBack}/>
+                <h3 className={`${classes.headerTitle} ${classes.arrowBack}`} onClick={navigateBack}>
                   Previous Page
                 </h3>
             </div>
 
-            <div className="media__selected">
-              <figure className="media__selected--figure">
+            <div className={classes.selectedMedia}>
+              <figure className={classes.selectedMediaFigure}>
                 <img
                   src={src}
                   alt=""
-                  className="media__selected--img"
+                  className={classes.selectedMediaImg}
                 />
               </figure>
-              <div className="media__selected--description">
-                <h2 className="media__selected--title">
+              <div className={classes.selectedMediaDescription}>
+                <h2 className={classes.selectedMediaTitle}>
                   {title}
                 </h2>
 
 
-                {year ? <h3 className="media__summary--title">
+                {year ? <h3 className={classes.selectedMediaTitle}>
                   Year: {year && year.slice(0, 4)}
                 </h3>
                 :
-                <h3 className="media__summary--title red">
+                <h3 className={`${classes.selectedMediaTitle} ${classes.red}`}>
                   Year Not Listed by Api
                 </h3>
                 }
 
                 {rating > 0 ?
-                <h3 className="media__summary--title">
-                  Tmdb Rating: <span className="media__score">{rating}</span>
+                <h3 className={classes.selectedMediaTitle}>
+                  Tmdb Rating: <span className={classes.mediaRating}>{rating}</span>
                 </h3>
                 :
-                <h3 className="media__summary--title red">
+                <h3 className={`${classes.selectedMediaTitle} ${classes.red}`}>
                   No Rating Available
                 </h3>
                 }
@@ -209,11 +210,11 @@ const MediaInfo = (props) => {
 
                {
                genre.length > 0 ?  
-                <h3 className="media__summary--title">
+                <h3 className={classes.selectedMediaTitle}>
                   Genres: {genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}
                 </h3>
                 :
-                <h3 className="media__summary--title red">
+                <h3 className={`${classes.selectedMediaTitle} ${classes.red}`}>
                   No Genres Listed
                 </h3>
                 }
@@ -223,43 +224,43 @@ const MediaInfo = (props) => {
 
 
                 {summary ? 
-                <div className="media__summary">
-                  <h3 className="media__summary--title">Summary</h3>
-                  <p className="media__summary--para">{summary}</p>
+                <div className={classes.mediaSummary}>
+                  <h3 className={classes.selectedMediaTitle}>Summary</h3>
+                  <p className={classes.mediaSummary}>{summary}</p>
                 </div>
                 :
-                <div className="media__summary">
-                  <h3 className="media__summary--title red">No Summary Available</h3>
+                <div className={classes.mediaSummary}>
+                  <h3 className={`${classes.selectedMediaTitle} ${classes.red}`}>No Summary Available</h3>
                 </div>
                 }
 
 
 
 
-                <div className="media__info--actions">
+                <div className={classes.mediaInfoActions}>
                   {/* Button to movie homepage if there is one */}
                   {myMedia.homepage &&
                     <a href={myMedia.homepage} target="_blank">
                       {" "}
-                      <button className="btn btn__effect">More Details</button>
+                      <button className={classes.button}>More Details</button>
                     </a>
                   }
                   {/* Button to movie imdb page if there isn't a homepage */}
                   {(imdbId && !myMedia.homepage) &&
                     <a href={`https://m.imdb.com/title/${imdbId}/`} target="_blank">
                       {" "}
-                      <button className="btn btn__effect">More Details</button>
+                      <button className={classes.button}>More Details</button>
                     </a>
                   }
 
                   {isLoggedIn && 
                   
-                  <span className={ addedToWatchlist ? "added-media" : "add-media"} onClick={addMediaToWatchlist} title="Already added to your watchlist!">
+                  <span className={ addedToWatchlist ? classes.addedMedia : classes.addMedia} onClick={addMediaToWatchlist} >
 
 
-                    {loading && <FontAwesomeIcon icon={faSpinner} className='spinner' />}
+                    {loading && <FontAwesomeIcon icon={faSpinner} className={classes.spinner} />}
 
-                    {(!addedToWatchlist && !loading) && <FontAwesomeIcon icon={faTimes} className='add-media__icon' />}
+                    {(!addedToWatchlist && !loading) && <FontAwesomeIcon icon={faTimes} className={classes.addMediaIcon} />}
 
                     { (addedToWatchlist && !loading) && <p>Added to Watchlist!</p> }
                     {/* { addedToWatchlist ? <p>Added to Watchlist!</p> : <FontAwesomeIcon icon={faTimes} className='add-media__icon' />} */}
@@ -283,13 +284,13 @@ const MediaInfo = (props) => {
         {/* CAST */}
 
 
-        {cast.length > 0 ? <div className="cast__container">
-          <div className="cast__container--fade">
-            <div className="row">
+        {cast.length > 0 ? <div className={classes.castContainer}>
+          <div className={classes.castContainerFade}>
+            <div className={classes.row}>
             {/* <div className="row bgblack"> */}
-              <div className="cast__section">
-                <h2 className="gold">Cast</h2>
-                <div className="cast__wrapper">
+              <div className={classes.castSection}>
+                <h2 className={classes.gold}>Cast</h2>
+                <div className={classes.castWrapper}>
                   {cast && cast.map(actor => {
                     return <Actor
                     key={actor.id}
@@ -306,9 +307,9 @@ const MediaInfo = (props) => {
           </div>
         </div>
         :
-        <div className="cast__container--alt">
-          <div className="cast__container--fade">
-              <h2 className="cast__title--alt red">{"Sorry, no Cast listed for this title via Api"}</h2>
+        <div className={classes.castContainerAlt}>
+          <div className={classes.castContainerFade}>
+              <h2 className={classes.castTitle}>{"Sorry, no Cast listed for this title via Api"}</h2>
           </div>
         </div>
         }
@@ -320,14 +321,14 @@ const MediaInfo = (props) => {
         {/* Suggested */}
 
         {relatedMedia.length > 0 ? (
-          <div className="suggested__container bgblack">
-            <div className="row">
-              <div className="media__selected--top">
-                <h2 className="media__selected--title--top gold">
+          <div className={classes.suggestedContainer}>
+            <div className={classes.row}>
+              <div className={classes.header}>
+                <h2 className={`${classes.selectedMediaTitle} ${classes.gold}`}>
                   You may also like:
                 </h2>
               </div>
-              <div className="media">
+              <div className={classes.suggestedMedia}>
                 {relatedMedia &&
                   relatedMedia.slice(0, 4).map((media) => {
                     return (
@@ -342,7 +343,7 @@ const MediaInfo = (props) => {
             </div>
           </div>
         ) : (
-          <h2 className="related__title red bgblack">{"Sorry, no related media for this title"}</h2>
+          <h2 className={classes.suggestedTitle}>{"Sorry, no related media for this title"}</h2>
         )}
       {/* </main> */}
     </div>

@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Media from "../ui/Media";
-import image from "../../assets/Search.svg";
+import Media from "../../ui/Media/Media";
+import image from "../../../assets/Search.svg";
+import classes from './Search.module.css'
 import {
   fetchQueryData,
   sortResults,
-} from "../../components/helpers/SearchHepers";
+} from "../../helpers/SearchHepers";
 
 const Search = () => {
   //State given from Landing component if a search was made from there
@@ -104,28 +105,28 @@ const Search = () => {
 
   return (
     <>
-      <section id="search__header">
-        <div className="row">
-          <div className="search__header--container">
-            <div className="search__header--wrapper">
-              <h1 className="search__title">
-                What are <span className="gold title__font">you </span>watching?
+      <section className={classes.header}>
+        <div className={classes.row}>
+          <div className={classes.headerContainer}>
+            <div className={classes.headerWrapper}>
+              <h1 className={classes.searchTitle}>
+                What are <span className={`${classes.titleFont} ${classes.gold}`}>you </span>watching?
               </h1>
-              {!valid && <p className="warning">{errorMessage}</p>}
-              <form className="search__wrapper" onSubmit={handleSubmit}>
+              {!valid && <p className={classes.warning}>{errorMessage}</p>}
+              <form className={classes.searchWrapper} onSubmit={handleSubmit}>
                 <input
                   type="search"
                   placeholder="Search by Title"
-                  className="header__input"
+                  className={classes.input}
                   value={query}
                   onChange={handleChange}
                 />
-                <button className="btn btn__search" >
+                <button className={classes.searchButton} >
                   {/* <FontAwesomeIcon icon="search" /> */}
                   {!loading ? (
                       <FontAwesomeIcon icon="search" />
                     ) : (
-                      <FontAwesomeIcon icon="spinner" className="spinner gold" />
+                      <FontAwesomeIcon icon="spinner" className={`${classes.spinner} ${classes.gold}`} />
                     )}
                 </button>
               </form>
@@ -135,13 +136,13 @@ const Search = () => {
       </section>
 
       
-        <section className="search__results">
-          <div className="container bgblack">
-            <div className="row search__row">
-              <div className="results__heading--wrapper bgblack">
-                <h2 className="results__title">Search Results:</h2>
-                <div className="sort__wrapper">
-                  <h3 className="white">Sort By: </h3>
+        <section className={classes.searchResults}>
+          <div className={classes.resultsContainer}>
+            <div className={classes.searchRow}>
+              <div className={classes.resultsHeadingWrapper}>
+                <h2 className={classes.resultsTitle}>Search Results:</h2>
+                <div className={classes.sortWrapper}>
+                  <h3 className={classes.white}>Sort By: </h3>
                   <select
                     id="filter"
                     value={sortValue}
@@ -165,7 +166,7 @@ const Search = () => {
               </div>
 
               
-              <div className="results__wrapper">
+              <div className={classes.resultsWrapper}>
                 {(results.length > 0 && !loading) && results.map((result) => {
                     return <Media media={result} key={result.id} />
                 }) 
@@ -175,13 +176,13 @@ const Search = () => {
                     return <Media media={result} key={result.id} />;
                   })
                 }
-                {(results.length < 1 && searchComplete) && <h2 className="red spacer bgblack">No Results Found!</h2>}
+                {(results.length < 1 && searchComplete) && <h2 className={classes.errorTitle}>No Results Found!</h2>}
               </div>
          
 
        {results.length < 1 && !loading &&(
-        <figure className="search__img--wrapper">
-          <img src={image} alt="" />
+        <figure className={classes.searchImgWrapper}>
+          <img src={image} alt="No Image Found Placeholder" />
         </figure>
       )}
             </div>

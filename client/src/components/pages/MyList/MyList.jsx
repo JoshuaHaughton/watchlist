@@ -3,9 +3,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
-import { useAuth } from "../contexts/auth-context";
-import { sortMyListResults } from "../helpers/MyListHelpers";
-import WatchlistItem from "../ui/WatchlistItem";
+import { useAuth } from "../../contexts/auth-context";
+import { sortMyListResults } from "../../helpers/MyListHelpers";
+import WatchlistItem from "../../ui/WatchlistItem/WatchlistItem";
+import classes from './MyList.module.css'
 
 const MyList = (props) => {
   const [cookies] = useCookies();
@@ -136,28 +137,28 @@ const MyList = (props) => {
   }, [isLoggedIn]);
 
   return (
-    <div className="my-list__container">
-      <div className="row">
-        <div className="my-list__content">
+    <div className={classes.container}>
+      <div className={classes.row}>
+        <div>
           {errorMessage ? (
-            <h1 className="error-page">{errorMessage}</h1>
+            <h1 className={classes.errorPage}>{errorMessage}</h1>
           ) : (
             <>
-              <div className="page__description">
-                <div className="discover__header--row">
-                  <div className="discover__arrow--wrapper">
+              <div className={classes.pageDescription}>
+                <div className={classes.descriptionTopRow}>
+                  <div className={classes.iconWrapper}>
                     <FontAwesomeIcon
                       icon="arrow-left"
-                      className="discover__arrow white click"
+                      className={classes.backArrow}
                       onClick={navigateBack}
                     />
                   </div>
 
-                  <h1 className="page__header gold">My List</h1>
+                  <h1 className={classes.pageTitle}>My List</h1>
 
-                  <div className="discover__filter--wrapper">
+                  <div className={classes.selectWrapper}>
                     <select
-                    className="discover__filter"
+                    className={classes.select}
                     value={filterType}
                     onChange={(e) =>  sortMyListResults(
                       e.target.value,
@@ -176,7 +177,7 @@ const MyList = (props) => {
 
                 </div>
 
-                <p className="white">
+                <p className={classes.white}>
                   Browse items from your saved watchlist!
                 </p>
 
@@ -196,7 +197,7 @@ const MyList = (props) => {
 
 
 
-              <div className="my-list__media--content">
+              <div className={classes.mediaContent}>
                 {myWatchlist.length > 0 && !loading
                   ? myWatchlist.map((media) => {
                       console.log("item");

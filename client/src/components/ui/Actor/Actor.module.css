@@ -1,0 +1,94 @@
+
+
+.actorWrapper {
+  position: relative;
+  background-color: transparent;
+  z-index: 8;
+  max-width: 168px;
+  margin: 12px;
+  cursor: pointer;
+}
+
+.actorWrapperBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background-color: #1c1d25;
+  opacity: 0;
+  transition: all 450ms ease;
+  cursor: pointer;
+}
+
+.actorImgWrapper {
+  position: relative;
+  max-height: 250px;
+  max-width: 168px;
+  border-radius: 12px;
+  box-shadow: -4px 2px 4px 2px rgba(0, 0, 0, 0.25);
+  transition: all 300ms ease;
+}
+
+.actorImgWrapper:hover {
+  transform: scale(1.025);
+}
+
+.actorImg {
+  max-width: 168px;
+  width: auto;
+  max-height: 250px;
+  border-radius: 12px;
+  transition: all 300ms ease;
+}
+
+.actorTextOverlay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -10%);
+  opacity: 0;
+  transition: opacity 300ms, transform 450ms ease;
+  color: white;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.actorLink {
+  cursor: default;
+}
+
+.actorLink:active {
+  transform: scale(0.95);
+}
+
+.actorNoLink {
+  cursor: not-allowed;
+}
+
+.actorWrapper:hover .actorTextOverlay {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.actorWrapper:hover .actorWrapperBg {
+  opacity: 0.7;
+}
+
+
+.actorText {
+  text-align: center;
+  color: white;
+}
+
+.white {
+  color: white;
+}
+
+.red {
+  color: #ba181b;
+}

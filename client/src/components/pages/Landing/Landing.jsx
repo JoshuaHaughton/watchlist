@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
-import tmdbApi from "../../api/tmdbApi";
-import { apiConfig } from "../../api/axiosClient";
+import tmdbApi from "../../../api/tmdbApi";
+import { apiConfig } from "../../../api/axiosClient";
+import classes from './Landing.module.css'
 
 const Landing = () => {
   const [query, setQuery] = useState("");
@@ -76,33 +77,33 @@ const Landing = () => {
   }, [location])
 
   return (
-    <section id="landing">
-      <div className="landing__fade">
-        <div className="container">
-          <div className="row">
-            <div className="landing__wrapper">
-              <h1 className="landing__title white">
-                What's next on <span className="landing__title gold">your</span> watch list?
+    <section id='landing' className={classes.landing}>
+      <div className={classes.landingFade}>
+        <div className={classes.container}>
+          <div className={classes.row}>
+            <div className={classes.landingWrapper}>
+              <h1 className={`${classes.title} ${classes.white}`}>
+                What's next on <span className={`${classes.title} ${classes.gold}`}>your</span> watch list?
               </h1>
               {!isValid && (
-                <p className="warning">Your search cannot be empty!</p>
+                <p className={classes.warning}>Your search cannot be empty!</p>
               )}
 
               
               {/* <div className="landing__search--wrapper"> */}
-                <form className="landing__search--wrapper" onSubmit={handleSubmit} autoComplete="on">
+                <form className={classes.searchWrapper} onSubmit={handleSubmit} autoComplete="on">
                   <input
                     type="search"
                     placeholder={backgroundMovieTitle}
-                    className="landing__input"
+                    className={classes.input}
                     value={query}
                     onChange={handleChange}
                   />
-                  <button className="btn landing__search--btn">
+                  <button className={classes.searchButton}>
                     {!loading ? (
                       <FontAwesomeIcon icon="search" />
                     ) : (
-                      <FontAwesomeIcon icon="spinner" className="spinner" />
+                      <FontAwesomeIcon icon="spinner" className={classes.spinner} />
                     )}
                   </button>
                 </form>

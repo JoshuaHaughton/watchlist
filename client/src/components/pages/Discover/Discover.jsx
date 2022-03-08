@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import MediaList from "../ui/MediaList";
+import MediaList from "../../ui/MediaList/MediaList";
+import classes from './Discover.module.css'
 
 const Discover = () => {
   const [mediaType, setMediaType] = useState("movie");
@@ -112,24 +113,24 @@ const Discover = () => {
   }, [mediaType]);
 
   return (
-    <section id="discover">
-      <div className="container discover__container">
-        <div className="discover__row">
-        <div className="page__description">
+    <section className={classes.discover}>
+      <div className={classes.container}>
+        <div className={classes.row}>
+        <div className={classes.pageDescription}>
 
 
-          <div className="discover__header--row">
+          <div className={classes.descriptionTopRow}>
 
-            <div className="discover__arrow--wrapper">
-              <FontAwesomeIcon icon="arrow-left" className="discover__arrow white click" onClick={navigateBack}/>
+            <div className={classes.iconWrapper}>
+              <FontAwesomeIcon icon="arrow-left" className={classes.backArrow} onClick={navigateBack}/>
             </div>
 
-              <h1 className="page__header gold">Discover</h1>
+              <h1 className={classes.pageTitle}>Discover</h1>
 
 
-              <div className="discover__filter--wrapper">
+              <div className={classes.selectWrapper}>
                 <select
-                  className="discover__filter"
+                  className={classes.select}
                   value={mediaType}
                   onChange={(e) => sortMedia(e.target.value)}
                 >
@@ -141,7 +142,7 @@ const Discover = () => {
 
           </div>
 
-        <p className="white">In search of something bingeworthy? Look no further!</p>
+        <p className={classes.white}>In search of something bingeworthy? Look no further!</p>
 
         <hr />
         </div>

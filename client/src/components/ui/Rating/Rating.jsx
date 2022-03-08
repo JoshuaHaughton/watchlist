@@ -1,6 +1,7 @@
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import classes from './Rating.module.css'
 
 export default function Rating( {rating} ) {
 
@@ -24,7 +25,7 @@ export default function Rating( {rating} ) {
 
 
   return (
-    <div className="media__ratings">
+    <div className={classes.mediaRating}>
         {
           new Array(Math.floor(rating / 2)).fill(0).map((_, index) => <FontAwesomeIcon icon="star" key={index}/>)
 

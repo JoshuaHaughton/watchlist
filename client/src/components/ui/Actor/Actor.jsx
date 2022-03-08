@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import tmdbApi from "../../api/tmdbApi";
-import Placeholder from "../../assets/No-Image-Placeholder.svg.png";
+import tmdbApi from "../../../api/tmdbApi";
+import Placeholder from "../../../assets/No-Image-Placeholder.svg.png";
+import classes from './Actor.module.css'
 
 const Actor = ({ id, name, character, src }) => {
   const [imdbId, setImdbId] = useState(null);
@@ -26,25 +27,25 @@ const Actor = ({ id, name, character, src }) => {
       <a
         href={imdbId ? `https://www.imdb.com/name/${imdbId}` : ''}
         target={imdbId && "_blank"}
-        className="actor__link"
+        className={classes.actorLink}
         onClick={!imdbId ? preventReload : undefined}
       >
-        <div className="actor__wrapper">
-          <figure className="actor__img--wrapper" >
-            <img src={src} alt="actor-thumbnail" className="actor__img" />
+        <div className={!imdbId ? `${classes.actorWrapper} ${classes.actorNoLink}` : classes.actorWrapper}>
+          <figure className={classes.actorImgWrapper} >
+            <img src={src} alt="actor-thumbnail" className={classes.actorImg} />
 
-            <div className="actor__wrapper--bg">
+            <div className={!imdbId ? `${classes.actorWrapperBg} ${classes.actorNoLink}` : classes.actorWrapperBg}>
 
 
 
             </div>
-            <div className="actor__text--overlay">
+            <div className={classes.actorTextOverlay}>
             {imdbId && (
-              <p className="actor__text white">Click for Actor Details</p>
+              <p className={classes.actorText}>Click for Actor Details</p>
             )}
             {!imdbId && (
-              <p className="actor__text white">
-                Actor Detail Page <strong className="red">Unavailable</strong>
+              <p className={classes.actorText}>
+                Actor Detail Page <strong className={classes.red}>Unavailable</strong>
               </p>
             )}
           </div>
@@ -54,8 +55,8 @@ const Actor = ({ id, name, character, src }) => {
         </div>
       </a>
 
-      <h3 className="actor__name white">{name}</h3>
-      <p className="actor__character white">{character}</p>
+      <h3 className={classes.actorText}>{name}</h3>
+      <p className={classes.actorText}>{character}</p>
     </div>
   );
 };

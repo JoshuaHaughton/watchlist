@@ -1,0 +1,154 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.logo {
+  width: 275px;
+  padding-top: 8px;
+}
+
+.navList {
+  margin: auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLink {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #c78f03;
+  margin: auto;
+  text-align: center;
+  font-family: 'Big Shoulders Display', sans-serif;
+  letter-spacing: 1px;
+}
+
+.navLinkPrimary {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #c78f03;
+  margin: auto;
+  text-align: center;
+  font-family: 'Big Shoulders Display', sans-serif;
+  letter-spacing: 1px;
+  padding: 8px;
+  border: 2px solid #c78f03;
+  border-radius: 4px;
+  transition: all 650ms ease;
+  cursor: pointer;
+}
+
+.navLinkPrimary:hover {
+  text-decoration: none !important;
+  background-color: #ba181b;
+  color:#c78f03;
+  border-color: #ba181b;
+  transform: scale(1.02);
+}
+
+.navLinkPrimary:active {
+  transform: scale(0.9)
+}
+
+.hoverEffect {
+  position: relative;
+}
+
+.hoverEffect:after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  height: 3px;
+  width: 0;
+  right: 0;
+  transition: all 600ms ease;
+}
+
+.hoverEffect:after {
+  background-color: #c78f03;
+}
+
+.hoverEffect:hover:after {
+  left: 0;
+  width: 100%;
+}
+
+.mobileMenuButton {
+  background-color: transparent;
+  font-size: 32px;
+  border: none;
+  color: #ba181b;
+  display: none;
+}
+
+.mobileMenuButtonClose {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 8px;
+  color: #e6e6e6;
+}
+
+.menuBackdrop {
+  position: absolute;
+  background-color: #242424;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  transition: all 400ms ease;
+  opacity: 0;
+  transform: translate(100%);
+}
+
+.menuList {
+  padding: 32px 0;
+}
+
+.menuLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menuLink {
+  color: #e6e6e6;
+  font-size: 40px;
+}
+
+.menu--open {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.menu--open .menuBackdrop {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(0);
+}
+
+.bgBlack {
+  background-color: #242424;
+}
+
+.red {
+  color:#ba181b
+}
+
+.gold {
+  color: #c78f03;
+}

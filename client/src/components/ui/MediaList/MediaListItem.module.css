@@ -1,0 +1,106 @@
+.imageWrapper {
+  position: relative;
+  margin: 0 8px;
+  max-height: 250px;
+  max-width: 168px;
+  border-radius: 12px;
+  box-shadow: -2px 2px 8px 1px rgba(0, 0, 0, 0.3);
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+.img {
+  max-width: 168px;
+  width: auto;
+  border-radius: 12px;
+  transition: all 300ms ease;
+}
+
+.mediaTitle {
+  color: #fff;
+  font-size: medium;
+  text-align: center;
+}
+
+.mediaSubtitle,
+.media__year {
+  color: white;
+  text-align: center;
+}
+
+.mediaDescription {
+  position: absolute; 
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -30%);
+  opacity: 0;
+  transition: opacity 300ms, transform 450ms ease;
+  color: white;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageWrapperBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background-color: #1c1d25;
+  opacity: 0;
+  transition: all 450ms ease;
+}
+
+
+.mediaDescription {
+  position: absolute; 
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -10%);
+  opacity: 0;
+  transition: opacity 300ms, transform 450ms ease;
+  color: white;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageWrapper:hover .mediaDescription {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.imageWrapper:hover .imageWrapperBg {
+  opacity: 0.7;
+}
+
+.imageWrapper:active {
+  transform: scale(0.95);
+}
+
+.imageWrapper:hover {
+  transform: scale(1.025);
+}
+
+.imageWrapper:hover .mediaDescription {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.imageWrapper:hover .imageWrapperBg {
+  opacity: 0.7;
+}
+
+.imageWrapper:hover {
+  transform: scale(1.05)
+}
+
+.red {
+  color: red;
+}
