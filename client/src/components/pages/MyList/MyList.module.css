@@ -95,6 +95,8 @@
 
 .errorPage {
   height: calc(100vh - 275px);
+  padding-top: 80px;
+  font-family: 'Roboto', sans-serif;
 }
 
 @media (max-width: 655px) {

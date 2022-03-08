@@ -78,10 +78,10 @@
   position: absolute; 
   left: 0;
   top: 0;
-  transform: translate(-20%, 0%);
+  transform: translate(-7%, 0%);
   opacity: 0;
   z-index: -1;
-  transition: opacity 300ms, transform 450ms ease;
+  transition: opacity 300ms, transform 550ms ease;
   color: white;
   display: flex;
   flex-direction: column;

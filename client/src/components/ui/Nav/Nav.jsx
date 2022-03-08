@@ -14,8 +14,8 @@ const Nav = (props) => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true);
-  const { isLoggedIn, setIsLoggedIn, logout } = useAuth();
-  console.log(props.isLoggedIn, 'islog');
+  const { isLoggedIn, setIsLoggedIn, logout, checkServerIfLogged } = useAuth();
+  // console.log(props.isLoggedIn, 'islog');
   console.log(isLoggedIn, 'logged in?');
   const location = useLocation();
 
@@ -42,28 +42,18 @@ const Nav = (props) => {
     const response = await logout();
     console.log(response)
     setIsLoggedIn(false)
-    props.setIsLoggedIn(false)
+    // props.setIsLoggedIn(false)
   }
 
   const navLoginHandler = async () => {
     setIsLoggedIn(true);
-    props.setIsLoggedIn(true)
+    // props.setIsLoggedIn(true)
   }
 
   useEffect(() => {
-    const fetchLoggedState = async () => {
-      const response = await axios.get('http://localhost:3001/logged', {withCredentials: true});
-      console.log(response, 'logged????');
-
-      if(response.status === 201 || response.status === 200) {
-        setIsLoggedIn(true)
-      } else {
-        setIsLoggedIn(false)
-      }
-    }
-
-    fetchLoggedState();
-  }, [])
+  
+    checkServerIfLogged();
+  }, [location])
 
 
 

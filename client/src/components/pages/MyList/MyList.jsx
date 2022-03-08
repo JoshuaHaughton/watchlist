@@ -11,7 +11,7 @@ import classes from './MyList.module.css'
 const MyList = (props) => {
   const [cookies] = useCookies();
   const [filterType, setFilterType] = useState("all");
-  const [fullResults, setFullResults] = useState();
+  const [fullResults, setFullResults] = useState(null);
   const [myWatchlist, setMyWatchlist] = useState([]);
   const [errorMessage, setErrorMessage] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -103,37 +103,55 @@ const MyList = (props) => {
     navigate(-1);
   }
 
+  const fetchWatchlist = async () => {
+    console.log("posting");
+    console.log(cookies);
+    setLoading(true);
+    const response = await axios
+      .get("http://localhost:3001/my-list", { withCredentials: true })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage("Please Login to view your list!");
+        return;
+      });
+
+    // const formattedWatchlist = response.data
+    console.log(response.data[0]);
+    setLoading(false);
+
+    setFullResults(response.data)
+    setMyWatchlist(response.data);
+    console.log("Actual response from DB", response.data);
+    console.log("watchlist: (may be delayed)", myWatchlist);
+
+    // setErrorMessage("Please Login to view your list!");
+    if (response.data.length === 0) {
+      setErrorMessage("You don't have any items in your watchlist. Add some in the discover tab!")
+    }
+
+  };
+
 
   useEffect(() => {
-    const fetchWatchlist = async () => {
-      console.log("posting");
-      console.log(cookies);
-      setLoading(true);
-      const response = await axios
-        .get("http://localhost:3001/my-list", { withCredentials: true })
-        .catch((err) => {
-          console.log(err.message);
-          setErrorMessage("Please Login to view your list!");
-        });
-
-      // const formattedWatchlist = response.data
-      console.log(response.data[0]);
-      setLoading(false);
-      setFullResults(response.data)
-      setMyWatchlist(response.data);
-      console.log("Actual response from DB", response.data);
-      console.log("watchlist: (may be delayed)", myWatchlist);
-    };
-
     fetchWatchlist();
   }, []);
 
   useEffect(() => {
+    let timeout = null;
     if (!isLoggedIn) {
-      setErrorMessage("Please Login to view your list!");
+      timeout = setTimeout(() => {
+        setErrorMessage("Please Login to view your list!");
+      }, 300)
     } else {
       setErrorMessage(false);
+      fetchWatchlist();
     }
+
+    return(() => {
+      if(timeout) {
+        clearTimeout(timeout);
+      }
+    })
   }, [isLoggedIn]);
 
   return (
@@ -199,7 +217,7 @@ const MyList = (props) => {
 
               <div className={classes.mediaContent}>
                 {myWatchlist.length > 0 && !loading
-                  ? myWatchlist.map((media) => {
+                  && myWatchlist.map((media) => {
                       console.log("item");
                       return (
                         <WatchlistItem
@@ -209,7 +227,9 @@ const MyList = (props) => {
                         />
                       );
                     })
-                  : skeleton.map((item) => {
+                  }
+                  
+                  {(!fullResults && loading) && skeleton.map((item) => {
                       return (
                         <WatchlistItem
                           media={item}
@@ -218,6 +238,8 @@ const MyList = (props) => {
                         />
                       );
                     })}
+
+                   
               </div>
             </>
           )}

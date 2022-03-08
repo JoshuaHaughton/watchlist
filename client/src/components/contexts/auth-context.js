@@ -82,8 +82,18 @@ export const AuthProvider = ({children}) => {
   }
 
   const checkServerIfLogged = async () => {
-    const response = await axios.get('http://localhost:3001/logged', { withCredentials: true });
+    const response = await axios.get('http://localhost:3001/logged', { withCredentials: true })
+    .catch(err => {
+      console.log(err.message)
+      setIsLoggedIn(false)
+    });
+
     console.log(response)
+    if(response.status === 201 || response.status === 200) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+    }
     return response;
   }
 

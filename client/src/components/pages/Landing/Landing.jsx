@@ -59,6 +59,8 @@ const Landing = () => {
       const randomIndex = Math.floor(Math.random() * response.results.length-1);
 
       let src = null;
+      console.log(response.results);
+      console.log(randomIndex)
       if (response.results[randomIndex].backdrop_path) {
         src = apiConfig.originalImage(response.results[randomIndex].backdrop_path)
       } else if (response.results[randomIndex].poster_path) {

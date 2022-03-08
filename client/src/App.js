@@ -16,14 +16,14 @@ import { AuthProvider } from './components/contexts/auth-context';
 
 
 function App() {
-  const [cookies] = useCookies()
-  const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
+  // const [cookies] = useCookies()
+  // const [isLoggedIn, setIsLoggedIn] = useState(cookies.AuthToken ? true : false);
 
   return (
     <Router>
       <ScrollToTop>
         <AuthProvider>
-          <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+          <Nav />
           <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/search" element={<Search />} />
