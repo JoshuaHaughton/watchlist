@@ -1,6 +1,8 @@
 .mediaCard {
   width: calc(100% / 3);
-  padding: 32px 32px;
+  padding: 52px 32px;
+  display: flex;
+  justify-content: center;
 }
 
 .mediaCardWrapper {
@@ -101,4 +103,18 @@
 
 .transparent {
   border-color: black
+}
+
+@media (max-width: 768px) {
+  .mediaCard {
+    width: 50%;
+    padding: 32px 48px;
+  }
+}
+
+@media (max-width: 550px) {
+  .mediaCard {
+    width: 100%;
+    padding: 40px 48px;
+  }
 }

@@ -323,9 +323,9 @@ const MediaInfo = (props) => {
         {relatedMedia.length > 0 ? (
           <div className={classes.suggestedContainer}>
             <div className={classes.row}>
-              <div className={classes.header}>
+              <div className={classes.suggestedHeader}>
                 <h2 className={`${classes.selectedMediaTitle} ${classes.gold}`}>
-                  You may also like:
+                  Suggested Movies:
                 </h2>
               </div>
               <div className={classes.suggestedMedia}>

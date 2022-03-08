@@ -146,6 +146,7 @@ const Search = () => {
                   <select
                     id="filter"
                     value={sortValue}
+                    className={classes.select}
                     onChange={(e) =>
                       sortResults(
                         e.target.value,

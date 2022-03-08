@@ -91,7 +91,7 @@ const Nav = (props) => {
           <img src={logo} alt="" className={classes.logo} />
         </Link>
 
-        <ul className="nav__links">
+        <ul className={classes.navLinks}>
           <li className={classes.navList}>
             <Link to="/" className={`${classes.navLink} ${classes.hoverEffect}`}>
               HOME
@@ -163,6 +163,26 @@ const Nav = (props) => {
                 <span className={classes.red}>Discover</span>
               </Link>
             </li>
+
+           {isLoggedIn && <li className={classes.menuList} onClick={closeMenu}>
+              <Link to="/my-list" className={classes.menuLink}>
+                <span className={classes.red}>My List</span>
+              </Link>
+            </li>}
+
+            {isLoggedIn && <li className={classes.menuList} onClick={closeMenu}>
+            <div className={classes.navLinkPrimary} onClick={logoutHandler}>
+              Logout
+            </div>
+            </li>}
+
+            {!isLoggedIn && <li className={classes.menuList} onClick={closeMenu}>
+            <div className={classes.navLinkPrimary} onClick={openAuthModalHandler}>
+              Register / Login
+            </div>
+            </li>}
+
+
 
           </ul>
         </div>

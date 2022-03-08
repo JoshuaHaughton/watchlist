@@ -61,7 +61,6 @@
   outline: none;
   padding: 0 16px;
   cursor: pointer;
-  max-width: 200px;
 }
 
 .backArrow {
@@ -84,4 +83,24 @@
 
 .white {
   color: white;
+}
+
+@media (max-width: 655px) {
+  .descriptionTopRow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 32px;
+  }
+
+  .iconWrapper {
+    justify-content: center;
+  }
+
+  .selectWrapper {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+  }
 }

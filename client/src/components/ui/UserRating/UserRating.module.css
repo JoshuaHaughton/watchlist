@@ -22,3 +22,9 @@
 .skeleton {
   color: transparent;
 }
+
+@media (max-width: 550px) {
+  .star {
+    font-size: 18px;
+  }
+}

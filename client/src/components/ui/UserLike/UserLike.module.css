@@ -23,3 +23,10 @@
   color: #c78f03;
   transform: scale(1.1);
 }
+
+@media (max-width: 550px) {
+  .liked,
+  .notLiked {
+    font-size: 28px;
+  }
+}

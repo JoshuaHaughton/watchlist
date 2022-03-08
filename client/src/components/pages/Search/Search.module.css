@@ -44,7 +44,7 @@
   border: 2px solid #ba181b;
   height: 64px;
   transition: all 400ms ease;
-  width: 40%;
+  width: 45%;
   font-size: larger;
 }
 
@@ -147,7 +147,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-bottom: 64px;
+  padding: 48px 0;
 }
 
 .errorTitle {
@@ -167,6 +167,19 @@
   background-color: #242424;
 }
 
+.select {
+  background-color: #e6e6e6;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  color: #242424;
+  height: 40px;
+  line-height: 40px;
+  outline: none;
+  padding: 0 16px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
 .warning {
   color: red;
   padding: 8px 0;
@@ -178,4 +191,29 @@
 
 .white {
   color: white;
+}
+
+@media (max-width: 768px) {
+  .sortWrapper {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input {
+    width: 75%;
+  }
+
+
+}
+
+@media (max-width: 550px) {
+
+}
+
+@media (max-width: 400px) {
+  .sortWrapper {
+    width: 70%;
+  }
+
 }

@@ -20,6 +20,11 @@
   justify-content: center;
 }
 
+/* .navLinks {
+  display: flex;
+
+} */
+
 .navLink {
   text-decoration: none;
   font-size: 24px;
@@ -130,17 +135,6 @@
   font-size: 40px;
 }
 
-.menu--open {
-  max-height: 100vh;
-  overflow: hidden;
-}
-
-.menu--open .menuBackdrop {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(0);
-}
-
 .bgBlack {
   background-color: #242424;
 }
@@ -151,4 +145,21 @@
 
 .gold {
   color: #c78f03;
+}
+
+
+@media (max-width: 790px) {
+  .mobileMenuButton {
+    display: block;
+  }
+
+  .navList {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  .logo {
+    width: 80%;
+  }
 }
