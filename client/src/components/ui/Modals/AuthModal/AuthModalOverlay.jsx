@@ -1,9 +1,7 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
-import { useCookies } from 'react-cookie';
 import { useAuth } from "../../../contexts/auth-context";
 import useInputValidate from "../../../hooks/input-validation";
 import classes from "./AuthModal.module.css";
@@ -11,8 +9,7 @@ import classes from "./AuthModal.module.css";
 const ModalOverlay = (props) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false)
-  const { signup, login } = useAuth();
-  const [cookies, setCookie, removeCookie] = useCookies(['user'])
+  const { signup, login, authLoading } = useAuth();
   const { isSignUp, setIsSignUp } = props;
 
   const {
@@ -84,6 +81,7 @@ const ModalOverlay = (props) => {
 
       //Else if Login form is enabled
     } else {
+
       //Login only requires email and password
       emailSubmitHandler();
       passwordSubmitHandler();
@@ -96,25 +94,21 @@ const ModalOverlay = (props) => {
 
 
 
-
     //If everything passes validation and works, attempt to submit
+
     if (isSignUp) {
       //If signup form, attempt to signup
 
 
-      setLoading(true)
+      // setLoading(true)
       const response = await signup(enteredName, enteredEmail, enteredPassword, setError, resetEmailInput);
-
-
-      console.log(response)
 
       const success = response.status === 200;
 
-      setLoading(false)
+      // setLoading(false)
 
+      //If successfull reset form inputs
       if (success) {
-
-        console.log(response.data, 'yaaa');
 
         resetNameInput();
         resetEmailInput();
@@ -130,21 +124,16 @@ const ModalOverlay = (props) => {
     } else {
       //If Login form, attempt to Login
 
-      setLoading(true)
+      // setLoading(true)
 
       const response = await login(enteredEmail, enteredPassword, resetEmailInput, resetPasswordInput, setError);
-   
 
-        console.log(response, 'login');
-
-      // If response comes back successfull
       const success = response.status == 200;
 
-      setLoading(false)
+      // setLoading(false)
 
+      //f successfull, reset form inputs
       if (success) {
-
-        console.log(response.data, 'login');
 
         resetEmailInput();
         resetPasswordInput();
@@ -269,7 +258,7 @@ const ModalOverlay = (props) => {
               </div>
             )}
 
-           {loading ? 
+           {authLoading ? 
            <button className={classes.loadingButton}>
              <FontAwesomeIcon icon={faSpinner} className={classes.spinner}/>
            </button>

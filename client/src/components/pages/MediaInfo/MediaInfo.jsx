@@ -1,31 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { getDetails } from "../../helpers/MediaInfoHelpers.js";
+import { useLocation, useNavigate } from "react-router-dom";
+import { addMediaToWatchlist, checkWatchlistForItem, getDetails } from "./MediaInfoHelpers.js";
 import Media from "../../ui/Media/Media";
 import placeholder from "../../../assets/No-Image-Placeholder.svg.png";
 import { apiConfig } from "../../../api/axiosClient.js";
 import Rating from "../../ui/Rating/Rating.jsx";
 import Actor from "../../ui/Actor/Actor.jsx";
-import DarkBg from '../../../assets/GrayBG2.jpeg'
 import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useCookies } from "react-cookie";
-import { elementType } from "prop-types";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/auth-context.js";
 import classes from './MediaInfo.module.css'
 
 const MediaInfo = (props) => {
   const { isLoggedIn } = useAuth();
-  //Get media category and id from url path
+  //Get media category and id (movie or tv) from url path
   let location = useLocation().pathname;
   let param = location.split("/");
   let id = param[param.length - 1];
   let category = param[param.length - 2];
+
   const { media } = props;
   const navigate = useNavigate();
-  const [cookies] = useCookies()
 
   //Movie info of current page
   const [myMedia, setMyMedia] = useState(media || {
@@ -41,52 +36,28 @@ const MediaInfo = (props) => {
   const [addedToWatchlist, setAddedToWatchlist] = useState(false);
   const [loading, setLoading] = useState(true)
 
-  const checkWatchlistForItem = async () => {
-
-    setLoading(true)
-    const response = await axios.get('http://localhost:3001/my-list', {withCredentials: true});
-    console.log(response.data, 'check watchlist item for mediainfo');
-
-
-    const foundItem = response.data.find(element => {
-      return element.tmdb_id === id
-    })
-
-
-
-
-
-
-    if (foundItem !== undefined) {
-      setAddedToWatchlist(true)
-      console.log("watched this");
-    } else {
-      setAddedToWatchlist(false)
-      console.log('didnt watch');
-    }
-    setLoading(false)
-
-  }
-
 
   //Get details for page everytime the url is changed
   useEffect(() => {
     id = param[param.length - 1];
-    console.log(id, 'param?');
     category = param[param.length - 2];
+
+    //Get details for media of current page
     getDetails(id, category, setMyMedia, setRelatedMedia, setCast);
 
-
-    checkWatchlistForItem()
+    //Check user watchlist to see if this title has already been added
+    checkWatchlistForItem(id, setLoading, setAddedToWatchlist)
     
   }, [location]);
 
-  // useEffect(() => {
-    
-  // }, [addedToWatchlist])
+  //Check if item is in user's watchlist when user logs in / out
+  useEffect(() => {
+    id = param[param.length - 1];
+    category = param[param.length - 2];
+    checkWatchlistForItem(id, setLoading, setAddedToWatchlist);
+  }, [isLoggedIn])
 
-  
-  console.log(myMedia, 'test');
+
   const title = myMedia.title || myMedia.name;
   const year = myMedia.release_date || myMedia.first_air_date;
   const rating = myMedia.vote_average
@@ -94,6 +65,23 @@ const MediaInfo = (props) => {
   const summary = myMedia.overview
   let src = placeholder
   let imdbId = myMedia.imdb_id
+
+
+  let backdrop_path = null;
+    if (myMedia.backdrop_path) {
+      backdrop_path = myMedia.backdrop_path;
+    }
+
+    //Formatted data for submission
+  const savedData = {
+    title, 
+    id, 
+    category, 
+    poster_path: src, 
+    backdrop_path, 
+    rating, 
+    year
+  }
 
 
   let selectedClass = "media__selected skeleton"
@@ -114,42 +102,6 @@ const MediaInfo = (props) => {
   const navigateBack = () => {
     navigate(-1);
   }
-
-  const addMediaToWatchlist = async () => {
-    const poster_path = src;
-    let backdrop_path = null;
-    if(myMedia.backdrop_path) {
-      backdrop_path = myMedia.backdrop_path;
-
-    }
-    const saveData = { title, id, category, email: cookies.Email, poster_path, backdrop_path, rating, year }
-    console.log(cookies, 'cookies');
-    console.log(saveData);
-    setLoading(true)
-    const response = await axios.put('http://localhost:3001/my-list', saveData, {withCredentials: true})
-      .catch((res) => {
-        console.log('ERROR RES MEDIA INFO save media', res.response);
-        // setError(res.response.data);
-        return;
-      });
-
-      const success = response.status == 201;
-      console.log(success);
-      console.log(response);
-
-      if (success) {
-        if (!addedToWatchlist) {
-          setAddedToWatchlist(true)
-        }
-
-        console.log(response.data, 'yaaa');
-
-      }
-
-      setLoading(false)
-  }
-
-
 
 
   return (
@@ -255,7 +207,7 @@ const MediaInfo = (props) => {
 
                   {isLoggedIn && 
                   
-                  <span className={ addedToWatchlist ? classes.addedMedia : classes.addMedia} onClick={addMediaToWatchlist} >
+                  <span className={ addedToWatchlist ? classes.addedMedia : classes.addMedia} onClick={() => addMediaToWatchlist(savedData, setLoading, setAddedToWatchlist, addedToWatchlist)} >
 
 
                     {loading && <FontAwesomeIcon icon={faSpinner} className={classes.spinner} />}

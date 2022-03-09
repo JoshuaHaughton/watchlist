@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import placeholder from "../../../assets/No-Image-Placeholder.svg.png";
 import { typeFormat } from "../../helpers/MediaHelpers";
 import skeletonImg from "../../../assets/WatchlistSkeleton.png";
 import { apiConfig } from "../../../api/axiosClient";
-import Rating from "../Rating/Rating";
 import classes from "./WatchlistItem.module.css";
 import UserRating from "../UserRating/UserRating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import UserLike from "../UserLike/UserLike";
 import WatchedIcon from "../WatchedIcon/WatchedIcon";
-import { set } from "lodash";
 import DeleteItemModal from "../Modals/DeleteItemModal/DeleteItemModal";
+import watchlistItemPlaceholder from '../../../assets/WatchlistPlaceholder.png'
 
 const WatchlistItem = (props) => {
   const { media, reloadWatchlist } = props;
   const [frontendRating, setFrontendRating] = useState(media.my_rating);
   const [frontendWatched, setFrontendWatched] = useState(media.watched);
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
-  console.log(media, "media");
 
   const openDeleteItemModalHandler = () => {
     setOpenDeleteItemModal(true);
@@ -38,21 +35,23 @@ const WatchlistItem = (props) => {
 
   if (media.backdrop_path) {
     imagePath = apiConfig.w500Image(media.backdrop_path);
-  } else if (media.poster_path) {
-    imagePath = apiConfig.w500Image(media.poster_path);
   } else if (media.skeleton) {
     //Blank background for loading state
     imagePath = skeletonImg;
   } else {
     //"No image available" placeholder
-    imagePath = placeholder;
+    imagePath = watchlistItemPlaceholder;
   }
 
   useEffect(() => {
-    // if(frontendWatched)
-    if (frontendRating && !frontendWatched) {
-      setFrontendWatched(true);
+
+    const setWatched = () => {
+      //If user sets rating without setting watched to true, automatically set it to true for them
+      if (frontendRating && !frontendWatched) {
+        setFrontendWatched(true);
+      }
     }
+    setWatched();
   }, [frontendWatched, frontendRating]);
 
   return (
@@ -90,8 +89,6 @@ const WatchlistItem = (props) => {
                 <h3 className={`${classes.mediaTitle} ${classes.gold}`}>
                   Click for more details!
                 </h3>
-                {/* <h3 className={classes.mediaTitle}>TMDB rating:</h3>
-            {(media && media.tmdb_rating) > 0 ? <Rating rating={media.tmdb_rating} /> : <p>No Ratings<br /></p>} */}
                 <br />
                 <h3 className={classes.mediaTitle}>{typeFormat(media.type)}</h3>
               </div>

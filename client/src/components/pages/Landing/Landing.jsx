@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
-import tmdbApi from "../../../api/tmdbApi";
-import { apiConfig } from "../../../api/axiosClient";
-import classes from './Landing.module.css'
+import classes from "./Landing.module.css";
+import { fetchBackgroundMovie } from "./LandingHelpers";
 
 const Landing = () => {
   const [query, setQuery] = useState("");
@@ -15,16 +14,14 @@ const Landing = () => {
   let location = useLocation().pathname;
 
 
-
-  // Navigate to search with whatever input the user input
+  // Navigate to search with whatever input the user input in state
   const handleSubmit = (event) => {
     event.preventDefault();
 
     // Shows rotating logo icon for UI
     setLoading(true);
 
-
-    // If trimmed input is empty
+    // If trimmed input is empty, set Invalid and return
     if (query.trim().length < 1) {
       setIsValid(false);
       setLoading(false);
@@ -36,83 +33,62 @@ const Landing = () => {
       setLoading(false);
       navigate("/search", { state: query });
     }, 500);
-
   };
 
 
-  //Handle state
+  //Handle input using state
   const handleChange = (e) => {
     setQuery(e.target.value);
 
-    //Reset validity once changes are made
+    //If invalid, reset validity once changes are made
     if (e.target.value.trim().length > 0 && !isValid) {
       setIsValid(true);
     }
   };
 
 
-
   useEffect(() => {
     //Fetch random movie backdrop from popular movies
-    const fetchBackgroundMovie = async () => {
-      const response = await tmdbApi.getMoviesList('popular')
-      const randomIndex = Math.floor(Math.random() * response.results.length-1);
-
-      let src = null;
-      console.log(response.results);
-      console.log(randomIndex)
-      if (response.results[randomIndex].backdrop_path) {
-        src = apiConfig.originalImage(response.results[randomIndex].backdrop_path)
-      } else if (response.results[randomIndex].poster_path) {
-        src = apiConfig.originalImage(response.results[randomIndex].poster_path)
-      }
-
-      //Sets background image of landing div
-      {src && (document.getElementById('landing').style.backgroundImage=`url(${src})`)};
-
-      //Set title of background movie to be used as placeholder for input
-      setBackgroundMovieTitle(response.results[randomIndex].title)
-    }
-
-    fetchBackgroundMovie()
-
-  }, [location])
+    fetchBackgroundMovie(setBackgroundMovieTitle);
+  }, [location]);
 
   return (
-    <section id='landing' className={classes.landing}>
+    <section id="landing" className={classes.landing}>
       <div className={classes.landingFade}>
         <div className={classes.container}>
           <div className={classes.row}>
             <div className={classes.landingWrapper}>
               <h1 className={`${classes.title} ${classes.white}`}>
-                What's next on <span className={`${classes.title} ${classes.gold}`}>your</span> watch list?
+                What's next on{" "}
+                <span className={`${classes.title} ${classes.gold}`}>your</span>{" "}
+                watch list?
               </h1>
               {!isValid && (
                 <p className={classes.warning}>Your search cannot be empty!</p>
               )}
-
-              
-              {/* <div className="landing__search--wrapper"> */}
-                <form className={classes.searchWrapper} onSubmit={handleSubmit} autoComplete="on">
-                  <input
-                    type="search"
-                    placeholder={backgroundMovieTitle}
-                    className={classes.input}
-                    value={query}
-                    onChange={handleChange}
-                  />
-                  <button className={classes.searchButton}>
-                    {!loading ? (
-                      <FontAwesomeIcon icon="search" />
-                    ) : (
-                      <FontAwesomeIcon icon="spinner" className={classes.spinner} />
-                    )}
-                  </button>
-                </form>
-                {/* <FontAwesomeIcon icon="search" className="landing__search--icon"/> */}
-              {/* </div> */}
-
-
+              <form
+                className={classes.searchWrapper}
+                onSubmit={handleSubmit}
+                autoComplete="on"
+              >
+                <input
+                  type="search"
+                  placeholder={backgroundMovieTitle}
+                  className={classes.input}
+                  value={query}
+                  onChange={handleChange}
+                />
+                <button className={classes.searchButton}>
+                  {!loading ? (
+                    <FontAwesomeIcon icon="search" />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon="spinner"
+                      className={classes.spinner}
+                    />
+                  )}
+                </button>
+              </form>
             </div>
           </div>
         </div>

@@ -1,34 +1,22 @@
-import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useCookies } from "react-cookie";
 import classes from "./UserRating.module.css";
 
 export default function UserRating(props) {
   const [hover, setHover] = useState(null);
-  const [cookies] = useCookies()
   const isMounted = useRef(false);
-  const { frontendRating, setFrontendRating, frontendWatched, setFrontendWatched, mediaId  } = props;
-  console.log(cookies);
+  const { frontendRating, setFrontendRating, mediaId  } = props;
 
   const setRating = async (ratingValue) => {
-    console.log(ratingValue);
     setFrontendRating(ratingValue)
-    console.log('id for like', mediaId);
-    const response = await axios.put('http://localhost:3001/user-rating', {frontendRating: ratingValue, mediaId}, {withCredentials: true});
-    console.log(response);
-    console.log(response.data);
+    await axios.put('http://localhost:3001/user-rating', {frontendRating: ratingValue, mediaId}, {withCredentials: true});
   }
 
   useEffect(() => {
-    if(!frontendWatched && frontendRating > 0) {
-      setFrontendWatched(true);
-    }
-    console.log('first load?', !isMounted.current);
-
     //If it is automaticaly cancelled out by user unchecking watched (Because if they haven't watched it, they can't rate it) then set backend to match
     if(frontendRating === 0 && isMounted.current) {
+      //Only run condition when frontendRating changes due to watched icon being toggled (not on first load)
       setRating(frontendRating)
     }
 
@@ -43,7 +31,6 @@ export default function UserRating(props) {
     <div className={classes.starWrapper}>
       {[...Array(5)].map((star, i) => {
         const ratingValue = i + 1;
-        // console.log(ratingValue);
 
         return (
           <label key={i}>

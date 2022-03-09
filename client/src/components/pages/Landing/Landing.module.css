@@ -27,7 +27,7 @@
 }
 
 .title {
-  font-size: 64px;
+  font-size: 88px;
   margin-bottom: 32px;
   text-align: center;
   font-family: 'Bebas Neue', sans-serif;
@@ -106,7 +106,7 @@
   padding: 0;
   color: white;
   font-size: 20px;
-  transition: 600ms ease;
+  transition: 900ms ease;
   line-height: 40px;
   width: 0px;
   height: 100%;
@@ -160,5 +160,9 @@
   .searchWrapper:hover > 
   .input {
     width: 80%;
+  }
+
+  .title {
+    font-size: 64px;
   }
 }

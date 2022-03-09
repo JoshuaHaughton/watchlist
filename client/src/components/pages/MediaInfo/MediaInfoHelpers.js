@@ -1,7 +1,9 @@
-import { apiConfig } from "../../api/axiosClient";
-import tmdbApi from "../../api/tmdbApi";
+import axios from "axios";
+import { apiConfig } from "../../../api/axiosClient";
+import tmdbApi from "../../../api/tmdbApi";
 
-//Detailed information retrieved from tmdbApi about this specific movie
+
+//Detailed information retrieved from tmdbApi about this specific movie or series
 export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setCast) => {
 
   //CURRENT MOVIE PAGE DETAILS
@@ -20,9 +22,6 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
     //Sets background image of landing div
     document.getElementById('media__container').style.backgroundImage=`url(${src})`;
   }
-
-
-
 
   // CAST
 
@@ -58,3 +57,48 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
   }
 
 };
+
+
+
+export const addMediaToWatchlist = async (savedData, setLoading, setAddedToWatchlist, addedToWatchlist) => {
+  setLoading(true)
+
+  const response = await axios.put('http://localhost:3001/my-list', savedData, {withCredentials: true})
+    .catch((res) => {
+      console.log('ERROR RES MEDIA INFO save media', res.response);
+      return;
+    });
+
+    const success = response.status == 201;
+
+    if (success) {
+      if (!addedToWatchlist) {
+        setAddedToWatchlist(true)
+      }
+    }
+
+    setLoading(false)
+}
+
+
+
+
+ //Check if item exists in user watchlist
+ export const checkWatchlistForItem = async (id, setLoading, setAddedToWatchlist) => {
+
+  setLoading(true)
+
+  const response = await axios.get('http://localhost:3001/my-list', {withCredentials: true});
+
+  const foundItem = response.data.find(element => {
+    return element.tmdb_id === id
+  })
+
+
+  if (foundItem !== undefined) {
+    setAddedToWatchlist(true)
+  } else {
+    setAddedToWatchlist(false)
+  }
+  setLoading(false)
+}

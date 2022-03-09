@@ -60,7 +60,7 @@
   position: absolute; 
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -10%);
+  transform: translate(-50%, -30%);
   opacity: 0;
   transition: opacity 300ms, transform 450ms ease;
   color: white;

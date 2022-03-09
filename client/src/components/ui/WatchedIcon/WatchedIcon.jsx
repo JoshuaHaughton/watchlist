@@ -1,12 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React from "react";
 import classes from './WatchedIcon.module.css'
-import { useCookies } from "react-cookie";
 import axios from "axios";
 
 const WatchedIcon = (props) => {
-  const [cookies] = useCookies();
   const { frontendWatched, setFrontendWatched, frontendRating, setFrontendRating, mediaId } = props;
 
   const watchedHandler = async () => {
@@ -15,16 +13,14 @@ const WatchedIcon = (props) => {
       setFrontendRating(0)
     }
 
-    //Set to opposite of what it was before
-    setFrontendWatched(!frontendWatched)
+    //Value that watched will be changed to 
+    const currentWatchedValue = !frontendWatched;
 
-    
-    console.log('id for watch', mediaId);
-    console.log('setting watch');
+    //Set to opposite of what it was before. used !prev before, but frontend and backend would sometimes be different
+    setFrontendWatched(prev => currentWatchedValue)
 
-    const response = await axios.put('http://localhost:3001/user-watched', {frontendWatched: !frontendWatched, email: cookies.Email, mediaId}, {withCredentials: true});
-    console.log(response);
-    console.log(response.data);
+    //Change backend "watched" boolean
+    await axios.put('http://localhost:3001/user-watched', {frontendWatched: currentWatchedValue, mediaId}, {withCredentials: true});
   }
 
 

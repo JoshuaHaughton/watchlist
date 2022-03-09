@@ -1,11 +1,7 @@
 import axios from 'axios'
-import React, { createContext, useEffect, useState, useContext } from 'react'
+import React, { createContext, useState, useContext } from 'react'
 
-
-// const sleep = (ms) => {
-//   return new Promise(resolve => setTimeout(resolve, ms))
-// }
-
+//Create context
 const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {

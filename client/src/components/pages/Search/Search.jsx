@@ -2,12 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Media from "../../ui/Media/Media";
-import image from "../../../assets/Search.svg";
-import classes from './Search.module.css'
-import {
-  fetchQueryData,
-  sortResults,
-} from "../../helpers/SearchHepers";
+import searchImage from "../../../assets/Search.svg";
+import classes from "./Search.module.css";
+import { fetchQueryData, sortResults, skeletonArr } from "./SearchHepers";
 
 const Search = () => {
   //State given from Landing component if a search was made from there
@@ -22,59 +19,28 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   //When false, won't submit a query to fetch data
   const [valid, setValid] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('')
-  const [searchComplete, setSearchComplete] = useState(false)
-  
+  const [errorMessage, setErrorMessage] = useState("");
+  const [searchComplete, setSearchComplete] = useState(false);
 
 
-  //Will populate media search while results are being fetched
-  const skeletonArr = [{
-    id: 1,
-    title: '-',
-    media_type: '-',
-    release_date: '-',
-    skeleton: true
-  },
-  {
-    id: 2,
-    title: '-',
-    media_type: '-',
-    release_date: '-',
-    skeleton: true
-  },
-  {
-    id: 3,
-    title: '-',
-    media_type: '-',
-    release_date: '-',
-    skeleton: true
-  },
-  {
-    id: 4,
-    title: '-',
-    media_type: '-',
-    release_date: '-',
-    skeleton: true
-  }]
-
-
-
-    const validateQuery = (queryBeingValidated) => {
-      if (queryBeingValidated.trim().length < 1) {
-        setValid(false)
-        setErrorMessage("Error! Cannot make a search for an empty string.")
-        return false;
-      }
-      setValid(true)
-      return true
+  //Validates query being searched for
+  const validateQuery = (queryBeingValidated) => {
+    if (queryBeingValidated.trim().length < 1) {
+      setValid(false);
+      setErrorMessage("Error! Cannot make a search for an empty string.");
+      return false;
     }
+    setValid(true);
+    return true;
+  };
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const validated = validateQuery(query)
-    if (validated){
+    //Searches for query if valid
+    const validated = validateQuery(query);
+    if (validated) {
       //setSearchFor triggers useEffect
       setLoading(true);
       setSearchFor(query);
@@ -84,18 +50,14 @@ const Search = () => {
 
 
   const handleChange = (event) => {
-
     if (!valid) {
-      setValid(true)
+      setValid(true);
     }
-
-    setQuery(event.target.value)
-  }
-
+    setQuery(event.target.value);
+  };
 
 
   useEffect(() => {
-
     //Returns list of movies from tmdbApi for given query
     fetchQueryData(searchFor, setResults, setLoading, setSearchComplete);
 
@@ -110,7 +72,11 @@ const Search = () => {
           <div className={classes.headerContainer}>
             <div className={classes.headerWrapper}>
               <h1 className={classes.searchTitle}>
-                What are <span className={`${classes.titleFont} ${classes.gold}`}>you </span>watching?
+                What are{" "}
+                <span className={`${classes.titleFont} ${classes.gold}`}>
+                  you{" "}
+                </span>
+                watching?
               </h1>
               {!valid && <p className={classes.warning}>{errorMessage}</p>}
               <form className={classes.searchWrapper} onSubmit={handleSubmit}>
@@ -121,13 +87,15 @@ const Search = () => {
                   value={query}
                   onChange={handleChange}
                 />
-                <button className={classes.searchButton} >
-                  {/* <FontAwesomeIcon icon="search" /> */}
+                <button className={classes.searchButton}>
                   {!loading ? (
-                      <FontAwesomeIcon icon="search" />
-                    ) : (
-                      <FontAwesomeIcon icon="spinner" className={`${classes.spinner} ${classes.gold}`} />
-                    )}
+                    <FontAwesomeIcon icon="search" />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon="spinner"
+                      className={`${classes.spinner} ${classes.gold}`}
+                    />
+                  )}
                 </button>
               </form>
             </div>
@@ -135,60 +103,65 @@ const Search = () => {
         </div>
       </section>
 
-      
-        <section className={classes.searchResults}>
-          <div className={classes.resultsContainer}>
-            <div className={classes.searchRow}>
-              <div className={classes.resultsHeadingWrapper}>
-                <h2 className={classes.resultsTitle}>Search Results:</h2>
-                <div className={classes.sortWrapper}>
-                  <h3 className={classes.white}>Sort By: </h3>
-                  <select
-                    id="filter"
-                    value={sortValue}
-                    className={classes.select}
-                    onChange={(e) =>
-                      sortResults(
-                        e.target.value,
-                        results,
-                        setResults,
-                        setSortValue,
-                      )
-                    }
-                  >
-                    <option value="DEFAULT" disabled>
-                      Sort
-                    </option>
-                    <option value="OLDEST">Oldest</option>
-                    <option value="NEWEST">Newest</option>
-                    <option value="TITLE">Title</option>
-                  </select>
-                </div>
+      <section className={classes.searchResults}>
+        <div className={classes.resultsContainer}>
+          <div className={classes.searchRow}>
+            <div className={classes.resultsHeadingWrapper}>
+              <h2 className={classes.resultsTitle}>Search Results:</h2>
+              <div className={classes.sortWrapper}>
+                <h3 className={classes.white}>Sort By: </h3>
+                <select
+                  id="filter"
+                  value={sortValue}
+                  className={classes.select}
+                  onChange={(e) =>
+                    sortResults(
+                      e.target.value,
+                      results,
+                      setResults,
+                      setSortValue,
+                    )
+                  }
+                >
+                  <option value="DEFAULT" disabled>
+                    Sort
+                  </option>
+                  <option value="OLDEST">Oldest</option>
+                  <option value="NEWEST">Newest</option>
+                  <option value="TITLE">Title</option>
+                </select>
               </div>
-
-              
-              <div className={classes.resultsWrapper}>
-                {(results.length > 0 && !loading) && results.map((result) => {
-                    return <Media media={result} key={result.id} />
-                }) 
-              }
-                { (loading) &&
-                  skeletonArr.map(result => {
-                    return <Media media={result} key={result.id} />;
-                  })
-                }
-                {(results.length < 1 && searchComplete) && <h2 className={classes.errorTitle}>No Results Found!</h2>}
-              </div>
-         
-
-       {results.length < 1 && !loading &&(
-        <figure className={classes.searchImgWrapper}>
-          <img src={image} alt="No Image Found Placeholder" />
-        </figure>
-      )}
             </div>
+
+            <div className={classes.resultsWrapper}>
+
+
+              {results.length > 0 &&
+                !loading &&
+                results.map((result) => {
+                  return <Media media={result} key={result.id} />;
+                })}
+
+
+              {loading &&
+                skeletonArr.map((result) => {
+                  return <Media media={result} key={result.id} />;
+                })}
+
+
+              {results.length < 1 && searchComplete && (
+                <h2 className={classes.errorTitle}>No Results Found!</h2>
+              )}
+            </div>
+
+            {results.length < 1 && !loading && (
+              <figure className={classes.searchImgWrapper}>
+                <img src={searchImage} alt="Default Saerch Image" />
+              </figure>
+            )}
           </div>
-        </section>
+        </div>
+      </section>
     </>
   );
 };

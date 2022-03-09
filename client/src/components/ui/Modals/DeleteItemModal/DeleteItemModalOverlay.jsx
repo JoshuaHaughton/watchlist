@@ -1,32 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import classes from './DeleteItemModal.module.css'
-import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classes from "./DeleteItemModal.module.css";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const DeleteItemModalOverlay = (props) => {
   const { mediaId, closeModal, reloadWatchlist } = props;
-  const [loading, setLoading] = useState(false)
-  const [cookies] = useCookies()
+  const [loading, setLoading] = useState(false);
 
   const handleDeleteItem = async () => {
-    //Need to remember to Rerender mylist component!!!!!!
+    setLoading(true);
 
-    console.log('id for deletion', mediaId);
-    console.log('initiating backend delete');
+    //Delete selected item
+    const response = await axios.put(
+      "http://localhost:3001/delete-item",
+      { mediaId },
+      { withCredentials: true },
+    );
+    closeModal();
+    reloadWatchlist(response.data);
 
-    setLoading(true)
+    setLoading(false);
+  };
 
-    const response = await axios.put('http://localhost:3001/delete-item', { mediaId }, {withCredentials: true});
-    console.log(response);
-    console.log(response.data);
-    closeModal()
-    reloadWatchlist(response.data)
-
-    setLoading(false)
-  }
-  
   return (
     <div className={`${classes.modal} ${classes.card}`}>
       <header className={classes.header}>
@@ -37,16 +34,28 @@ const DeleteItemModalOverlay = (props) => {
       </header>
       <div className={classes.content}>
         <p className={classes.text}>{props.message}</p>
-          <br />   
+        <br />
       </div>
       <footer className={classes.actions}>
-        <button className={`${classes.deleteButton} ${classes.button}`} onClick={handleDeleteItem}>
-          {loading ? <FontAwesomeIcon icon={faSpinner} className={classes.spinner} /> : 'Delete'}
-          </button>
-        <button className={`${classes.cancelButton} ${classes.button}`} onClick={closeModal}>Cancel</button>
+        <button
+          className={`${classes.deleteButton} ${classes.button}`}
+          onClick={handleDeleteItem}
+        >
+          {loading ? (
+            <FontAwesomeIcon icon={faSpinner} className={classes.spinner} />
+          ) : (
+            "Delete"
+          )}
+        </button>
+        <button
+          className={`${classes.cancelButton} ${classes.button}`}
+          onClick={closeModal}
+        >
+          Cancel
+        </button>
       </footer>
     </div>
-  )
-}
+  );
+};
 
 export default DeleteItemModalOverlay;

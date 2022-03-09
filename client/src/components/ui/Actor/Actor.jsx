@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import tmdbApi from "../../../api/tmdbApi";
-import Placeholder from "../../../assets/No-Image-Placeholder.svg.png";
-import classes from './Actor.module.css'
+import classes from "./Actor.module.css";
 
 const Actor = ({ id, name, character, src }) => {
   const [imdbId, setImdbId] = useState(null);
@@ -14,44 +13,48 @@ const Actor = ({ id, name, character, src }) => {
   useEffect(() => {
     const fetchActorDetails = async () => {
       const response = await tmdbApi.getActorDetails(id);
-      console.log(id);
-      console.log(response, "actor");
       setImdbId(response.imdb_id);
     };
     fetchActorDetails();
   }, []);
 
-
   return (
-    <div className="actor__card">
+    <div>
       <a
-        href={imdbId ? `https://www.imdb.com/name/${imdbId}` : ''}
+        href={imdbId ? `https://www.imdb.com/name/${imdbId}` : ""}
         target={imdbId && "_blank"}
         className={classes.actorLink}
         onClick={!imdbId ? preventReload : undefined}
       >
-        <div className={!imdbId ? `${classes.actorWrapper} ${classes.actorNoLink}` : classes.actorWrapper}>
-          <figure className={classes.actorImgWrapper} >
+        <div
+          className={
+            !imdbId
+              ? `${classes.actorWrapper} ${classes.actorNoLink}`
+              : classes.actorWrapper
+          }
+        >
+          <figure className={classes.actorImgWrapper}>
             <img src={src} alt="actor-thumbnail" className={classes.actorImg} />
 
-            <div className={!imdbId ? `${classes.actorWrapperBg} ${classes.actorNoLink}` : classes.actorWrapperBg}>
-
-
-
-            </div>
+            <div
+              className={
+                !imdbId
+                  ? `${classes.actorWrapperBg} ${classes.actorNoLink}`
+                  : classes.actorWrapperBg
+              }
+            ></div>
             <div className={classes.actorTextOverlay}>
-            {imdbId && (
-              <p className={classes.actorText}>Click for Actor Details</p>
-            )}
-            {!imdbId && (
-              <p className={classes.actorText}>
-                Actor Detail Page <strong className={classes.red}>Unavailable</strong>
-              </p>
-            )}
-          </div>
+              {imdbId && (
+                <p className={classes.actorText}>Click for Actor Details</p>
+              )}
+              {!imdbId && (
+                <p className={classes.actorText}>
+                  Actor Detail Page{" "}
+                  <strong className={classes.red}>Unavailable</strong>
+                </p>
+              )}
+            </div>
           </figure>
-
-          
         </div>
       </a>
 

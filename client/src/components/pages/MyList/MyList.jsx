@@ -1,157 +1,49 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/auth-context";
-import { sortMyListResults } from "../../helpers/MyListHelpers";
+import { fetchWatchlist, sortMyListResults } from "./MyListHelpers";
 import WatchlistItem from "../../ui/WatchlistItem/WatchlistItem";
-import classes from './MyList.module.css'
+import classes from "./MyList.module.css";
+import { skeleton } from "./MyListHelpers";
 
-const MyList = (props) => {
-  const [cookies] = useCookies();
+const MyList = () => {
   const [filterType, setFilterType] = useState("all");
   const [fullResults, setFullResults] = useState(null);
   const [myWatchlist, setMyWatchlist] = useState([]);
   const [errorMessage, setErrorMessage] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
 
-  const skeleton = [
-    {
-      skeleton: true,
-      title: "",
-      tmdb_id: 1,
-      type: "",
-      poster_path: "",
-      backdrop_path: "",
-      release_date: "",
-      tmdb_rating: "",
-      my_rating: "",
-      watched: "",
-      liked: "",
-    },
-    {
-      skeleton: true,
-      title: "",
-      tmdb_id: 2,
-      type: "",
-      poster_path: "",
-      backdrop_path: "",
-      release_date: "",
-      tmdb_rating: "",
-      my_rating: "",
-      watched: "",
-      liked: "",
-    },
-    {
-      skeleton: true,
-      title: "",
-      tmdb_id: 3,
-      type: "",
-      poster_path: "",
-      backdrop_path: "",
-      release_date: "",
-      tmdb_rating: "",
-      my_rating: "",
-      watched: "",
-      liked: "",
-    },
-    {
-      skeleton: true,
-      title: "",
-      tmdb_id: 4,
-      type: "",
-      poster_path: "",
-      backdrop_path: "",
-      release_date: "",
-      tmdb_rating: "",
-      my_rating: "",
-      watched: "",
-      liked: "",
-    },
-    {
-      skeleton: true,
-      title: "",
-      tmdb_id: 5,
-      type: "",
-      poster_path: "",
-      backdrop_path: "",
-      release_date: "",
-      tmdb_rating: "",
-      my_rating: "",
-      watched: "",
-      liked: "",
-    },
-    {
-      skeleton: true,
-      title: "",
-      tmdb_id: 6,
-      type: "",
-      poster_path: "",
-      backdrop_path: "",
-      release_date: "",
-      tmdb_rating: "",
-      my_rating: "",
-      watched: "",
-      liked: "",
-    },
-  ];
 
   const navigateBack = () => {
     navigate(-1);
-  }
-
-  const fetchWatchlist = async () => {
-    console.log("posting");
-    console.log(cookies);
-    setLoading(true);
-    const response = await axios
-      .get("http://localhost:3001/my-list", { withCredentials: true })
-      .catch((err) => {
-        console.log(err);
-        setErrorMessage("Please Login to view your list!");
-        return;
-      });
-
-    // const formattedWatchlist = response.data
-    console.log(response.data[0]);
-    setLoading(false);
-
-    setFullResults(response.data)
-    setMyWatchlist(response.data);
-    console.log("Actual response from DB", response.data);
-    console.log("watchlist: (may be delayed)", myWatchlist);
-
-    // setErrorMessage("Please Login to view your list!");
-    if (response.data.length === 0) {
-      setErrorMessage("You don't have any items in your watchlist. Add some in the discover tab!")
-    }
-
   };
-
-
-  useEffect(() => {
-    fetchWatchlist();
-  }, []);
 
   useEffect(() => {
     let timeout = null;
+
+    //On first load and when logged state changes, fetch user watchlist if they are logged in
     if (!isLoggedIn) {
+      //Give time to fetch data before rendering error
       timeout = setTimeout(() => {
         setErrorMessage("Please Login to view your list!");
-      }, 300)
+      }, 300);
+
     } else {
+      //If logged in, set error to false and fetch watchlist
       setErrorMessage(false);
-      fetchWatchlist();
+      fetchWatchlist(setLoading, setErrorMessage, setFullResults, setMyWatchlist);
     }
 
-    return(() => {
-      if(timeout) {
+    //If logged state changes to true before setTimeout ends, cancel setTimeout
+    return () => {
+      if (timeout) {
         clearTimeout(timeout);
       }
-    })
+    };
   }, [isLoggedIn]);
 
   return (
@@ -176,23 +68,24 @@ const MyList = (props) => {
 
                   <div className={classes.selectWrapper}>
                     <select
-                    className={classes.select}
-                    value={filterType}
-                    onChange={(e) =>  sortMyListResults(
-                      e.target.value,
-                      setMyWatchlist,
-                      setFilterType,
-                      fullResults
-                    )}
-                  >
-                    <option value="ALL">All</option>
-                    <option value="MOVIES">Movies</option>
-                    <option value="TV">Series</option>
-                    <option value="NAME">All by Name</option>
-                    <option value="DATE">All by Date</option>
-                  </select>
+                      className={classes.select}
+                      value={filterType}
+                      onChange={(e) =>
+                        sortMyListResults(
+                          e.target.value,
+                          setMyWatchlist,
+                          setFilterType,
+                          fullResults,
+                        )
+                      }
+                    >
+                      <option value="ALL">All</option>
+                      <option value="MOVIES">Movies</option>
+                      <option value="TV">Series</option>
+                      <option value="NAME">All by Name</option>
+                      <option value="DATE">All by Date</option>
+                    </select>
                   </div>
-
                 </div>
 
                 <p className={classes.white}>
@@ -202,44 +95,31 @@ const MyList = (props) => {
                 <hr />
               </div>
 
-
-
-
-              {/* <div className="my-list__header">
-                <h1 className="my-list__title">My List</h1>
-                <p className="my-list__text white">Browse your list</p>
-              </div> */}
-
-
-
-
-
-
               <div className={classes.mediaContent}>
-                {myWatchlist.length > 0 && !loading
-                  && myWatchlist.map((media) => {
-                      console.log("item");
-                      return (
-                        <WatchlistItem
-                          media={media}
-                          key={media.tmdb_id}
-                          reloadWatchlist={setMyWatchlist}
-                        />
-                      );
-                    })
-                  }
-                  
-                  {(!fullResults && loading) && skeleton.map((item) => {
-                      return (
-                        <WatchlistItem
-                          media={item}
-                          key={item.tmdb_id}
-                          reloadWatchlist={setMyWatchlist}
-                        />
-                      );
-                    })}
+                {myWatchlist.length > 0 &&
+                  !loading &&
+                  myWatchlist.map((media) => {
+                    console.log("item");
+                    return (
+                      <WatchlistItem
+                        media={media}
+                        key={media.tmdb_id}
+                        reloadWatchlist={setMyWatchlist}
+                      />
+                    );
+                  })}
 
-                   
+                {!fullResults &&
+                  loading &&
+                  skeleton.map((item) => {
+                    return (
+                      <WatchlistItem
+                        media={item}
+                        key={item.tmdb_id}
+                        reloadWatchlist={setMyWatchlist}
+                      />
+                    );
+                  })}
               </div>
             </>
           )}

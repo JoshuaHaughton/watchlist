@@ -1,4 +1,4 @@
-import tmdbApi from "../../api/tmdbApi";
+import tmdbApi from "../../../api/tmdbApi";
 
 export const sortResults = (filter, results, setResults, setSortValue) => {
   //Visually changes value of filter for user
@@ -63,3 +63,35 @@ export const fetchQueryData = async (query, setResults, setLoading, setSearchCom
   }
 };
 
+
+//Will populate media search while results are being fetched
+export const skeletonArr = [
+  {
+    id: 1,
+    title: "-",
+    media_type: "-",
+    release_date: "-",
+    skeleton: true,
+  },
+  {
+    id: 2,
+    title: "-",
+    media_type: "-",
+    release_date: "-",
+    skeleton: true,
+  },
+  {
+    id: 3,
+    title: "-",
+    media_type: "-",
+    release_date: "-",
+    skeleton: true,
+  },
+  {
+    id: 4,
+    title: "-",
+    media_type: "-",
+    release_date: "-",
+    skeleton: true,
+  },
+];
