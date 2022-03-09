@@ -1,99 +1,29 @@
-const express = require('express');
+const express = require("express");
 const cors = require("cors");
-const { MongoClient } = require('mongodb')
-const { v4: uuidv4 } = require('uuid')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser')
+const { MongoClient } = require("mongodb");
+const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
+const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+const { authenticateToken, returnToken } = require("./helpers/token-helpers");
 require("dotenv").config();
-const uri = "mongodb+srv://user:Password@cluster0.b4wso.mongodb.net/Cluster0?retryWrites=true&w=majority"
+
+const uri =
+  "mongodb+srv://user:Password@cluster0.b4wso.mongodb.net/Cluster0?retryWrites=true&w=majority";
 const app = express();
-app.use(morgan('dev'))
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(morgan("dev"));
+//Allows for server to receive requests from specific domains
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 3001;
 
 
-const authenticateToken = async (req, res, next) => {
-
-  try {
-
-    console.log(req.headers.cookie, 'req.headers.cookie')
-
-    const token = req.headers.cookie.split('=')[1];
-
-
-    //Return if they have no token
-    if (!token) return res.status(401).send('Token required for access! Please login.')
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, userId) => {
-    //They have a token, but it has expired so they no longer have access
-    if (err) return res.status(403).send("Unauthorized Access token!")
-
-    //Set user on request object
-    req.userId = userId;
-
-    //Token is authenticated, proceed with route
-    next()
-  })
-
-  } catch(err) {
-    // console.log(err, 'authenticate')
-    res.status(500)
-    .clearCookie('watchlist-jwt')
-    .send("Invalid token received! Please Login again")
-    
-
-    
-  }
-
-  
-}
-
-
-
-
-const returnToken = (userId, statusCode, res) => {
-  const token = jwt.sign({userId}, process.env.JWT_SECRET, {
-    expiresIn: '1h'
-  })
-  const options = {
-    httpOnly: true, 
-    expires: new Date(new Date().getTime() + (60 * 60 * 1000)), 
-    sameSite: 'strict',
-    path: "/"
-  }
-
-
-  console.log('jwt token for:', userId)
-  // console.log(process.env.JWT_EXPIRY)
-  // console.log(Number(process.env.JWT_EXPIRY))
-
-  // userId: user.user_id,
-  res.status(statusCode)
-  .cookie('watchlist-jwt', token, options)
-  .send('cookie initialized')
-}
-
-
-
-
-
-
-
-app.get('/', (req, res) => {
-  res.json('hello')
-})
-
-app.post('/signup', async (req, res) => {
+//Attempt to register a user
+app.post("/signup", async (req, res) => {
   const client = new MongoClient(uri);
-  console.log(req.body)
-
-  const { email, username, password } = req.body
-
+  const { email, username, password } = req.body;
 
   //Generates unique user ids
   const generatedUserId = uuidv4();
@@ -101,21 +31,27 @@ app.post('/signup', async (req, res) => {
   //Hash password for user security
   const hashedPassword = await bcrypt.hash(password, 10);
 
-
   try {
     //Connect to MongoDB database
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
-    const existingUser = await users.findOne({ email })
+    await client.connect();
+    const database = client.db("app-data");
+
+    //Check if user exists
+    const users = database.collection("users");
+    const existingUser = await users.findOne({ email });
 
     //Return error if email is already in use
-    if(existingUser) {
-      console.log('here')
-      return res.status(409).send('User already exists! Please Login or Sign Up with another email.')
+    if (existingUser) {
+      console.log("here");
+      return res
+        .status(409)
+        .send(
+          "User already exists! Please Login or Sign Up with another email.",
+        );
     }
 
     //If no error, create user
+
     const sanitizedEmail = email.toLowerCase();
 
     const data = {
@@ -123,77 +59,78 @@ app.post('/signup', async (req, res) => {
       email: sanitizedEmail,
       username,
       hashed_password: hashedPassword,
-      watchlist: []
-    }
+      watchlist: [],
+    };
 
-    const insertedUser = await users.insertOne(data)
-    console.log('inserted', insertedUser)
+    //Insert user into database
+    await users.insertOne(data);
 
-
+    //Generate JWT token from generated user ID and store it in an httpOnly cookie
     returnToken(generatedUserId, 200, res);
 
     // userId: generatedUserId,
-
-
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
+});
 
-})
 
-app.post('/login', async(req, res) => {
-  const client = new MongoClient(uri)
-  const { email, password } = req.body
+
+//Attempt to log a user in
+app.post("/login", async (req, res) => {
+  const client = new MongoClient(uri);
+  const { email, password } = req.body;
 
   try {
     //Connect to MongoDB
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
 
-    //Attempt to retrieve user info from db by email
+    //Attempt to retrieve user info from db by given email
     const user = await users.findOne({ email });
-    console.log('USER', user)
-    const username = user.username;
 
-    const passwordMatch = bcrypt.compare(password, user.hashed_password)
+    //Compare given password with the storeed hashed password using bcrypt
+    const passwordMatch = bcrypt.compare(password, user.hashed_password);
 
-  
     //If credentials are invalid, let user know
-    if(!user || !passwordMatch) {
-      return res.status(400).send('Invalid Credentials');
+    if (!user || !passwordMatch) {
+      return res.status(400).send("Invalid Credentials");
     }
 
     //Else, generate a token and return data to client
-
     returnToken(user.user_id, 200, res);
 
-
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
+});
 
-})
 
-app.get('/logout', async(req, res) => {
 
-      res.status(201)
-      .clearCookie('watchlist-jwt')
-      .send('cookie deleted')
 
-})
+//Log a user out
+app.get("/logout", async (req, res) => {
+  //Clear cookie if it exists
+  res.status(201).clearCookie("watchlist-jwt").send("cookie deleted");
+});
 
-app.put('/my-list', authenticateToken, async (req, res) => {
+
+
+
+//Add item to user's watchlist
+app.put("/my-list", authenticateToken, async (req, res) => {
   const client = new MongoClient(uri);
-  console.log('my list')
-
+  //Get user ID stored in JWT token
   const userId = req.userId.userId;
+  const { title, id, category, poster_path, backdrop_path, rating, year } =
+    req.body;
 
-  const { title, id, category, poster_path, backdrop_path, rating, year } = req.body
+  //Format a new watchlist item
   const newWatchlistItem = {
     title,
     tmdb_id: id,
@@ -204,369 +141,297 @@ app.put('/my-list', authenticateToken, async (req, res) => {
     tmdb_rating: rating,
     my_rating: 0,
     watched: false,
-    liked: false
-  }
-
+    liked: false,
+  };
 
   try {
     //Connect to MongoDB database
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
-    const user = await users.findOne({user_id: userId})
-    console.log('USER', user)
-    const foundItem = user.watchlist.find(item => item.tmdb_id === id)
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
+    const user = await users.findOne({ user_id: userId });
 
-    // If item already exists, dont add it
-    if(foundItem !== undefined) {
-      throw new Error("item already exists!")
+    //Check if item already exists in wathlist
+    const foundItem = user.watchlist.find((item) => item.tmdb_id === id);
+
+    //If item already exists, dont add it
+    if (foundItem !== undefined) {
+      throw new Error("item already exists!");
     }
+
+    //Add item to watchlist
 
     const filter = { user_id: userId };
 
     const updateDoc = {
       $addToSet: {
-        watchlist: newWatchlistItem
+        watchlist: newWatchlistItem,
       },
     };
 
-    // const options = { upsert: true };
+    await users.updateOne(filter, updateDoc);
 
-    // console.log()
+    res.status(201).send("Added!");
 
-    const result = await users.updateOne(filter, updateDoc);
-    console.log(result, 'added')
-
-
-
-    res.status(201).send('Added!');
-
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
-})
+});
+
+
 
 
 // Get my watchlist
-app.get('/my-list', authenticateToken, async (req, res) => {
+app.get("/my-list", authenticateToken, async (req, res) => {
   const client = new MongoClient(uri);
- 
-  console.log(req.userId, 'user id')
-
+  //Get user ID stored in JWT token
   const userId = req.userId.userId;
-
 
   try {
     //Connect to MongoDB database
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
 
     //Attempt to retrieve user info from db by email
     const user = await users.findOne({ user_id: userId });
-    console.log(user)
 
+    //Return user's watchlist
+    return res.status(201).json(user.watchlist);
 
-    return res.status(201).json(user.watchlist)
-
-
-  } catch(err) {
-    console.log(err)
-    
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
-})
+});
 
-app.put('/user-rating', authenticateToken, async (req, res) => {
+
+
+
+//Update user rating on a watchlist item
+app.put("/user-rating", authenticateToken, async (req, res) => {
   const client = new MongoClient(uri);
-
+  //Get user ID stored in JWT token
   const userId = req.userId.userId;
-  console.log(userId)
-  console.log(req.userId, 'id')
-  const { frontendRating, mediaId } = req.body
-
+  const { frontendRating, mediaId } = req.body;
 
   try {
     //Connect to MongoDB database
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
 
-    //Attempt to retrieve user info from db by email
+    //Attempt to retrieve user info from db by id
     const user = await users.findOne({ user_id: userId });
-    console.log(user)
 
     const userWatchlist = user.watchlist;
-    console.log('watchlist:', userWatchlist)
 
-    const selectedWatchlistItemIndex = userWatchlist.findIndex(item => item.tmdb_id === mediaId)
-    console.log('index', selectedWatchlistItemIndex)
 
-    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex]
+    //Retrieve watchlist item
+    const selectedWatchlistItemIndex = userWatchlist.findIndex(
+      (item) => item.tmdb_id === mediaId,
+    );
 
-    const updatedWatchlistItem = {...selectedWatchlistItem, my_rating: frontendRating}
-    console.log("updated item", updatedWatchlistItem)
+    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex];
 
-    const updatedWatchlist = [...userWatchlist]
-    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem
+    //Update rating on watchlist item
+    const updatedWatchlistItem = {
+      ...selectedWatchlistItem,
+      my_rating: frontendRating,
+    };
+
+    //Update watchlist with updated item
+
+    const updatedWatchlist = [...userWatchlist];
+
+    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem;
 
     const filter = { user_id: userId };
 
     const updateDoc = {
       $set: {
-        watchlist: updatedWatchlist
+        watchlist: updatedWatchlist,
       },
     };
 
-    // const options = { upsert: true };
+    await users.updateOne(filter, updateDoc);
 
-    console.log(filter, updatedWatchlist, updatedWatchlistItem)
+    return res.status(201).json(updatedWatchlist);
 
-    const result = await users.updateOne(filter, updateDoc);
-    console.log(result)
-
-
-
-    return res.status(201).json(updatedWatchlist)
-
-
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
-
-})
-
+});
 
 
-app.put('/user-watched', authenticateToken, async (req, res) => {
+
+
+//Update "watched" boolean on watchlist item
+app.put("/user-watched", authenticateToken, async (req, res) => {
   const client = new MongoClient(uri);
-
-  console.log(req.body)
-
+  //Get user ID stored in JWT token
   const userId = req.userId.userId;
-  const { frontendWatched, mediaId } = req.body
-
+  const { frontendWatched, mediaId } = req.body;
 
   try {
     //Connect to MongoDB database
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
 
-    //Attempt to retrieve user info from db by email
+    //Attempt to retrieve user info from db by user ID
     const user = await users.findOne({ user_id: userId });
-    console.log(user)
 
     const userWatchlist = user.watchlist;
-    console.log('watchlist:', userWatchlist)
 
-    const selectedWatchlistItemIndex = userWatchlist.findIndex(item => item.tmdb_id === mediaId)
-    console.log('index', selectedWatchlistItemIndex)
+    //Retrieve watchlist Item
+    const selectedWatchlistItemIndex = userWatchlist.findIndex(
+      (item) => item.tmdb_id === mediaId,
+    );
 
-    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex]
+    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex];
 
-    const updatedWatchlistItem = {...selectedWatchlistItem, watched: frontendWatched}
-    console.log("updated item", updatedWatchlistItem)
+    //Update watchlist item 
+    const updatedWatchlistItem = {
+      ...selectedWatchlistItem,
+      watched: frontendWatched,
+    };
 
-    const updatedWatchlist = [...userWatchlist]
-    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem
+    const updatedWatchlist = [...userWatchlist];
+    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem;
 
     const filter = { user_id: userId };
 
     const updateDoc = {
       $set: {
-        watchlist: updatedWatchlist
+        watchlist: updatedWatchlist,
       },
     };
 
-    // const options = { upsert: true };
+    await users.updateOne(filter, updateDoc);
 
-    console.log(filter, updatedWatchlist, updatedWatchlistItem)
+    return res.status(201).json(updatedWatchlist);
 
-    const result = await users.updateOne(filter, updateDoc);
-    console.log(result)
-
-
-
-    return res.status(201).json(updatedWatchlist)
-
-
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
-
-})
-
+});
 
 
 
-app.put('/user-liked', authenticateToken, async (req, res) => {
+//Update "liked" boolean on watchlist item
+app.put("/user-liked", authenticateToken, async (req, res) => {
   const client = new MongoClient(uri);
-
-  console.log(req.body)
-
+  //Get user ID stored in JWT token
   const userId = req.userId.userId;
-  const { frontendLike, mediaId } = req.body
-
+  const { frontendLike, mediaId } = req.body;
 
   try {
     //Connect to MongoDB database
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
 
-    //Attempt to retrieve user info from db by email
+    //Attempt to retrieve user info from db by user ID
     const user = await users.findOne({ user_id: userId });
-    console.log(user)
 
     const userWatchlist = user.watchlist;
-    console.log('watchlist:', userWatchlist)
 
-    const selectedWatchlistItemIndex = userWatchlist.findIndex(item => item.tmdb_id === mediaId)
-    console.log('index', selectedWatchlistItemIndex)
+    //Retrieve watchlist item
+    const selectedWatchlistItemIndex = userWatchlist.findIndex(
+      (item) => item.tmdb_id === mediaId,
+    );
 
-    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex]
+    const selectedWatchlistItem = userWatchlist[selectedWatchlistItemIndex];
 
-    const updatedWatchlistItem = {...selectedWatchlistItem, liked: frontendLike}
-    console.log("updated item", updatedWatchlistItem)
 
-    const updatedWatchlist = [...userWatchlist]
-    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem
+    //Update watchlist item
+    const updatedWatchlistItem = {
+      ...selectedWatchlistItem,
+      liked: frontendLike,
+    };
+
+    const updatedWatchlist = [...userWatchlist];
+
+    updatedWatchlist[selectedWatchlistItemIndex] = updatedWatchlistItem;
 
     const filter = { user_id: userId };
 
     const updateDoc = {
       $set: {
-        watchlist: updatedWatchlist
+        watchlist: updatedWatchlist,
       },
     };
 
-    // const options = { upsert: true };
+    await users.updateOne(filter, updateDoc);
 
-    console.log(filter, updatedWatchlist, updatedWatchlistItem)
+    return res.status(201).json(updatedWatchlist);
 
-    const result = await users.updateOne(filter, updateDoc);
-    console.log(result)
-
-
-
-    return res.status(201).json(updatedWatchlist)
-
-
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
-
-})
-
+});
 
 
-app.put('/delete-item', authenticateToken, async (req, res) => {
+
+//Attempt to delete a watchlist item
+app.put("/delete-item", authenticateToken, async (req, res) => {
   const client = new MongoClient(uri);
-
-  console.log('body', req.body)
-
+  //Get user ID stored in JWT token
   const userId = req.userId.userId;
-  const { mediaId } = req.body
-
+  const { mediaId } = req.body;
 
   try {
     //Connect to MongoDB database
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
 
     //Attempt to retrieve user info from db by email
     const user = await users.findOne({ user_id: userId });
-    console.log(user)
 
     const userWatchlist = user.watchlist;
-    console.log('watchlist:', userWatchlist)
 
-
-    const updatedWatchlist = userWatchlist.filter(item => {
-      console.log('ids!', item.tmbd_id, mediaId)
-      return item.tmdb_id !== mediaId
-    })
+    //Filter watchlist to not include the watchlist item anymore
+    const updatedWatchlist = userWatchlist.filter((item) => {
+      return item.tmdb_id !== mediaId;
+    });
 
     const filter = { user_id: userId };
 
     const updateDoc = {
       $set: {
-        watchlist: updatedWatchlist
+        watchlist: updatedWatchlist,
       },
     };
 
+    await users.updateOne(filter, updateDoc);
 
-    console.log(filter, updatedWatchlist)
+    return res.status(201).json(updatedWatchlist);
 
-    const result = await users.updateOne(filter, updateDoc);
-    console.log(result)
-
-
-
-    return res.status(201).json(updatedWatchlist)
-
-
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   } finally {
-    await client.close()
+    await client.close();
   }
-
-})
-
-app.get('/logged', authenticateToken, async (req, res) => {
+});
 
 
-  const userId = req.userId.userId;
-  console.log(userId)
-  console.log(req.userId, 'user id first')
+
+//Check if user httpOnly cookie is still valid
+app.get("/logged", authenticateToken, async (req, res) => {
+  return res.status(201).send("Auth passed, user logged in!");
+});
 
 
-    return res.status(201).send("Auth passed, user logged in!")
 
-
-  // } catch(err) {
-  //   console.log(err)
-  // } finally {
-  //   await client.close()
-  // }
-})
-
-
-//FOR TESTING, WILL BE REMOVED
-app.get('/users', async (req, res) => {
-  const client = new MongoClient(uri);
-
-  try {
-    //Connect to MongoDB
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
-    const returnedUsers = await users.find().toArray();
-
-    console.log(returnedUsers)
-    //Return all users
-    res.send(returnedUsers)
-
-
-  } catch(err) {
-    console.log(err)
-  } finally {
-    await client.close()
-  }
-
-})
-
-
-app.listen(PORT, () => console.log(`Server Running on port ${PORT}`))
+app.listen(PORT, () => console.log(`Server Running on port ${PORT}`));
