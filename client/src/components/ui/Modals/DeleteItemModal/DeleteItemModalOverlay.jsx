@@ -18,7 +18,7 @@ const DeleteItemModalOverlay = (props) => {
 
     setLoading(true)
 
-    const response = await axios.put('http://localhost:3001/delete-item', { email: cookies.Email, mediaId}, {withCredentials: true});
+    const response = await axios.put('http://localhost:3001/delete-item', { mediaId }, {withCredentials: true});
     console.log(response);
     console.log(response.data);
     closeModal()
