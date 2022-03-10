@@ -6,6 +6,8 @@ const authenticateToken = async (req, res, next) => {
   try {
 
     const token = req.headers.cookie.split("=")[1];
+    console.log('headers', req.headers)
+    console.log('cookie', req.headers.cookie)
 
     //Return error if they have no token
     if (!token) {
@@ -27,7 +29,11 @@ const authenticateToken = async (req, res, next) => {
     //If any error is thrown, send user an error and clear the cookie if it exists
     res
       .status(500)
-      .clearCookie("watchlist-jwt")
+      .clearCookie("watchlist-jwt", {
+        httpOnly: true,
+        sameSite: "none",
+        path: '/',
+        secure: true})
       .send("Invalid token received! Please Login again");
   }
 };
