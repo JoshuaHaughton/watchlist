@@ -11,12 +11,12 @@ require("dotenv").config();
 const uri =
   "mongodb+srv://user:Password@cluster0.b4wso.mongodb.net/Cluster0?retryWrites=true&w=majority";
 const app = express();
+app.set("trust proxy", 1);
 app.use(morgan("dev"));
 //Allows for server to receive requests from specific domains
 app.use(cors({ credentials: true, origin: "https://watchlist-client.netlify.app" }));
 app.use(express.json());
 app.use(cookieParser());
-app.set("trust proxy", 1);
 
 
 app.use(function(req, res, next) {
