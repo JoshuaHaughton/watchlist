@@ -63,13 +63,13 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
 export const addMediaToWatchlist = async (savedData, setLoading, setAddedToWatchlist, addedToWatchlist) => {
   setLoading(true)
 
-  const response = await axios.put('http://localhost:3001/my-list', savedData, {withCredentials: true})
+  const response = await axios.put('https://watchlist-server1.herokuapp.com/my-list', savedData, {withCredentials: true})
     .catch((res) => {
       console.log('ERROR RES MEDIA INFO save media', res.response);
       return;
     });
 
-    const success = response.status == 201;
+    const success = response.status === 201;
 
     if (success) {
       if (!addedToWatchlist) {
@@ -88,7 +88,7 @@ export const addMediaToWatchlist = async (savedData, setLoading, setAddedToWatch
 
   setLoading(true)
 
-  const response = await axios.get('http://localhost:3001/my-list', {withCredentials: true});
+  const response = await axios.get('https://watchlist-server1.herokuapp.com/my-list', {withCredentials: true});
 
   const foundItem = response.data.find(element => {
     return element.tmdb_id === id

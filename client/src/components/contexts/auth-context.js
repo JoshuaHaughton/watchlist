@@ -69,7 +69,7 @@ export const AuthProvider = ({children}) => {
 
   const logout = async () => {
   
-    const response = await axios.get('http://localhost:3001/logout', { withCredentials: true });
+    const response = await axios.get('https://watchlist-server1.herokuapp.com/logout', { withCredentials: true });
     console.log(response);
 
     setIsLoggedIn(false);
@@ -78,7 +78,7 @@ export const AuthProvider = ({children}) => {
   }
 
   const checkServerIfLogged = async () => {
-    const response = await axios.get('http://localhost:3001/logged', { withCredentials: true })
+    const response = await axios.get('https://watchlist-server1.herokuapp.com/logged', { withCredentials: true })
     .catch(err => {
       console.log(err.message)
       setIsLoggedIn(false)

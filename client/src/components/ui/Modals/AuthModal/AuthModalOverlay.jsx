@@ -8,7 +8,6 @@ import classes from "./AuthModal.module.css";
 
 const ModalOverlay = (props) => {
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false)
   const { signup, login, authLoading } = useAuth();
   const { isSignUp, setIsSignUp } = props;
 
@@ -128,11 +127,10 @@ const ModalOverlay = (props) => {
 
       const response = await login(enteredEmail, enteredPassword, resetEmailInput, resetPasswordInput, setError);
 
-      const success = response.status == 200;
+      const success = response.status === 200;
 
-      // setLoading(false)
 
-      //f successfull, reset form inputs
+      //If successfull, reset form inputs
       if (success) {
 
         resetEmailInput();

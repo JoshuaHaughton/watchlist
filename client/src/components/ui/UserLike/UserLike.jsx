@@ -12,7 +12,7 @@ const UserLike = ({ liked, mediaId }) => {
   const handleLike = async () => {
     setFrontendLike(!frontendLike);
     await axios.put(
-      "http://localhost:3001/user-liked",
+      "https://watchlist-server1.herokuapp.com/user-liked",
       { frontendLike: !frontendLike, email: cookies.Email, mediaId },
       { withCredentials: true },
     );

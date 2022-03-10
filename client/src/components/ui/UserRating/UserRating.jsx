@@ -10,7 +10,7 @@ export default function UserRating(props) {
 
   const setRating = async (ratingValue) => {
     setFrontendRating(ratingValue)
-    await axios.put('http://localhost:3001/user-rating', {frontendRating: ratingValue, mediaId}, {withCredentials: true});
+    await axios.put('https://watchlist-server1.herokuapp.com/user-rating', {frontendRating: ratingValue, mediaId}, {withCredentials: true});
   }
 
   useEffect(() => {

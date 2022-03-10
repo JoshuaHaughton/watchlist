@@ -15,12 +15,10 @@ export const fetchBackgroundMovie = async (setBackgroundMovieTitle) => {
   }
 
   //Sets background image of landing div if it exists
-  {
     src &&
       (document.getElementById(
         "landing",
       ).style.backgroundImage = `url(${src})`);
-  }
 
   //Set title of background movie to be used as placeholder for input
   setBackgroundMovieTitle(response.results[randomIndex].title);

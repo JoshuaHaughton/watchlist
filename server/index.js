@@ -13,7 +13,7 @@ const uri =
 const app = express();
 app.use(morgan("dev"));
 //Allows for server to receive requests from specific domains
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "https://zealous-austin-a33feb.netlify.app" }));
 app.use(express.json());
 app.use(cookieParser());
 

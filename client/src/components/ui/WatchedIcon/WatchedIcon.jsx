@@ -20,7 +20,7 @@ const WatchedIcon = (props) => {
     setFrontendWatched(prev => currentWatchedValue)
 
     //Change backend "watched" boolean
-    await axios.put('http://localhost:3001/user-watched', {frontendWatched: currentWatchedValue, mediaId}, {withCredentials: true});
+    await axios.put('https://watchlist-server1.herokuapp.com/user-watched', {frontendWatched: currentWatchedValue, mediaId}, {withCredentials: true});
   }
 
 

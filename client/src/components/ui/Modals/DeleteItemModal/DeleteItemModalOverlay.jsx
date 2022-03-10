@@ -3,7 +3,6 @@ import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./DeleteItemModal.module.css";
 import axios from "axios";
-import { useCookies } from "react-cookie";
 
 const DeleteItemModalOverlay = (props) => {
   const { mediaId, closeModal, reloadWatchlist } = props;
@@ -14,7 +13,7 @@ const DeleteItemModalOverlay = (props) => {
 
     //Delete selected item
     const response = await axios.put(
-      "http://localhost:3001/delete-item",
+      "https://watchlist-server1.herokuapp.com/delete-item",
       { mediaId },
       { withCredentials: true },
     );
