@@ -16,6 +16,17 @@ app.use(morgan("dev"));
 app.use(cors({ credentials: true, origin: "https://watchlist-client.netlify.app" }));
 app.use(express.json());
 app.use(cookieParser());
+app.set("trust proxy", 1);
+
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Origin", "https://watchlist-client.netlify.app");
+  res.header("Access-Control-Allow-Headers",
+  "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, Set-Cookie, Cookie");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  next();  
+}); 
 
 const PORT = process.env.PORT || 3001;
 
