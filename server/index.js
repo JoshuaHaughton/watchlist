@@ -14,7 +14,7 @@ const app = express();
 app.set("trust proxy", 1);
 app.use(morgan("dev"));
 //Allows for server to receive requests from specific domains
-app.use(cors({ credentials: true, origin: "https://watchlist-client.netlify.app" }));
+app.use(cors({ credentials: true, origin: "https://watchlist-client.netlify.app", exposedHeaders: ["set-cookie"] }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -131,7 +131,11 @@ app.post("/login", async (req, res) => {
 //Log a user out
 app.get("/logout", async (req, res) => {
   //Clear cookie if it exists
-  res.status(201).clearCookie("watchlist-jwt", {domain: 'https://watchlist-client.netlify.app', path: '/'}).send("cookie deleted");
+  res.status(201).clearCookie("watchlist-jwt", {
+    httpOnly: true,
+    sameSite: "none",
+    path: '/',
+    secure: true}).send("cookie deleted");
 });
 
 

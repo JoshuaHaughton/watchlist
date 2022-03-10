@@ -13,7 +13,7 @@ View Live HERE: [Watchlist](https://watchlist-client.netlify.app/)
 - Node.js
 - Express.js
 - MongoDB
-- OMDBapi
+- TMDBapi
 
 
 ## Description / Features
