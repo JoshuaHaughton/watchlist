@@ -20,6 +20,10 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 3001;
 
 
+app.get('/', (req, res) => {
+  return res.send('Hello world!');
+})
+
 //Attempt to register a user
 app.post("/signup", async (req, res) => {
   const client = new MongoClient(uri);
