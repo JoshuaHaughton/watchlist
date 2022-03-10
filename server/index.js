@@ -16,6 +16,7 @@ app.use(morgan("dev"));
 app.use(cors({ credentials: true, origin: "https://watchlist-client.netlify.app" }));
 app.use(express.json());
 app.use(cookieParser());
+app.set('trust proxy', 1);
 
 const PORT = process.env.PORT || 3001;
 
