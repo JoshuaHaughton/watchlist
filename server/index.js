@@ -110,11 +110,6 @@ app.post("/login", async (req, res) => {
     //Compare given password with the storeed hashed password using bcrypt
     const passwordMatch = await bcrypt.compare(password, user.hashed_password);
 
-    console.log('password', password)
-    console.log('passwordMatch', passwordMatch)
-    console.log('passwordMatch')
-    console.log('user', user)
-
     //If credentials are invalid, let user know
     if (!user || !passwordMatch) {
       return res.status(400).send("Invalid Credentials");
