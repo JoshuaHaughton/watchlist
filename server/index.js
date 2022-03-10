@@ -131,7 +131,7 @@ app.post("/login", async (req, res) => {
 //Log a user out
 app.get("/logout", async (req, res) => {
   //Clear cookie if it exists
-  res.status(201).clearCookie("watchlist-jwt").send("cookie deleted");
+  res.status(201).clearCookie("watchlist-jwt", {domain: 'https://watchlist-client.netlify.app', path: '/'}).send("cookie deleted");
 });
 
 
