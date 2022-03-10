@@ -6,7 +6,9 @@ const authenticateToken = async (req, res, next) => {
   try {
 
     const token = req.headers.cookie.split("=")[1];
-    console.log(token)
+    console.log(token, 'tok')
+    console.log(req.headers, 'headers')
+
 
     //Return error if they have no token
     if (!token) {
@@ -45,9 +47,8 @@ const returnToken = (userId, statusCode, res) => {
   const options = {
     httpOnly: true,
     expires: new Date(new Date().getTime() + 60 * 60 * 1000),
-    sameSite: "none",
+    sameSite: 'none',
     secure: true,
-    proxy: true,
     path: '/'
   };
 
