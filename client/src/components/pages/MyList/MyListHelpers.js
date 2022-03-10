@@ -48,7 +48,7 @@ export const sortMyListResults = (filter, setMyWatchlist, setFilterType, fullRes
 export const fetchWatchlist = async (setLoading, setErrorMessage, setFullResults, setMyWatchlist ) => {
   setLoading(true);
   const response = await axios
-    .get("http://localhost:3001/my-list", { withCredentials: true })
+    .get("https://watchlist-server1.herokuapp.com/my-list", { withCredentials: true })
     .catch((err) => {
       console.log(err);
       setErrorMessage("Please Login to view your list!");

@@ -11,7 +11,7 @@ export const AuthProvider = ({children}) => {
   const signup = async (username, email, password, setError, resetEmailInput) => {
     setAuthLoading(true)
     const response = await axios
-    .post("http://localhost:3001/signup", {
+    .post("https://watchlist-server1.herokuapp.com/signup", {
       username,
       email,
       password,
@@ -41,7 +41,7 @@ export const AuthProvider = ({children}) => {
   const login = async (email, password, resetEmailInput, resetPasswordInput, setError) => {
     setAuthLoading(true)
     const response = await axios
-    .post("http://localhost:3001/login", {
+    .post("https://watchlist-server1.herokuapp.com/login", {
       email,
       password,
     }, {withCredentials: true})
