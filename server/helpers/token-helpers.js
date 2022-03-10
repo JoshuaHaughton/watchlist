@@ -6,6 +6,7 @@ const authenticateToken = async (req, res, next) => {
   try {
 
     const token = req.headers.cookie.split("=")[1];
+    console.log(token)
 
     //Return error if they have no token
     if (!token) {
@@ -45,7 +46,9 @@ const returnToken = (userId, statusCode, res) => {
     httpOnly: true,
     expires: new Date(new Date().getTime() + 60 * 60 * 1000),
     sameSite: "none",
-    secure: true
+    domain: 'https://watchlist-client.netlify.app',
+    secure: true,
+    path: '/'
   };
 
   //Set cookie
