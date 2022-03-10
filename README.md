@@ -1,5 +1,5 @@
-# Watchlist - Media Finder & Saver
-Watchlist is a media searching app where users can search and find detailed descriptions of their favourite movies and tv series. Users can create an account, save movies and tv series they find, and then give them ratings, as well as check off when they watched them. This project served as a way for me to solidify my understanding of using APIs with React.js, and allowed me to experiment with implementing these features into a bigger project that uses my own Html and CSS.
+# Watchlist - Media Searching & Saving App
+Watchlist is a media searching app where users can search and find detailed descriptions of their favourite movies and tv series. Users can create an account, save movies and tv series they find, and then give them ratings, as well as check off when they watched them. This project served as a way for me to solidify my understanding of using APIs with React.js, and allowed me to experiment with implementing these features into a bigger project that uses my own Html, CSS, and Database.
 
 View Live HERE: [Watchlist](https://watchlist-client.netlify.app/)
 
@@ -17,44 +17,58 @@ View Live HERE: [Watchlist](https://watchlist-client.netlify.app/)
 
 
 ## Description / Features
-- Page layouts and styling built entirely with HTML, CSS and JavaScript
-- Use of React hooks and custom hooks
+- Page layouts and styling built entirely with HTML, CSS JavaScript and React.js
+- Responsive CSS on all devices
+- Use of React hooks and Custom hooks
 - Use of Context API
 - Creating and storing JWT tokens in an httpOnly cookie
 - Hashing and comparing of user passwords using bcrypt
 - Functional sorting by date (new to old / old to new) and title
-- Recommended movies section showing similar movies to the one selected
+- Recommended media section showing similar media to the item selected
 - Final app and subsequent edits connected and deployed to Netlify and Heroku
 
 
 
 
-<!-- ## Images
+## Images
 
 
 
 ### Landing
-!['Landing page of app'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Landing.png)
+!['Landing page of app'](https://github.com/JoshuaHaughton/watchlist/blob/main/client/docs/Landing.png)
 
 
-### Search
-!['Landing page of app'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Search.png)
+
+### User Watchlist
+!["List of all items saved to user's watchlist"](https://github.com/JoshuaHaughton/watchlist/blob/main/client/docs/UserWatchlist.png)
 
 
-### Search Results
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Search_Results.png)
+
+### MediaInfo
+!['Media Info Page'](https://github.com/JoshuaHaughton/watchlist/blob/main/client/docs/MediaInfo.png)
 
 
-### Movie Info
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Movie_Info.png)
+
+### MediaInfo Cast Section
+!['Cast Results under MediaInfo Page'](https://github.com/JoshuaHaughton/watchlist/blob/main/client/docs/MediaInfoCast.png)
 
 
-### Recommended Movies
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Recommended_Movies.png)
+
+### Discover Page
+!['Browse popular media'](https://github.com/JoshuaHaughton/watchlist/blob/main/client/docs/Discover.png)
+
+
+
+### Auth Modal
+!['Authentication modal for registering and logging in'](https://github.com/JoshuaHaughton/watchlist/blob/main/client/docs/AuthModal.png)
+
 
 
 ### Mobile Mode
-!['List of all available vinyls'](https://github.com/JoshuaHaughton/find-it/blob/main/docs/Mobile_Mode.png) -->
+!['List of all available vinyls'](https://github.com/JoshuaHaughton/watchlist/blob/main/client/docs/MobileModePreview.png)
+
+
+
 
 
 
