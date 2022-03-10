@@ -44,8 +44,8 @@ const returnToken = (userId, statusCode, res) => {
   const options = {
     httpOnly: true,
     expires: new Date(new Date().getTime() + 60 * 60 * 1000),
-    sameSite: "strict",
-    path: "/",
+    sameSite: "none",
+    secure: true
   };
 
   //Set cookie
