@@ -7,13 +7,12 @@ import { useCookies } from "react-cookie";
 
 const UserLike = ({ liked, mediaId }) => {
   const [frontendLike, setFrontendLike] = useState(liked);
-  const [cookies] = useCookies();
 
   const handleLike = async () => {
     setFrontendLike(!frontendLike);
     await axios.put(
       "https://watchlist-server1.herokuapp.com/user-liked",
-      { frontendLike: !frontendLike, email: cookies.Email, mediaId },
+      { frontendLike: !frontendLike, mediaId },
       { withCredentials: true },
     );
   };

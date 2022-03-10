@@ -46,8 +46,8 @@ const returnToken = (userId, statusCode, res) => {
     httpOnly: true,
     expires: new Date(new Date().getTime() + 60 * 60 * 1000),
     sameSite: "none",
-    domain: 'https://watchlist-client.netlify.app',
     secure: true,
+    proxy: true,
     path: '/'
   };
 
