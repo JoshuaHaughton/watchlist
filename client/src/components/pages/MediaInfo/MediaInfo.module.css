@@ -75,7 +75,6 @@
 
 .selectedMediaFigure {
   width: 40%;
-  padding: 16px 80px 16px 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -317,6 +316,7 @@
   .selectedMediaFigure {
     width: 100%;
     justify-content: flex-start;
+    padding: 16px 80px 16px 24px;
   }
 
   .selectedMediaDescription {
