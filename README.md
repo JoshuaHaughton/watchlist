@@ -21,7 +21,7 @@ View Live HERE: [Watchlist](https://watchlist-client.netlify.app/)
 - Responsive CSS on all devices
 - Use of React hooks and Custom hooks
 - Use of Context API
-- Creating and storing JWT tokens in an httpOnly cookie
+- Creating and storing of JWT tokens in an httpOnly cookie
 - Hashing and comparing of user passwords using bcrypt
 - Functional sorting by date (new to old / old to new) and title
 - Recommended media section showing similar media to the item selected
