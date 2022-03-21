@@ -51,7 +51,7 @@ export const AuthProvider = ({children}) => {
     // }, {withCredentials: true})
     const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
       method: 'POST',
-      mode: 'same-origin',
+      mode: 'cors',
       redirect: 'follow',
       credentials: 'include', // Don't forget to specify this if you need cookies
       headers: headers,
@@ -88,7 +88,7 @@ export const AuthProvider = ({children}) => {
 
     const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
       method: 'GET',
-      mode: 'same-origin',
+      mode: 'cors',
       redirect: 'follow',
       credentials: 'include', // Don't forget to specify this if you need cookies
       headers: headers,
@@ -108,7 +108,7 @@ export const AuthProvider = ({children}) => {
     // const response = await axios.get('https://watchlist-server1.herokuapp.com/logged', { withCredentials: true })
     const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
       method: 'GET',
-      mode: 'same-origin',
+      mode: 'cors',
       redirect: 'follow',
       credentials: 'include', // Don't forget to specify this if you need cookies
       headers: headers,
