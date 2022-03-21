@@ -59,7 +59,7 @@ export const AuthProvider = ({children}) => {
         email,
         password
     })
-    }).then(res =>{
+    }).then(async res => {
       console.log(res.body)
       let a = await res.json()
       console.log(a)
