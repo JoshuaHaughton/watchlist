@@ -50,7 +50,7 @@ export const AuthProvider = ({children}) => {
     //   password,
     // }, {withCredentials: true})
     const response = await fetch('https://watchlist-server1.herokuapp.com/login', {
-      method: 'GET',
+      method: 'POST',
       mode: 'cors',
       redirect: 'follow',
       credentials: 'include', // Don't forget to specify this if you need cookies
@@ -76,6 +76,7 @@ export const AuthProvider = ({children}) => {
         setError(res.response.data);
         return;
     });
+    console.log(response)
     setIsLoggedIn(true)
     setAuthLoading(false)
 
