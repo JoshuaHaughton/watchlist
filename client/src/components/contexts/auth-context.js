@@ -59,7 +59,10 @@ export const AuthProvider = ({children}) => {
         email,
         password
     })
-    }).then(res => res.json())
+    }).then(res =>{
+      console.log(res)
+      return res.json()
+    })
     .catch((res) => {
 
       if(res.response === undefined && res.message) {
