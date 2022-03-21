@@ -3,6 +3,9 @@ import React, { createContext, useState, useContext } from 'react'
 
 //Create context
 const AuthContext = createContext()
+let headers = new Headers();
+headers.append('Content-Type', 'application/json');
+headers.append('Accept', 'application/json');
 
 export const AuthProvider = ({children}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -40,11 +43,23 @@ export const AuthProvider = ({children}) => {
 
   const login = async (email, password, resetEmailInput, resetPasswordInput, setError) => {
     setAuthLoading(true)
-    const response = await axios
-    .post("https://watchlist-server1.herokuapp.com/login", {
-      email,
-      password,
-    }, {withCredentials: true})
+
+    // const response = await axios
+    // .post("https://watchlist-server1.herokuapp.com/login", {
+    //   email,
+    //   password,
+    // }, {withCredentials: true})
+    const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
+      method: 'POST',
+      mode: 'same-origin',
+      redirect: 'follow',
+      credentials: 'include', // Don't forget to specify this if you need cookies
+      headers: headers,
+       body: JSON.stringify({
+        email,
+        password
+    })
+    }).then(res => res.json())
     .catch((res) => {
 
       if(res.response === undefined && res.message) {
@@ -69,16 +84,35 @@ export const AuthProvider = ({children}) => {
 
   const logout = async () => {
   
-    const response = await axios.get('https://watchlist-server1.herokuapp.com/logout', { withCredentials: true });
+    // const response = await axios.get('https://watchlist-server1.herokuapp.com/logout', { withCredentials: true });
+
+    const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
+      method: 'GET',
+      mode: 'same-origin',
+      redirect: 'follow',
+      credentials: 'include', // Don't forget to specify this if you need cookies
+      headers: headers,
+    }).then(res => res.json());
+
+
     console.log(response);
 
     setIsLoggedIn(false);
+
+
 
     return response;
   }
 
   const checkServerIfLogged = async () => {
-    const response = await axios.get('https://watchlist-server1.herokuapp.com/logged', { withCredentials: true })
+    // const response = await axios.get('https://watchlist-server1.herokuapp.com/logged', { withCredentials: true })
+    const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
+      method: 'GET',
+      mode: 'same-origin',
+      redirect: 'follow',
+      credentials: 'include', // Don't forget to specify this if you need cookies
+      headers: headers,
+    }).then(res => res.json())
     .catch(err => {
       console.log(err.message)
       setIsLoggedIn(false)
