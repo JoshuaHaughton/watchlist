@@ -49,8 +49,8 @@ export const AuthProvider = ({children}) => {
     //   email,
     //   password,
     // }, {withCredentials: true})
-    const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
-      method: 'POST',
+    const response = await fetch('https://watchlist-server1.herokuapp.com/login', {
+      method: 'GET',
       mode: 'cors',
       redirect: 'follow',
       credentials: 'include', // Don't forget to specify this if you need cookies
@@ -106,7 +106,7 @@ export const AuthProvider = ({children}) => {
 
   const checkServerIfLogged = async () => {
     // const response = await axios.get('https://watchlist-server1.herokuapp.com/logged', { withCredentials: true })
-    const response = await fetch('https://watchlist-server1.herokuapp.com/logout', {
+    const response = await fetch('https://watchlist-server1.herokuapp.com/logged', {
       method: 'GET',
       mode: 'cors',
       redirect: 'follow',
