@@ -60,7 +60,9 @@ export const AuthProvider = ({children}) => {
         password
     })
     }).then(res =>{
-      console.log(res)
+      console.log(res.body)
+      let a = await res.json()
+      console.log(a)
       return res.json()
     })
     .catch((res) => {
@@ -116,7 +118,11 @@ export const AuthProvider = ({children}) => {
       redirect: 'follow',
       credentials: 'include', // Don't forget to specify this if you need cookies
       headers: headers,
-    }).then(res => res.json())
+    }).then(res => {
+      console.log(res, 'res2')
+      console.log(res.body, 'res2 body')
+      return res.json()
+    })
     .catch(err => {
       console.log(err.message)
       setIsLoggedIn(false)
