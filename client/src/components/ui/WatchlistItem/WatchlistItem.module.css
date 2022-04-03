@@ -12,6 +12,7 @@
   height: 100%;
   margin: 0;
   max-width: none;
+  transition: all 300ms ease;
 }
 
 .mediaWrapper {
