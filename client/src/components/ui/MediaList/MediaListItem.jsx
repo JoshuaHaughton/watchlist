@@ -1,9 +1,34 @@
 import Rating from "../Rating/Rating";
 import GrayBG from "../../../assets/GrayBG.jpeg";
 import classes from "./MediaListItem.module.css";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 export default function MediaListItem(props) {
   const { handleClick, media, typeFormat, type } = props;
+  const [img, setImg] = useState();
+
+  //Whole component doesn't re-render with useRef unlike useState
+  const mountedRef = useRef(true);
+
+  //Loads skeleton image in place of vinyls until they load
+  useEffect(() => {
+    let image = new Image();
+    if (props.src) {
+      image.src = props.src || "null";
+
+      image.onload = () => {
+        if (props.src) {
+          setImg(image);
+        }
+      };
+    }
+    return () => {
+      //when the component unmounts
+      mountedRef.current = false;
+    };
+  }, [props.src]);
 
   return (
     <figure
@@ -11,7 +36,7 @@ export default function MediaListItem(props) {
       onClick={() => handleClick(media.id)}
     >
       <img
-        src={!props.src ? GrayBG : props.src}
+        src={img ? img : GrayBG}
         alt={props.skeleton ? "Skeleton Placheholder" : media.title}
         className={classes.img}
         key={media.id}

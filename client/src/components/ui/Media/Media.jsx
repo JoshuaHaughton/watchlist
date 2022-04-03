@@ -6,10 +6,14 @@ import skeleton from "../../../assets/GrayBG.jpeg";
 import { apiConfig } from "../../../api/axiosClient";
 import Rating from "../Rating/Rating";
 import classes from "./Media.module.css";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const Media = (props) => {
   const { media, suggested } = props;
-  console.log(media, "media");
+  const [img, setImg] = useState();
+
 
   //Deside class based on if the media given was a skeleton or not (for loading state)
   let classType;
@@ -41,6 +45,29 @@ const Media = (props) => {
     imagePath = placeholder;
   }
 
+
+  //Whole component doesn't re-render with useRef unlike useState
+  const mountedRef = useRef(true);
+
+  //Loads skeleton image in place of vinyls until they load
+  useEffect(() => {
+    let image = new Image();
+    if (imagePath) {
+      image.src = imagePath;
+
+      image.onload = () => {
+        if (imagePath) {
+          setImg(image);
+        }
+      };
+    }
+    return () => {
+      //when the component unmounts
+      mountedRef.current = false;
+    };
+  }, [imagePath]);
+
+
   return (
     <div
       className={
@@ -53,7 +80,7 @@ const Media = (props) => {
         <div className={classes.mediaWrapper}>
           <figure className={classes.mediaCardWrapper}>
             <img
-              src={imagePath ? imagePath : skeleton}
+              src={img ? img : skeleton}
               alt={media.title ? media.title : media.name}
               className={classes.mediaCardImg}
             />

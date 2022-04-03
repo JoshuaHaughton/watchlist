@@ -84,6 +84,7 @@
   max-height: 500px;
   width: auto;
   max-width: 100%;
+  min-width: 333.33px;
   border-radius: 16px;
   box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.3);
 }
@@ -311,6 +312,8 @@
 @media (max-width: 765px) {
   .selectedMedia {
     flex-direction: column;
+    width: 468px;
+    margin: 0 auto;
   }
 
   .selectedMediaFigure {
@@ -339,4 +342,22 @@
     text-align: left;
   }
 
+  .selectedMedia {
+    width: 85%;
+  }
+
+  .selectedMediaDescription {
+    padding-top: 0;
+  }
+
+  .selectedMediaTitle {
+    margin-top: 8px;
+  }
+
+}
+
+@media (max-width: 450px) {
+  .selectedMedia {
+    width: 100%;
+  }
 }

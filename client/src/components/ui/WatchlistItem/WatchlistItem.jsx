@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { typeFormat } from "../../helpers/MediaHelpers";
 import skeletonImg from "../../../assets/WatchlistSkeleton.png";
@@ -17,6 +17,7 @@ const WatchlistItem = (props) => {
   const [frontendRating, setFrontendRating] = useState(media.my_rating);
   const [frontendWatched, setFrontendWatched] = useState(media.watched);
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
+  const [img, setImg] = useState();
 
   const openDeleteItemModalHandler = () => {
     setOpenDeleteItemModal(true);
@@ -42,6 +43,27 @@ const WatchlistItem = (props) => {
     //"No image available" placeholder
     imagePath = watchlistItemPlaceholder;
   }
+
+   //Whole component doesn't re-render with useRef unlike useState
+   const mountedRef = useRef(true);
+
+   //Loads skeleton image in place of vinyls until they load
+   useEffect(() => {
+     let image = new Image();
+     if (imagePath) {
+       image.src = imagePath;
+ 
+       image.onload = () => {
+         if (imagePath) {
+           setImg(image);
+         }
+       };
+     }
+     return () => {
+       //when the component unmounts
+       mountedRef.current = false;
+     };
+   }, [imagePath]);
 
   useEffect(() => {
 
@@ -72,7 +94,7 @@ const WatchlistItem = (props) => {
           <div className={classes.mediaWrapper}>
             <figure className={classes.mediaImgWrapper}>
               <img
-                src={imagePath ? imagePath : skeletonImg}
+                src={img ? img : skeletonImg}
                 alt={media.title}
                 className={classes.mediaCardImg}
               />

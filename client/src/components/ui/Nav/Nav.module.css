@@ -88,6 +88,11 @@
   border: none;
   color: #ba181b;
   display: none;
+  transition: all 300ms ease;
+}
+
+.mobileMenuButton > svg:hover {
+  transform: scale(1.1);
 }
 
 .mobileMenuButtonClose {
@@ -96,6 +101,12 @@
   right: 20px;
   padding: 8px;
   color: #e6e6e6;
+  transition: all 300ms ease;
+}
+
+.mobileMenuButtonClose > svg:hover {
+  color: red;
+  transform: scale(1.1);
 }
 
 .menuBackdrop {
@@ -128,6 +139,11 @@
 .menuLink {
   color: #e6e6e6;
   font-size: 40px;
+}
+
+.menuLink:hover {
+  filter: brightness(0.8);
+  font-size: 18px;
 }
 
 .bgBlack {
