@@ -25,6 +25,7 @@ View Live HERE: [Watchlist](https://watchlist-client.netlify.app/)
 - Hashing and comparing of user passwords using bcrypt
 - Functional sorting by date (new to old / old to new) and title
 - Recommended media section showing similar media to the item selected
+- MongoDB Database with CRUD operations
 - Final app and subsequent edits connected and deployed to Netlify and Heroku
 
 
