@@ -94,7 +94,7 @@ const WatchlistItem = (props) => {
           <div className={classes.mediaWrapper}>
             <figure className={classes.mediaImgWrapper}>
               <img
-                src={img ? img : skeletonImg}
+                src={img ? img.src : skeletonImg}
                 alt={media.title}
                 className={classes.mediaCardImg}
               />

@@ -80,7 +80,7 @@ const Media = (props) => {
         <div className={classes.mediaWrapper}>
           <figure className={classes.mediaCardWrapper}>
             <img
-              src={img ? img : skeleton}
+              src={img ? img.src : skeleton}
               alt={media.title ? media.title : media.name}
               className={classes.mediaCardImg}
             />

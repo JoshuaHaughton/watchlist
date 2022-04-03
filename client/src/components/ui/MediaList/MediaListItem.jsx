@@ -36,7 +36,7 @@ export default function MediaListItem(props) {
       onClick={() => handleClick(media.id)}
     >
       <img
-        src={img ? img : GrayBG}
+        src={img ? img.src : GrayBG}
         alt={props.skeleton ? "Skeleton Placheholder" : media.title}
         className={classes.img}
         key={media.id}
