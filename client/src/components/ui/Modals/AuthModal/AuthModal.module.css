@@ -238,16 +238,12 @@ body {
   }
 }
 
-@media(max-width: 500px) {
+@media(max-width: 550px) {
   .row {
     width: 100%;
   }
-}
 
-@media (max-width: 375px) {
   .modal {
     width: 95%;
     }
 }
-
-

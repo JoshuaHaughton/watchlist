@@ -309,7 +309,7 @@
 }
 
 
-@media (max-width: 100px) {
+@media (max-width: 1000px) {
   .selectedMedia {
     flex-direction: column;
     width: 468px;
