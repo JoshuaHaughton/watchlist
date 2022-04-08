@@ -195,7 +195,7 @@ const ModalOverlay = (props) => {
                   type="username"
                   id="username"
                   name="username"
-                  placeholder="Enter your username"
+                  placeholder="Enter your Username"
                   onChange={nameChangeHandler}
                   onBlur={nameBlurHandler}
                   value={enteredName}
@@ -210,14 +210,14 @@ const ModalOverlay = (props) => {
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="Enter your Email"
                 onChange={emailChangeHandler}
                 onBlur={emailBlurHandler}
                 value={enteredEmail}
               />
               {emailInputHasError && (
                 <p className={classes.errorText}>
-                  Please enter a valid Email Address
+                  Please enter a valid email address
                 </p>
               )}
             </div>

@@ -94,7 +94,7 @@ body {
   transition: all 300ms ease;
 }
 
-.modal input:hover {
+.modal input:hover, .modal input:active {
   border: 1px solid #c78f03;
 }
 
