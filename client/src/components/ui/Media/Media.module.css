@@ -114,7 +114,7 @@
 
 @media (max-width: 550px) {
   .mediaCard {
-    width: 100%;
-    padding: 40px 48px;
+    width: 80%;
+    padding: 24px 48px;
   }
 }

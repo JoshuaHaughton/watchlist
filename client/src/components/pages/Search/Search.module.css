@@ -207,13 +207,20 @@
 
 }
 
-@media (max-width: 550px) {
-
-}
-
 @media (max-width: 400px) {
   .sortWrapper {
     width: 70%;
+  }
+
+  .searchWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .searchWrapper > input {
+    margin-bottom: 16px;
   }
 
 }

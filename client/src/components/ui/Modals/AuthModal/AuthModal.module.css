@@ -91,6 +91,11 @@ body {
   margin: 8px 0;
   font-size: 16px;
   width: 100%;
+  transition: all 300ms ease;
+}
+
+.modal input:hover {
+  border: 1px solid #c78f03;
 }
 
 .toggle {
@@ -230,7 +235,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
-  max-width: 550px;
+  max-width: 500px;
   }
 
   .form {
