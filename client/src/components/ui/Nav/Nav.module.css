@@ -82,13 +82,17 @@
   width: 100%;
 }
 
-.mobileMenuButton {
+.mobileMenuButton > svg, .mobileMenuButtonClose > svg {
+  transition: all 300ms ease;
+}
+
+.mobileMenuButton > svg {
   background-color: transparent;
   font-size: 32px;
   border: none;
   color: #ba181b;
   display: none;
-  transition: all 300ms ease;
+  transition: all 400ms ease;
 }
 
 .mobileMenuButton > svg:hover {
@@ -139,11 +143,12 @@
 .menuLink {
   color: #e6e6e6;
   font-size: 40px;
+  transition: all 400ms ease;
 }
 
 .menuLink:hover {
   filter: brightness(0.8);
-  font-size: 18px;
+  font-size: 44px;
 }
 
 .bgBlack {

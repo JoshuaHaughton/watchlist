@@ -154,15 +154,24 @@ body {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .modal {
-  /* top: 20vh;
-  left: 10%; */
   width: 30%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 55%;
+  width: 80%;
+  max-width: 550px;
+  }
+
+  .form {
+    width: 80%;
+  }
+}
+
+@media(max-width: 500px) {
+  .row {
+    width: 100%;
   }
 }
 
@@ -171,4 +180,3 @@ body {
     width: 95%;
     }
 }
-
