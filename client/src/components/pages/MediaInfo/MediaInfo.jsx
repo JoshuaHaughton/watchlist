@@ -163,7 +163,7 @@ const MediaInfo = (props) => {
                {
                genre.length > 0 ?  
                 <h3 className={classes.selectedMediaTitle}>
-                  Genres: {genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}
+                  Genres: <span className={classes.genre}>{genre.map((g, idx) => (idx !== genre.length - 1) ? `${g.name}, ` : `${g.name}`)}</span>
                 </h3>
                 :
                 <h3 className={`${classes.selectedMediaTitle} ${classes.red}`}>
