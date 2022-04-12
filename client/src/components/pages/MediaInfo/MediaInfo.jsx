@@ -23,7 +23,7 @@ const MediaInfo = (props) => {
   const navigate = useNavigate();
 
   //Movie info of current page
-  const [myMedia, setMyMedia] = useState(media || {
+  const [d, setd] = useState(media || {
     title: '',
     release_date: null,
     vote_average: 0,
@@ -43,7 +43,7 @@ const MediaInfo = (props) => {
     category = param[param.length - 2];
 
     //Get details for media of current page
-    getDetails(id, category, setMyMedia, setRelatedMedia, setCast);
+    getDetails(id, category, setd, setRelatedMedia, setCast);
 
     //Check user watchlist to see if this title has already been added
     checkWatchlistForItem(id, setLoading, setAddedToWatchlist)
@@ -58,18 +58,18 @@ const MediaInfo = (props) => {
   }, [isLoggedIn])
 
 
-  const title = myMedia.title || myMedia.name;
-  const year = myMedia.release_date || myMedia.first_air_date;
-  const rating = myMedia.vote_average
-  const genre = myMedia.genres
-  const summary = myMedia.overview
+  const title = d.title || d.name;
+  const year = d.release_date || d.first_air_date;
+  const rating = d.vote_average
+  const genre = d.genres
+  const summary = d.overview
   let src = placeholder
-  let imdbId = myMedia.imdb_id
+  let imdbId = d.imdb_id
 
 
   let backdrop_path = null;
-    if (myMedia.backdrop_path) {
-      backdrop_path = myMedia.backdrop_path;
+    if (d.backdrop_path) {
+      backdrop_path = d.backdrop_path;
     }
 
     //Formatted data for submission
@@ -87,15 +87,15 @@ const MediaInfo = (props) => {
   let selectedClass = "media__selected skeleton"
 
 
-  if (myMedia && !myMedia.poster_path && !myMedia.backdrop_path) {
+  if (d && !d.poster_path && !d.backdrop_path) {
     selectedClass = "media__selected"
     src = placeholder;
-  } else if (myMedia.poster_path) {
+  } else if (d.poster_path) {
     selectedClass = "media__selected"
-    src = apiConfig.w500Image(myMedia.poster_path)
-  } else if(myMedia.backdrop_path) {
+    src = apiConfig.w500Image(d.poster_path)
+  } else if(d.backdrop_path) {
     selectedClass = "media__selected"
-    src = apiConfig.w500Image(myMedia.backdrop_path)
+    src = apiConfig.w500Image(d.backdrop_path)
   }
 
   //Navigate to the previous page
@@ -191,14 +191,14 @@ const MediaInfo = (props) => {
 
                 <div className={classes.mediaInfoActions}>
                   {/* Button to movie homepage if there is one */}
-                  {myMedia.homepage &&
-                    <a href={myMedia.homepage} target="_blank">
+                  {d.homepage &&
+                    <a href={d.homepage} target="_blank">
                       {" "}
                       <button className={classes.button}>More Details</button>
                     </a>
                   }
                   {/* Button to movie imdb page if there isn't a homepage */}
-                  {(imdbId && !myMedia.homepage) &&
+                  {(imdbId && !d.homepage) &&
                     <a href={`https://m.imdb.com/title/${imdbId}/`} target="_blank">
                       {" "}
                       <button className={classes.button}>More Details</button>
@@ -277,7 +277,7 @@ const MediaInfo = (props) => {
             <div className={classes.row}>
               <div className={classes.suggestedHeader}>
                 <h2 className={`${classes.selectedMediaTitle} ${classes.gold}`}>
-                  Suggested Movies:
+                  Suggested Media:
                 </h2>
               </div>
               <div className={classes.suggestedMedia}>

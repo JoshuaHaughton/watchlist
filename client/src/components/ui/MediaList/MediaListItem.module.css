@@ -18,15 +18,22 @@
 
 .mediaTitle {
   color: #fff;
-  font-size: medium;
+  font-size: large;
   text-align: center;
 }
 
 .mediaSubtitle,
-.media__year {
-  color: white;
+.mediaYear {
   text-align: center;
+  color: #fff;
+  font-size: 13px;
 }
+
+.mediaYear {
+  color: #fabf2a;
+}
+
+
 
 .mediaDescription {
   position: absolute; 
@@ -55,29 +62,13 @@
   transition: all 450ms ease;
 }
 
-
-.mediaDescription {
-  position: absolute; 
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -30%);
-  opacity: 0;
-  transition: opacity 300ms, transform 450ms ease;
-  color: white;
-  max-width: 550px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .imageWrapper:hover .mediaDescription {
   opacity: 1;
   transform: translate(-50%, -50%);
 }
 
 .imageWrapper:hover .imageWrapperBg {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .imageWrapper:active {
@@ -91,10 +82,6 @@
 .imageWrapper:hover .mediaDescription {
   opacity: 1;
   transform: translate(-50%, -50%);
-}
-
-.imageWrapper:hover .imageWrapperBg {
-  opacity: 0.7;
 }
 
 .imageWrapper:hover {

@@ -45,7 +45,7 @@ export default function MediaListItem(props) {
       {!props.skeleton && (
         <div className={classes.mediaDescription}>
           <h3 className={classes.mediaTitle}>{media.title || media.name}</h3>
-          <h5 className={classes.mediaSubtitle}>
+          <h5 className={classes.mediaYear}>
             {media.release_date || media.first_air_date}
           </h5>
           {(media && media.vote_average) > 0 ? (

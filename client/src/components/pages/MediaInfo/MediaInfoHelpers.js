@@ -87,15 +87,22 @@ export const addMediaToWatchlist = async (savedData, setLoading, setAddedToWatch
 
   const response = await axios.get('https://watchlist-server1.herokuapp.com/my-list', {withCredentials: true});
 
-  const foundItem = response.data.find(element => {
-    return element.tmdb_id === id
-  })
 
-
-  if (foundItem !== undefined) {
-    setAddedToWatchlist(true)
-  } else {
+  if (!response) {
     setAddedToWatchlist(false)
-  }
-  setLoading(false)
+    setLoading(false)
+    return;
+  } else {
+    const foundItem = response.data.find(element => {
+      return element.tmdb_id === id
+    })
+
+    if (foundItem !== undefined) {
+      setAddedToWatchlist(true)
+    } else {
+      setAddedToWatchlist(false)
+    }
+    setLoading(false)
+
+  } 
 }

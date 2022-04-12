@@ -130,7 +130,7 @@ const Discover = () => {
             </div>
 
             <p className={classes.white}>
-              In search of something bingeworthy? Look no further!
+              In search of something new? Look no further!
             </p>
 
             <hr />
