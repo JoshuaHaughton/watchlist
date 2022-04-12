@@ -22,10 +22,9 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
     //Sets background image of landing div
     document.getElementById('media__container').style.backgroundImage=`url(${src})`;
   }
-
   // CAST
 
-  const resp = await tmdbApi.getMediaCredits('movie', id);
+  const resp = await tmdbApi.getMediaCredits(category, id);
 
   // const pic = apiConfig.w500Image(resp.cast[0].profile_path)
   // console.log(pic)
@@ -45,8 +44,6 @@ export const getDetails = async (id, category, setMyMedia, setRelatedMedia, setC
 
   //Prevents the selected movie from showing up in the suggested movie section (rare issue)
   const uniqueSimilarMovies = similarMedia.results.filter(item => Number(item.id) !== Number(id))
-
-  console.log(uniqueSimilarMovies, 'yyy')
 
   
   //Attatch a property to every result that identifies the type (movie or tv series)
