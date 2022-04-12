@@ -52,12 +52,12 @@
   transition: all 650ms ease;
   background-color: transparent;
   padding: 4px !important;
-  color: #ba181b;
+  color: #fff;
 }
 
 .arrowBack:hover {
   transform: scale(1.02);
-  color: #fff;
+  color: #ba181b;
   background-color: rgb(0, 0, 0, 0.7);
   border-radius: 8px;
   box-shadow: 5px 5px 8px 4px rgba(0, 0, 0, 0.4);
