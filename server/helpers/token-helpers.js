@@ -53,7 +53,7 @@ const returnToken = (userId, statusCode, res) => {
     sameSite: "none",
     secure: true,
     path: '/',
-    domain: 'https://watchlist-client.netlify.app/#'
+    domain: 'watchlist-client.netlify.app'
   };
 
   //Set cookie
