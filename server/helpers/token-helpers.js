@@ -52,7 +52,8 @@ const returnToken = (userId, statusCode, res) => {
     expires: new Date(new Date().getTime() + 60 * 60 * 1000),
     sameSite: "none",
     secure: true,
-    path: '/'
+    path: '/',
+    domain: 'https://watchlist-client.netlify.app/'
   };
 
   //Set cookie
